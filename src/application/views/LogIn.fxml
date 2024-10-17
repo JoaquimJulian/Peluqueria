@@ -45,7 +45,7 @@
                         </ImageView>
                         <ImageView fitHeight="63.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/iconoPerfil.png" />
+                              <Image url="@../images/ficha.png" />
                            </image>
                            <StackPane.margin>
                               <Insets bottom="20.0" />
