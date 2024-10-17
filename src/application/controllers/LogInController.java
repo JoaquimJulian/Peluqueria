@@ -8,6 +8,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import application.models.databaseConection;
 import application.Main; // Importa la clase Main
 
@@ -18,6 +19,8 @@ public class LogInController {
     private PasswordField contraseña;
     @FXML
     private Button acceder;
+    @FXML
+    private BorderPane panelPrincipal;
 
     private Main mainApp; // Referencia a Main
 
@@ -28,11 +31,11 @@ public class LogInController {
 
     @FXML
     public void initialize() {
-        cerrar.setOnMouseClicked(event -> {
-            Platform.exit();
-        });
-
+    	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+    	eliminarEspaciosContraseña(); //llama al metodo que no permite poner espacios en la contraseña
+        cerrar.setOnMouseClicked(event -> { Platform.exit(); });
         acceder.setOnAction(event -> loguearUsuario());
+        
     }
 
     private void loguearUsuario() {
@@ -53,6 +56,17 @@ public class LogInController {
         }
     }
 
+    private void eliminarEspaciosContraseña() {
+    	// Listener para eliminar espacios en el texto del PasswordField
+        contraseña.textProperty().addListener((observable, oldValue, newValue) -> {
+            // Si el nuevo texto contiene espacios, reemplazarlos
+            if (newValue.contains(" ")) {
+                // Eliminar espacios del texto actual
+                contraseña.setText(newValue.replace(" ", ""));
+            }
+        });
+    }
+    
     private void mostrarAlerta(String titulo, String mensaje) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titulo);

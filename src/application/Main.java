@@ -1,6 +1,6 @@
 package application;
 
-import application.controllers.LogInController;
+import application.controllers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -30,6 +30,7 @@ public class Main extends Application {
                 LogInController controller = loader.getController();
                 controller.setMainApp(this); // Establecer la referencia a Main
             }
+            
             
             primaryStage.show();
         } catch (Exception e) {
