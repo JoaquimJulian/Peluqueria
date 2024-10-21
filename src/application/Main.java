@@ -25,10 +25,14 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle(vista);
             
-            // Aquí, comprobamos si la vista es "LogIn.fxml"
-            if (vista.equals("LogIn.fxml")) {
-                LogInController controller = loader.getController();
-                controller.setMainApp(this); // Establecer la referencia a Main
+            // Obtener el controlador de la vista cargada
+            Object controller = loader.getController();
+
+            // Verificar si el controlador tiene el método setMainApp
+            if (controller instanceof LogInController) {
+                ((LogInController) controller).setMainApp(this);
+            } else if (controller instanceof diaAdminController) {
+                ((diaAdminController) controller).setMainApp(this);
             }
             
             
