@@ -12,7 +12,7 @@ public class diaAdminController {
 	@FXML
 	private ImageView cerrar;
 	@FXML
-	private Button usuarios;
+	private Button trabajadores;
 	@FXML
 	private Button servicios;
 	@FXML
@@ -27,8 +27,8 @@ public class diaAdminController {
 
 	public void initialize() {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	productos.setOnMouseClicked(event -> mainApp.mostrarVista("Productos.fxml"));
-    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("Usuarios.fxml"));
-    	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("Servicios.fxml"));
+    	productos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+    	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("usuarios.fxml"));
+    	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml")); 
 	}
 }
