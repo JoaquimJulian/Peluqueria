@@ -31,6 +31,8 @@ public class serviciosController {
 	private Button btnGuardarCambios;
 	@FXML
 	private TextField barraBusqueda;
+	@FXML
+	private Button btnCrear;
 	
 	// TABLA PRODUCTOS
 	@FXML
@@ -57,6 +59,7 @@ public class serviciosController {
     
     public void initialize() {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
     }
 }

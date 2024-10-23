@@ -47,6 +47,7 @@ public class LogInController {
         }
 
         boolean loginExitoso = databaseConection.verificarContraseña(pass);
+        
 
         if (loginExitoso) {
             

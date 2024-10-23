@@ -1,5 +1,7 @@
 package application;
 
+import java.lang.reflect.Method;
+
 import application.controllers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -28,13 +30,9 @@ public class Main extends Application {
             // Obtener el controlador de la vista cargada
             Object controller = loader.getController();
 
-            // Verificar si el controlador tiene el método setMainApp
-            if (controller instanceof LogInController) {
-                ((LogInController) controller).setMainApp(this);
-            } else if (controller instanceof diaAdminController) {
-                ((diaAdminController) controller).setMainApp(this);
-            }
-            
+            // Compruebo si el controlador cargado contiene el metodo 'setMainApp' y lo ejecuta para proporcionar una referencia de main al controlador.
+            Method method = controller.getClass().getMethod("setMainApp", Main.class);
+            method.invoke(controller, this);
             
             primaryStage.show();
         } catch (Exception e) {

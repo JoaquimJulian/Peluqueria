@@ -30,7 +30,7 @@ public class databaseConection {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
+       
         String sql = "SELECT * FROM trabajadores WHERE nombre = 'Juan' AND contrasena = ?";
         
         try {
