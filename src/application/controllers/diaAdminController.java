@@ -28,7 +28,7 @@ public class diaAdminController {
 	public void initialize() {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	productos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
-    	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("usuarios.fxml"));
+    	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
     	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml")); 
 	}
 }
