@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="diaAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.diaAdminController">
+         <top>
+            <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="565.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="83.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="cerrar" fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <image>
+                        <Image url="@../images/cerrarPagina.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="535.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="505.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="475.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="443.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="409.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/salir.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="482.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ficha.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="450.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/pagar.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="416.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/calendario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="511.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ajustes.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="542.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/iconoPerfil.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+   <center>
+      <AnchorPane prefHeight="317.0" prefWidth="498.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="productos" layoutX="265.0" layoutY="72.0" mnemonicParsing="false" text="Productos" />
+            <Button fx:id="servicios" layoutX="268.0" layoutY="118.0" mnemonicParsing="false" text="Servicios" />
+            <Button fx:id="trabajadores" layoutX="257.0" layoutY="170.0" mnemonicParsing="false" text="Trabajadores" />
+         </children>
+      </AnchorPane>
+   </center>
+      </BorderPane>

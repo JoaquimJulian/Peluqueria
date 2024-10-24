@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.productosController">
+         <top>
+            <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="salir" fitHeight="28.0" fitWidth="28.0" layoutX="565.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="83.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="cerrar" fitHeight="23.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                     <image>
+                        <Image url="@../images/cerrarPagina.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="usuarios" fitHeight="28.0" fitWidth="28.0" layoutX="535.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="ajustes" fitHeight="28.0" fitWidth="28.0" layoutX="505.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="475.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="cobrar" fitHeight="28.0" fitWidth="28.0" layoutX="443.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="calendario" fitHeight="28.0" fitWidth="28.0" layoutX="409.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/salir.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="482.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ficha.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="15.0" fitWidth="19.0" layoutX="448.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/pagar.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="21.0" layoutX="413.0" layoutY="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="511.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ajustes.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="542.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/iconoPerfil.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="25.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos" wrappingWidth="108.713623046875">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <TextField fx:id="barraBusqueda" layoutX="214.0" layoutY="12.0" prefHeight="26.0" prefWidth="188.0" style="-fx-background-color: #D9D9D9;" />
+            <ImageView fitHeight="13.0" fitWidth="14.0" layoutX="383.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/lupa.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnGuardarCambios" layoutX="414.0" layoutY="12.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="124.0" style="-fx-background-color: #3E403D;" text="Guardar cambios" textFill="#d9d9d9">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <TableView fx:id="tablaProductos" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
+               <columns>
+                  <TableColumn fx:id="columnaNombre" prefWidth="47.0" text="Nombre" />
+                  <TableColumn fx:id="columnaDescripcion" prefWidth="147.0" text="Descripcion" />
+                  <TableColumn fx:id="columnaPrecioVenta" prefWidth="117.0" text="Precio venta" />
+                  <TableColumn fx:id="columnaCoste" prefWidth="101.0" text="Coste" />
+                  <TableColumn fx:id="columnaStock" prefWidth="70.0" text="Stock" />
+                  <TableColumn fx:id="accion" prefWidth="91.0" text="Acción" />
+               </columns>
+            </TableView>
+            <Button fx:id="btnGuardarCambios1" layoutX="139.0" layoutY="12.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="32.0" style="-fx-background-color: #3E403D;" text="+" textFill="#d9d9d9">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnGuardarCambios2" layoutX="551.0" layoutY="12.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="29.0" style="-fx-background-color: #3E403D;" text="X" textFill="#d9d9d9">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </AnchorPane>
+   </center>
+      </BorderPane>
