@@ -1,8 +1,15 @@
 package application.controllers;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.sql.SQLException;
+
 import application.Main;
+import application.models.Producto;
+import application.models.*;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -36,7 +43,7 @@ public class serviciosController {
 	
 	// TABLA PRODUCTOS
 	@FXML
-	private TableView tablaProductos;
+	private TableView tablaServicios;
 	@FXML
 	private TableColumn columnaNombre;
 	@FXML
@@ -57,10 +64,24 @@ public class serviciosController {
         this.mainApp = mainApp;
     }
     
-    public void initialize() {
+    public void initialize() throws SQLException {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
+    	
+    	columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        columnaDuracion.setCellValueFactory(new PropertyValueFactory<>("duracion_estimada"));
+        columnaReserva.setCellValueFactory(new PropertyValueFactory<>("requiere_reserva"));
+    	
+    	cargarServicios();
     }
+    
+    private void cargarServicios() throws SQLException {
+        ObservableList<Servicio> servicios = ServiciosModel.getServicios();
+        tablaServicios.setItems(servicios);
+    }
+    
 }
 

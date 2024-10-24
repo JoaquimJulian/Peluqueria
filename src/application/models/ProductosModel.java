@@ -15,7 +15,7 @@ public class ProductosModel {
 
         try {
             // Conexión a la base de datos
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/peluqueria", "root", "");
+            Connection conn = databaseConection.getConnection();
             Statement stmt = conn.createStatement();
             String query = "SELECT id_producto, nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock FROM productos";
             ResultSet rs = stmt.executeQuery(query);

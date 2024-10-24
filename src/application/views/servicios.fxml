@@ -111,7 +111,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <TableView fx:id="tablaProductos" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
+            <TableView fx:id="tablaServicios" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
                <columns>
                   <TableColumn fx:id="columnaNombre" prefWidth="95.20001220703125" text="Nombre" />
                   <TableColumn fx:id="columnaDescripcion" prefWidth="260.800048828125" text="Descripcion" />
