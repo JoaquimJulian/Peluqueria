@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.productosController">
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.serviciosController">
          <top>
             <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
@@ -92,7 +92,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="25.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos" wrappingWidth="108.713623046875">
+            <Text layoutX="25.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios" wrappingWidth="108.713623046875">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -103,7 +103,7 @@
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnGuardarCambios" layoutX="414.0" layoutY="12.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="124.0" style="-fx-background-color: #3E403D;" text="Guardar cambios" textFill="#d9d9d9">
+            <Button fx:id="btnGuardarCambios" layoutX="457.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="129.0" style="-fx-background-color: #3E403D;" text="Guardar cambios" textFill="#d9d9d9">
                <font>
                   <Font name="Franklin Gothic Medium" size="14.0" />
                </font>
@@ -111,46 +111,19 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            
-            <Text layoutX="25.0" layoutY="350.0" text="Crear Nuevo Producto:" wrappingWidth="150.0">
-                    <font>
-                        <Font name="System Bold" size="14.0" />
-                    </font>
-                </Text>
-                <TextField fx:id="nombreProducto" layoutX="25.0" layoutY="375.0" prefHeight="25.0" prefWidth="200.0" promptText="Nombre" />
-                <TextField fx:id="descripcionProducto" layoutX="250.0" layoutY="375.0" prefHeight="25.0" prefWidth="200.0" promptText="Descripción" />
-                <TextField fx:id="precio_venta" layoutX="25.0" layoutY="410.0" prefHeight="25.0" prefWidth="90.0" promptText="Precio_Venta" />
-                <TextField fx:id="precio_costo" layoutX="140.0" layoutY="410.0" prefHeight="25.0" prefWidth="90.0" promptText="precio_costo" />
-                <TextField fx:id="stockProducto" layoutX="250.0" layoutY="410.0" prefHeight="25.0" prefWidth="90.0" promptText="Stock" />
-                <Button fx:id="crearProducto" layoutX="370.0" layoutY="410.0" text="Crear Producto" />
-            
-            
             <TableView fx:id="tablaProductos" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
                <columns>
-                  <TableColumn fx:id="columnaNombre" prefWidth="47.0" text="Nombre" />
-                  <TableColumn fx:id="columnaDescripcion" prefWidth="147.0" text="Descripcion" />
-                  <TableColumn fx:id="columnaPrecioVenta" prefWidth="117.0" text="Precio_venta" />
-                  <TableColumn fx:id="columnaCoste" prefWidth="101.0" text="Coste" />
-                  <TableColumn fx:id="columnaStock" prefWidth="70.0" text="Stock" />
-                  <TableColumn fx:id="accion" prefWidth="91.0" text="Acción" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="95.20001220703125" text="Nombre" />
+                  <TableColumn fx:id="columnaDescripcion" prefWidth="260.800048828125" text="Descripcion" />
+                  <TableColumn fx:id="columnaPrecio" prefWidth="73.5999755859375" text="Precio" />
+                  <TableColumn fx:id="columnaDuracion" minWidth="0.0" prefWidth="75.20001220703125" text="Duracion" />
+                  <TableColumn fx:id="columnaReserva" prefWidth="75.99993896484375" text="Reserva" />
                </columns>
             </TableView>
-            <Button fx:id="btnGuardarCambios1" layoutX="139.0" layoutY="12.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="32.0" style="-fx-background-color: #3E403D;" text="+" textFill="#d9d9d9">
-               <font>
-                  <Font name="Franklin Gothic Medium" size="14.0" />
-               </font>
+            <Button fx:id="btnCrear" layoutX="121.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="+" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="btnGuardarCambios2" layoutX="551.0" layoutY="12.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="29.0" style="-fx-background-color: #3E403D;" text="X" textFill="#d9d9d9">
-               <font>
-                  <Font name="Franklin Gothic Medium" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+               </cursor></Button>
          </children>
       </AnchorPane>
    </center>
