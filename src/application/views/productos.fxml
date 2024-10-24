@@ -103,7 +103,7 @@
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnGuardarCambios" layoutX="457.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="129.0" style="-fx-background-color: #3E403D;" text="Guardar cambios" textFill="#d9d9d9">
+            <Button fx:id="btnGuardarCambios" layoutX="414.0" layoutY="12.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="124.0" style="-fx-background-color: #3E403D;" text="Guardar cambios" textFill="#d9d9d9">
                <font>
                   <Font name="Franklin Gothic Medium" size="14.0" />
                </font>
@@ -113,13 +113,30 @@
             </Button>
             <TableView fx:id="tablaProductos" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
                <columns>
-                  <TableColumn fx:id="columnaNombre" prefWidth="95.20001220703125" text="Nombre" />
-                  <TableColumn fx:id="columnaDescripcion" prefWidth="246.4000244140625" text="Descripcion" />
-                  <TableColumn fx:id="columnaPrecioVenta" prefWidth="91.20001220703125" text="Precio venta" />
-                  <TableColumn fx:id="columnaCoste" prefWidth="79.20001220703125" text="Coste" />
-                  <TableColumn fx:id="columnaStock" prefWidth="59.99997558593748" text="Stock" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="47.0" text="Nombre" />
+                  <TableColumn fx:id="columnaDescripcion" prefWidth="147.0" text="Descripcion" />
+                  <TableColumn fx:id="columnaPrecioVenta" prefWidth="117.0" text="Precio venta" />
+                  <TableColumn fx:id="columnaCoste" prefWidth="101.0" text="Coste" />
+                  <TableColumn fx:id="columnaStock" prefWidth="70.0" text="Stock" />
+                  <TableColumn fx:id="accion" prefWidth="91.0" text="Acción" />
                </columns>
             </TableView>
+            <Button fx:id="btnGuardarCambios1" layoutX="139.0" layoutY="12.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="32.0" style="-fx-background-color: #3E403D;" text="+" textFill="#d9d9d9">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnGuardarCambios2" layoutX="551.0" layoutY="12.0" mnemonicParsing="false" prefHeight="21.0" prefWidth="29.0" style="-fx-background-color: #3E403D;" text="X" textFill="#d9d9d9">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
    </center>

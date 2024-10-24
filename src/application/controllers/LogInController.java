@@ -14,8 +14,6 @@ import application.Main; // Importa la clase Main
 
 public class LogInController {
     @FXML
-    private ImageView cerrar;
-    @FXML
     private PasswordField contraseña;
     @FXML
     private Button acceder;
@@ -57,7 +55,10 @@ public class LogInController {
         }
     }
 
-    private void eliminarEspaciosContraseña() {
+    @FXML
+	private ImageView cerrar;
+
+	private void eliminarEspaciosContraseña() {
     	// Listener para eliminar espacios en el texto del PasswordField
         contraseña.textProperty().addListener((observable, oldValue, newValue) -> {
             // Si el nuevo texto contiene espacios, reemplazarlos
