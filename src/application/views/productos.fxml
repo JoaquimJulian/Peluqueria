@@ -111,11 +111,25 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            
+            <Text layoutX="25.0" layoutY="350.0" text="Crear Nuevo Producto:" wrappingWidth="150.0">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Text>
+                <TextField fx:id="nombreProducto" layoutX="25.0" layoutY="375.0" prefHeight="25.0" prefWidth="200.0" promptText="Nombre" />
+                <TextField fx:id="descripcionProducto" layoutX="250.0" layoutY="375.0" prefHeight="25.0" prefWidth="200.0" promptText="Descripción" />
+                <TextField fx:id="precio_venta" layoutX="25.0" layoutY="410.0" prefHeight="25.0" prefWidth="90.0" promptText="Precio_Venta" />
+                <TextField fx:id="precio_costo" layoutX="140.0" layoutY="410.0" prefHeight="25.0" prefWidth="90.0" promptText="precio_costo" />
+                <TextField fx:id="stockProducto" layoutX="250.0" layoutY="410.0" prefHeight="25.0" prefWidth="90.0" promptText="Stock" />
+                <Button fx:id="crearProducto" layoutX="370.0" layoutY="410.0" text="Crear Producto" />
+            
+            
             <TableView fx:id="tablaProductos" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
                <columns>
                   <TableColumn fx:id="columnaNombre" prefWidth="47.0" text="Nombre" />
                   <TableColumn fx:id="columnaDescripcion" prefWidth="147.0" text="Descripcion" />
-                  <TableColumn fx:id="columnaPrecioVenta" prefWidth="117.0" text="Precio venta" />
+                  <TableColumn fx:id="columnaPrecioVenta" prefWidth="117.0" text="Precio_venta" />
                   <TableColumn fx:id="columnaCoste" prefWidth="101.0" text="Coste" />
                   <TableColumn fx:id="columnaStock" prefWidth="70.0" text="Stock" />
                   <TableColumn fx:id="accion" prefWidth="91.0" text="Acción" />
