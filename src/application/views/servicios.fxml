@@ -103,14 +103,6 @@
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnGuardarCambios" layoutX="457.0" layoutY="12.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="129.0" style="-fx-background-color: #3E403D;" text="Guardar cambios" textFill="#d9d9d9">
-               <font>
-                  <Font name="Franklin Gothic Medium" size="14.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
             <TableView fx:id="tablaServicios" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
                <columns>
                   <TableColumn fx:id="columnaNombre" prefWidth="95.20001220703125" text="Nombre" />
@@ -124,6 +116,16 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
+            <Button fx:id="btnEditar" layoutX="462.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnEliminar" layoutX="519.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
       </AnchorPane>
    </center>

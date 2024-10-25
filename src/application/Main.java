@@ -3,6 +3,7 @@ package application;
 import java.lang.reflect.Method;
 
 import application.controllers.*;
+import application.models.Servicio;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -11,6 +12,16 @@ import javafx.scene.Scene;
 
 public class Main extends Application {
     private Stage primaryStage; // Almacena la ventana principal
+    
+    private Object datosCompartidos; //Almacena los datos del controlador 
+    
+    public void setDatosCompartidos(Object datos) {
+        this.datosCompartidos = datos;
+    }
+
+    public Object getDatosCompartidos() {
+        return datosCompartidos;
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -18,8 +29,14 @@ public class Main extends Application {
         mostrarVista("LogIn.fxml"); // Muestra la vista de inicio de sesión al inicio
     }
 
-    public void mostrarVista(String vista) {
+    public void mostrarVista(String vista) { //sobrecargamos el metodo para que no haga falta pasarle dos parametros siempre
+    	mostrarVista(vista, null);
+    }
+    
+    public void mostrarVista(String vista, Object datos) { //Y aqui le pasamos la vista y los datos del controlador si los necesita la vista que se va a ejecutar
     	try {
+    		setDatosCompartidos(datos);  //digo que la variable datosCompartidos va acontener la información que ha enviado el controlador
+    		
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/views/" + vista));
             Parent root = loader.load();
 

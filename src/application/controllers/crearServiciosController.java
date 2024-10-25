@@ -47,7 +47,6 @@ public class crearServiciosController {
 	    
 	    public void initialize() {
 	        crearServicio.setOnMouseClicked(event -> crearServicio());
-	        
 	        precioServicio.setEditable(true);
 	        duracionServicio.setEditable(true);
 	    }

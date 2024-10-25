@@ -2,17 +2,35 @@ package application.controllers;
 
 import javafx.scene.control.Button; 
 import javafx.scene.control.TextField;
-
+import application.Main;
 import application.models.Producto;
 import application.models.ProductosModel;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 
 public class productosController {
 
+	// BOTONES HEADER
+	@FXML
+	private ImageView salir;
+	@FXML
+	private ImageView calendario;
+	@FXML
+	private ImageView ajustes;
+	@FXML
+	private ImageView cobrar;
+	@FXML
+	private ImageView usuarios;
+	@FXML
+	private ImageView cerrar;
+	
+	
+		
 	@FXML
     private TableView<Producto> tablaProductos;
     @FXML
@@ -42,8 +60,16 @@ public class productosController {
 
     private ProductosModel productosModel = new ProductosModel();
 
+    private Main mainApp; // Referencia a Main
+    
+    // Este método se llamará desde Main para establecer la referencia
+       public void setMainApp(Main mainApp) {
+           this.mainApp = mainApp;
+       }
     @FXML
     public void initialize() {
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+
         // Configurar las columnas
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));

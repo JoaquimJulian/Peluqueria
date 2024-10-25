@@ -35,25 +35,27 @@ public class serviciosController {
 	
 	// CONTROLES GENERICOS PARA CRUD
 	@FXML
-	private Button btnGuardarCambios;
-	@FXML
 	private TextField barraBusqueda;
 	@FXML
 	private Button btnCrear;
+	@FXML
+	private Button btnEditar;
+	@FXML
+	private Button btnEliminar;
 	
 	// TABLA PRODUCTOS
 	@FXML
-	private TableView tablaServicios;
+	private TableView<Servicio> tablaServicios;
 	@FXML
-	private TableColumn columnaNombre;
+	private TableColumn<Servicio, String> columnaNombre;
 	@FXML
-	private TableColumn columnaDescripcion;
+	private TableColumn<Servicio, String> columnaDescripcion;
 	@FXML
-	private TableColumn columnaPrecio;
+	private TableColumn<Servicio, Double> columnaPrecio;
 	@FXML
-	private TableColumn columnaDuracion;
+	private TableColumn<Servicio, Integer> columnaDuracion;
 	@FXML
-	private TableColumn columnaReserva;
+	private TableColumn<Servicio, Boolean> columnaReserva;
 	
 	
 	
@@ -66,14 +68,16 @@ public class serviciosController {
     
     public void initialize() throws SQLException {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
+    	btnEditar.setOnAction(event -> abrirVistaEdicion());
     	
     	columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        columnaDuracion.setCellValueFactory(new PropertyValueFactory<>("duracion_estimada"));
-        columnaReserva.setCellValueFactory(new PropertyValueFactory<>("requiere_reserva"));
+        columnaDuracion.setCellValueFactory(new PropertyValueFactory<>("duracionEstimada"));
+        columnaReserva.setCellValueFactory(new PropertyValueFactory<>("requiereReserva"));
     	
     	cargarServicios();
     }
@@ -81,6 +85,15 @@ public class serviciosController {
     private void cargarServicios() throws SQLException {
         ObservableList<Servicio> servicios = ServiciosModel.getServicios();
         tablaServicios.setItems(servicios);
+    }
+    
+    @FXML
+    private void abrirVistaEdicion() {
+        // Obtener la fila seleccionada
+        Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
+       
+        mainApp.mostrarVista("editarServicios.fxml", servicioSeleccionado);  // Método para abrir la vista de edición en Main
+        
     }
     
 }

@@ -25,7 +25,7 @@ public class ServiciosModel {
 
 	            // Ejecutamos la inserción
 	            stmt.executeUpdate();
-	            System.out.println("Servicio creado con éxito: " + nombre);
+	            
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	            System.out.println("Error al crear el servicio: " + e.getMessage());
