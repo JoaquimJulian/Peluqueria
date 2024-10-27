@@ -55,7 +55,7 @@ public class serviciosController {
 	@FXML
 	private TableColumn<Servicio, Integer> columnaDuracion;
 	@FXML
-	private TableColumn<Servicio, Boolean> columnaReserva;
+	private TableColumn<Servicio, Boolean> columnaReserva = new TableColumn<>("Reserva");
 	
 	
 	
@@ -71,14 +71,28 @@ public class serviciosController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
-    	btnEditar.setOnAction(event -> abrirVistaEdicion());
+    	
+    	btnEditar.setDisable(true);
+    	tablaServicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+            btnEditar.setDisable(false);
+            btnEditar.setOnAction(event -> abrirVistaEdicion());
+        });
+    	
+    	btnEliminar.setOnMouseClicked(event -> {
+			try {
+				eliminarServicio();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
     	
     	columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         columnaDuracion.setCellValueFactory(new PropertyValueFactory<>("duracionEstimada"));
         columnaReserva.setCellValueFactory(new PropertyValueFactory<>("requiereReserva"));
-    	
+    
     	cargarServicios();
     }
     
@@ -96,5 +110,12 @@ public class serviciosController {
         
     }
     
+    private void eliminarServicio() throws SQLException {
+        Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
+        
+        ServiciosModel.eliminarServicio(servicioSeleccionado.getId());
+        
+        cargarServicios();
+    }
 }
 

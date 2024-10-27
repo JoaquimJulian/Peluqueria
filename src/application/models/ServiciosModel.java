@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 
 public class ServiciosModel {
 
-	public static void crearServicio(String nombre, String precio, String duracion, String descripcion, Boolean requiereReserva) {
+	public static void crearServicio(String nombre, Double precio, Integer duracion, String descripcion, Boolean requiereReserva) {
 		String sql = "INSERT INTO servicios (nombre_servicio, precio, duracion_estimada, descripcion, requiere_reserva) VALUES (?, ?, ?, ?, ?)";
 		
 		try (Connection connection = databaseConection.getConnection();
@@ -18,8 +18,8 @@ public class ServiciosModel {
 
 	            // Establecemos los parámetros del PreparedStatement
 	            stmt.setString(1, nombre);
-	            stmt.setString(2, precio);
-	            stmt.setString(3, duracion);
+	            stmt.setDouble(2, precio);
+	            stmt.setInt(3, duracion);
 	            stmt.setString(4, descripcion);
 	            stmt.setBoolean(5, requiereReserva);
 
@@ -30,6 +30,41 @@ public class ServiciosModel {
 	            e.printStackTrace();
 	            System.out.println("Error al crear el servicio: " + e.getMessage());
 	        }
+	}
+	
+	public static void editarServicio(Integer id, String nombre, Double precio, Integer duracion, String descripcion, Boolean requiereReserva) {
+		String sql = "UPDATE servicios SET nombre_servicio = ?, precio = ?, duracion_estimada = ?, descripcion = ?, requiere_reserva = ? WHERE id_servicio = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setString(1, nombre);
+				stmt.setDouble(2, precio);
+				stmt.setInt(3, duracion);
+				stmt.setString(4, descripcion);
+				stmt.setBoolean(5, requiereReserva);
+				stmt.setInt(6, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al editar el servicio: " + e.getMessage());
+        }
+	}
+	
+	public static void eliminarServicio(Integer id) {
+		String sql = "DELETE FROM servicios WHERE id_servicio = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al eliminar el servicio: " + e.getMessage());
+        }
 	}
 	
 	public static ObservableList<Servicio> getServicios() throws SQLException {
