@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-public class serviciosController {
+public class clientesController {
 	@FXML
 	private BorderPane panelPrincipal;
 	
@@ -45,17 +45,17 @@ public class serviciosController {
 	
 	// TABLA PRODUCTOS
 	@FXML
-	private TableView<Servicio> tablaServicios;
+	private TableView<Cliente> tablaClientes;
 	@FXML
-	private TableColumn<Servicio, String> columnaNombre;
+	private TableColumn<Cliente, String> columnaNombre;
 	@FXML
-	private TableColumn<Servicio, String> columnaDescripcion;
+	private TableColumn<Cliente, String> columnaApellidos;
 	@FXML
-	private TableColumn<Servicio, Double> columnaPrecio;
+	private TableColumn<Cliente, Integer> columnaTelefono;
 	@FXML
-	private TableColumn<Servicio, Integer> columnaDuracion;
+	private TableColumn<Cliente, String> columnaEmail;
 	@FXML
-	private TableColumn<Servicio, Boolean> columnaReserva = new TableColumn<>("Reserva");
+	private TableColumn<Cliente, Boolean> columnaLpd;
 	
 	
 	
@@ -69,18 +69,16 @@ public class serviciosController {
     public void initialize() throws SQLException {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
-    	
-    	
+    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearClientes.fxml"));
     	btnEditar.setDisable(true);
-    	tablaServicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+    	tablaClientes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
             btnEditar.setDisable(false);
             btnEditar.setOnAction(event -> abrirVistaEdicion());
         });
     	
     	btnEliminar.setOnMouseClicked(event -> {
 			try {
-				eliminarServicio();
+				eliminarCliente();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -88,34 +86,34 @@ public class serviciosController {
 		});
     	
     	columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-        columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
-        columnaDuracion.setCellValueFactory(new PropertyValueFactory<>("duracionEstimada"));
-        columnaReserva.setCellValueFactory(new PropertyValueFactory<>("requiereReserva"));
+        columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        columnaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        columnaLpd.setCellValueFactory(new PropertyValueFactory<>("lpd"));
     
-    	cargarServicios();
+    	cargarClientes();
     }
     
-    private void cargarServicios() throws SQLException {
-        ObservableList<Servicio> servicios = ServiciosModel.getServicios();
-        tablaServicios.setItems(servicios);
+    private void cargarClientes() throws SQLException {
+        ObservableList<Cliente> clientes = ClientesModel.getClientes();
+        tablaClientes.setItems(clientes);
     }
     
     @FXML
     private void abrirVistaEdicion() {
         // Obtener la fila seleccionada
-        Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
+        Cliente clienteSeleccionado = tablaClientes.getSelectionModel().getSelectedItem();
        
-        mainApp.mostrarVista("editarServicios.fxml", servicioSeleccionado);  // Método para abrir la vista de edición en Main
+        mainApp.mostrarVista("editarClientes.fxml", clienteSeleccionado);  // Método para abrir la vista de edición en Main
         
     }
     
-    private void eliminarServicio() throws SQLException {
-        Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
+    private void eliminarCliente() throws SQLException {
+        Cliente clienteSeleccionado = tablaClientes.getSelectionModel().getSelectedItem();
         
-        ServiciosModel.eliminarServicio(servicioSeleccionado.getId());
+        ClientesModel.eliminarCliente(clienteSeleccionado.getId());
         
-        cargarServicios();
+        cargarClientes();
     }
 }
 
