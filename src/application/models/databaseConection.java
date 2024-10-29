@@ -26,17 +26,18 @@ public class databaseConection {
     }
 
     // Método para verificar la contraseña de Juan
-    public static boolean verificarContraseña(String contraseña) {
+    public static boolean verificarContraseña(String usuario, String contrasena) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
        
-        String sql = "SELECT * FROM trabajadores WHERE nombre = 'Juan' AND contrasena = ?";
+        String sql = "SELECT * FROM trabajadores WHERE nombre = ? AND contrasena = ?";
         
         try {
             conn = getConnection();
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, contraseña);
+            stmt.setString(1, usuario);
+            stmt.setString(2, contrasena);
 
             rs = stmt.executeQuery();
             return rs.next(); // Si hay un resultado, significa que la contraseña es correcta

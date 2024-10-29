@@ -1,24 +1,41 @@
 package application.controllers;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import application.models.Servicio;
+import application.models.ServiciosModel;
+import application.models.Trabajador;
+import application.models.TrabajadoresModel;
 import application.models.databaseConection;
+
+import java.sql.SQLException;
+
 import application.Main; // Importa la clase Main
 
 public class LogInController {
     @FXML
-    private PasswordField contraseña;
+    private TableView<Trabajador> tablaUsuarios;
     @FXML
-    private Button acceder;
+    private TableColumn<Trabajador, String> columnaUsuarios;
+    @FXML
+    private Button btnAcceder;
+    @FXML
+    private PasswordField contrasena;
     @FXML
     private BorderPane panelPrincipal;
+    @FXML
+    private ImageView cerrar;
 
     private Main mainApp; // Referencia a Main
 
@@ -28,52 +45,32 @@ public class LogInController {
     }
 
     @FXML
-    public void initialize() {
-    	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
-    	eliminarEspaciosContraseña(); //llama al metodo que no permite poner espacios en la contraseña
+    public void initialize() throws SQLException {
         cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-        acceder.setOnAction(event -> loguearUsuario());
-        
+        cargarUsuarios();
+                
+        btnAcceder.setOnAction(event -> loguearUsuario());
+
+    }
+    
+    private void cargarUsuarios() throws SQLException {
+
+        ObservableList<Trabajador> trabajadores = TrabajadoresModel.getTrabajadores();
+        tablaUsuarios.setItems(trabajadores);
+    	
+        columnaUsuarios.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     }
 
     private void loguearUsuario() {
-        String pass = contraseña.getText();
-
-        if (pass.isEmpty()) {
-            mostrarAlerta("Campo vacío", "Por favor, introduce la contraseña.");
-            return;
-        }
-
-        boolean loginExitoso = databaseConection.verificarContraseña(pass);
-        
-
-        if (loginExitoso) {
-            
-            mainApp.mostrarVista("diaAdmin.fxml"); // Cambia a la nueva vista a través de Main
-        } else {
-            mostrarAlerta("Error", "Contraseña incorrecta.");
-        }
-    }
-
-    @FXML
-	private ImageView cerrar;
-
-	private void eliminarEspaciosContraseña() {
-    	// Listener para eliminar espacios en el texto del PasswordField
-        contraseña.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Si el nuevo texto contiene espacios, reemplazarlos
-            if (newValue.contains(" ")) {
-                // Eliminar espacios del texto actual
-                contraseña.setText(newValue.replace(" ", ""));
-            }
-        });
-    }
-    
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle(titulo);
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
+    	Trabajador usuarioSeleccionado = tablaUsuarios.getSelectionModel().getSelectedItem();
+    	
+    	String usuario = usuarioSeleccionado.getNombre();
+    	String password = contrasena.getText();
+    	
+    	boolean loginExitoso = databaseConection.verificarContraseña(usuario, password);
+    	
+    	if (loginExitoso) {
+    		mainApp.mostrarVista("diaAdmin.fxml");
+    	}
     }
 }
