@@ -67,7 +67,7 @@ public class serviciosController {
     }
     
     public void initialize() throws SQLException {
-    	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+    	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar

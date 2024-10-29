@@ -1,73 +1,97 @@
 package application.models;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class ProductosModel {
 
-    // Método para obtener los productos de la base de datos
-    public ObservableList<Producto> getProductos() {
+	public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock) {
+		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock) VALUES (?, ?, ?, ?, ?)";
+		
+		try (Connection connection = databaseConection.getConnection();
+	             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+	            // Establecemos los parámetros del PreparedStatement
+	            stmt.setString(1, nombre);
+	            stmt.setString(2, descripcion);
+	            stmt.setDouble(3, precioVenta);
+	            stmt.setDouble(4, precioCosto);
+	            stmt.setInt(5, cantidad_en_stock);
+
+	            // Ejecutamos la inserción
+	            stmt.executeUpdate();
+	            
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.println("Error al crear el producto: " + e.getMessage());
+	        }
+	}
+	
+	public static void editarproducto(Integer id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock) {
+		String sql = "UPDATE productos SET nombre_producto = ?, descripcion = ?, precio_venta  = ?, precio_costo = ?, cantidad_en_stock = ? WHERE id_producto = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setString(1, nombre);
+	            stmt.setString(2, descripcion);
+	            stmt.setDouble(3, precioVenta);
+	            stmt.setDouble(4, precioCosto);
+	            stmt.setInt(5, cantidad_en_stock);
+				stmt.setInt(6, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al editar el producto: " + e.getMessage());
+        }
+	}
+	
+	public static void eliminarproducto(Integer id) {
+		String sql = "DELETE FROM productos WHERE id_producto = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al eliminar el producto: " + e.getMessage());
+        }
+	}
+	
+	public static ObservableList<Producto> getProductos() throws SQLException {
         ObservableList<Producto> productos = FXCollections.observableArrayList();
-
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM productos";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        
         try {
-            // Conexión a la base de datos
-
-            Connection conn = databaseConection.getConnection();
-
-            Statement stmt = conn.createStatement();
-            String query = "SELECT id_producto, nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock FROM productos";
-            ResultSet rs = stmt.executeQuery(query);
-
-            // Recorrer los resultados y agregarlos a la lista
-            while (rs.next()) {
-                productos.add(new Producto(
-                    rs.getString("nombre_producto"),
-                    rs.getString("descripcion"),
-                    rs.getDouble("precio_venta"),
-                    rs.getDouble("precio_costo"), 
-                    rs.getInt("cantidad_en_stock")
-                ));
-            }
-
-            // Cerrar la conexión
-            conn.close();
-        } catch (Exception e) {
+        	
+        	ResultSet rs = stmt.executeQuery(sql);
+        	
+        	 while (rs.next()) {
+                 productos.add(new Producto(
+                	 rs.getInt("id_producto"),
+                     rs.getString("nombre_producto"),
+                     rs.getString("descripcion"),
+                     rs.getDouble("precio_venta"),
+                     rs.getDouble("precio_costo"), 
+                     rs.getInt("cantidad_en_stock")
+                 ));
+             }
+        	
+        }catch (Exception e) {
             e.printStackTrace();
         }
-
+        	
         return productos;
     }
-    
-    
- 
-    public void crearproductos(Producto producto) {
-        String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock) VALUES (?,?,?,?,?)";
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/peluqueria", "root", "");
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, producto.getNombre());
-            pstmt.setString(2, producto.getDescripcion());
-            pstmt.setDouble(3, producto.getPrecioVenta());
-            pstmt.setDouble(4, producto.getPrecioCosto()); 
-            pstmt.setInt(5, producto.getStock()); 
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
-
-	private Connection connect() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }

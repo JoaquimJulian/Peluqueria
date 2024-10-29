@@ -1,21 +1,36 @@
 package application.controllers;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button; 
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
+import java.sql.SQLException;
+
 import application.Main;
+import application.models.Producto;
+import application.models.ProductosModel;
+import application.models.Servicio;
+import application.models.ServiciosModel;
 import application.models.Producto;
 import application.models.ProductosModel;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 public class productosController {
 
 	// BOTONES HEADER
+	@FXML
+	private BorderPane panelPrincipal;
 	@FXML
 	private ImageView salir;
 	@FXML
@@ -29,6 +44,15 @@ public class productosController {
 	@FXML
 	private ImageView cerrar;
 	
+	// CONTROLES GENERICOS PARA CRUD
+	@FXML
+	private TextField barraBusqueda;
+	@FXML
+	private Button btnCrear;
+	@FXML
+	private Button btnEditar;
+	@FXML
+	private Button btnEliminar;
 	
 		
 	@FXML
@@ -42,23 +66,10 @@ public class productosController {
     @FXML
     private TableColumn<Producto, Double> columnaCoste; 
     @FXML
-    private TableColumn<Producto, Integer> columnaStock;
+    private TableColumn<Producto, Integer> columnacantidad_en_stock;
     @FXML
-    private Button crearProducto;
-    
- // Añade los TextFields
-    @FXML
-    private TextField nombreProducto;
-    @FXML
-    private TextField descripcionProducto;
-    @FXML
-    private TextField precio_venta;
-    @FXML
-    private TextField precio_costo;
-    @FXML
-    private TextField stockProducto;
-
-    private ProductosModel productosModel = new ProductosModel();
+    private Button crearProductoButton;
+  
 
     private Main mainApp; // Referencia a Main
     
@@ -67,44 +78,58 @@ public class productosController {
            this.mainApp = mainApp;
        }
     @FXML
-    public void initialize() {
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-
+    public void initialize() throws SQLException {
+    
+    Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearProductos.fxml"));
+	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
+	
+	btnEditar.setDisable(true);
+	tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+        btnEditar.setDisable(false);
+        btnEditar.setOnAction(event -> abrirVistaEdicion());
+    });
+	
+	btnEliminar.setOnMouseClicked(event -> {
+		try {
+			eliminarProducto();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	});
         // Configurar las columnas
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         columnaPrecioVenta.setCellValueFactory(new PropertyValueFactory<>("precioVenta"));
         columnaCoste.setCellValueFactory(new PropertyValueFactory<>("precioCosto"));
-        columnaStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        columnacantidad_en_stock.setCellValueFactory(new PropertyValueFactory<>("cantidad_en_stock"));
 
-        // Cargar los datos
+     // Cargar los datos
         cargarProductos();
-        
-     // Evento de creación
-        crearProducto.setOnAction(event -> crearNuevoProducto());
-        
     }
 
-    private void cargarProductos() {
-        ObservableList<Producto> productos = productosModel.getProductos();
+    private void cargarProductos() throws SQLException {
+        ObservableList<Producto> productos = ProductosModel.getProductos();
         tablaProductos.setItems(productos);
     }
     
-    private void crearNuevoProducto() {
-        // Recoger los datos ingresados
-        String nombre = nombreProducto.getText();
-        String descripcion = descripcionProducto.getText();
-        double precioVenta = Double.parseDouble(precio_venta.getText()); 
-        double precioCosto = Double.parseDouble(precio_costo.getText()); 
-        int stock = Integer.parseInt(stockProducto.getText());
-
-        // Crear un nuevo objeto Producto
-        Producto nuevoProducto = new Producto(nombre, descripcion, precioVenta, precioCosto, stock);
-
-        // Guardar el nuevo producto en la base de datos usando ProductosModel
-        productosModel.crearproductos(nuevoProducto);
-
-        // Recargar la tabla para mostrar el nuevo producto
+    @FXML
+    private void abrirVistaEdicion() {
+        // Obtener la fila seleccionada
+        Producto Productoseleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+       
+        mainApp.mostrarVista("editarProductos.fxml", Productoseleccionado);  // Método para abrir la vista de edición en Main
+        
+    }
+    
+    
+    private void eliminarProducto() throws SQLException {
+        Producto prodcutoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+        
+        ProductosModel.eliminarproducto(prodcutoSeleccionado.getId());
+        
         cargarProductos();
     }
     
