@@ -86,7 +86,7 @@ public class clientesController {
 		});
     	
     	columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellido"));
         columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         columnaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         columnaLpd.setCellValueFactory(new PropertyValueFactory<>("lpd"));

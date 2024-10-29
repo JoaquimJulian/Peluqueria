@@ -39,7 +39,7 @@ public class editarClientesController {
 	    @FXML
 	    private CheckBox lpd;
 	    @FXML
-	    private Button crearCliente;
+	    private Button editarCliente;
     
     private Main mainApp; // Referencia a Main
     
@@ -66,7 +66,7 @@ public class editarClientesController {
     	
         nombreCliente.setText(cliente.getNombre());
         apellidosCliente.setText(cliente.getApellido());
-        telefonoCliente.setInt(cliente.getTelefono());
+        telefonoCliente.setText(cliente.getTelefono() + "");
         emailCliente.setText(cliente.getEmail());
         lpd.setSelected(cliente.isLpd());
        	}
@@ -83,6 +83,6 @@ public class editarClientesController {
 			boolean lpdd = lpd.isSelected();
 			
 			
-	        ClientesModel.editarCliente(cliente.getId(), nombre, apellidos, telefono, email, lpd);
+	        ClientesModel.editarCliente(cliente.getId(), nombre, apellidos, telefono, email, lpdd);
 	    }
 }

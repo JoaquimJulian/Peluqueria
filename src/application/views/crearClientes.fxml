@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.crearServiciosController">
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.crearClientesController">
          <top>
             <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
@@ -103,7 +103,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="nombreServicio" layoutX="32.0" layoutY="23.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                  <TextField fx:id="nombreCliente" layoutX="32.0" layoutY="23.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
