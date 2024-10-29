@@ -70,7 +70,7 @@ public class serviciosController {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
+    	
     	
     	btnEditar.setDisable(true);
     	tablaServicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar

@@ -17,7 +17,9 @@ public class diaAdminController {
 	private Button servicios;
 	@FXML
 	private Button productos;
-	
+	@FXML
+	private Button clientes;
+
     private Main mainApp; // Referencia a Main
     
  // Este método se llamará desde Main para establecer la referencia
@@ -29,6 +31,7 @@ public class diaAdminController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	productos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
-    	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml")); 
+    	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+    	clientes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
 	}
 }

@@ -89,6 +89,7 @@
             <Button fx:id="productos" layoutX="265.0" layoutY="72.0" mnemonicParsing="false" text="Productos" />
             <Button fx:id="servicios" layoutX="268.0" layoutY="118.0" mnemonicParsing="false" text="Servicios" />
             <Button fx:id="trabajadores" layoutX="257.0" layoutY="170.0" mnemonicParsing="false" text="Trabajadores" />
+            <Button fx:id="clientes" layoutX="274.0" layoutY="219.0" mnemonicParsing="false" text="Clientes" />
          </children>
       </AnchorPane>
    </center>
