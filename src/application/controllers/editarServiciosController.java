@@ -50,6 +50,8 @@ public class editarServiciosController {
    
        public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+
     	   	editarServicio.setOnAction(event ->  {
     	   		editarServicio();
 	         	mainApp.mostrarVista("servicios.fxml");

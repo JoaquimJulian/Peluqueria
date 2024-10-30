@@ -2,8 +2,6 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -56,10 +54,13 @@
                         <Image url="@../images/redondaUsuario.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="salir" fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/salir.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="482.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -92,31 +93,31 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="213.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar producto" textAlignment="CENTER" wrappingWidth="173.6640625">
+                <Text layoutX="196.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar producto" textAlignment="CENTER" wrappingWidth="207.26409912109375">
                     <font>
                         <Font name="System Bold" size="25.0" />
                     </font>
                 </Text>
-                <AnchorPane layoutX="182.0" layoutY="39.0" prefHeight="300.0" prefWidth="236.0" style="-fx-background-color: D9CCC7; -fx-background-radius: 10;">
+                <AnchorPane layoutX="182.0" layoutY="36.0" prefHeight="274.0" prefWidth="236.0" style="-fx-background-color: D9CCC7; -fx-background-radius: 10;">
                     <children>
-                        <Text layoutX="32.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:"/>
+                        <Text layoutX="32.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" />
                         <TextField fx:id="nombreProducto" layoutX="32.0" layoutY="23.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
-                        <Text layoutX="32.0" layoutY="63.0" text="Descripción:"/>
-                        <TextField fx:id="descripcionProducto" layoutX="32.0" layoutY="70.0" prefHeight="71.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                        <Text layoutX="32.0" layoutY="63.0" text="Descripción:" />
+                        <TextField fx:id="descripcionProducto" layoutX="32.0" layoutY="70.0" prefHeight="32.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
-                        <Text layoutX="32.0" layoutY="149.0" text="Precio de Venta:"/>
-                        <TextField fx:id="PrecioVenta" layoutX="32.0" layoutY="160.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                        <Text layoutX="32.0" layoutY="122.0" text="Precio de Venta:" />
+                        <TextField fx:id="PrecioVenta" layoutX="32.0" layoutY="126.0" prefHeight="27.0" prefWidth="91.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
-                        <Text layoutX="32.0" layoutY="199.0" text="Precio de Costo:"/>
-                        <TextField fx:id="PrecioCosto" layoutX="32.0" layoutY="210.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                        <Text layoutX="32.0" layoutY="172.0" text="Precio de Costo:" />
+                        <TextField fx:id="PrecioCosto" layoutX="32.0" layoutY="177.0" prefHeight="27.0" prefWidth="91.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
-                        <Text layoutX="32.0" layoutY="249.0" text="Stock:"/>
-                        <TextField fx:id="cantidad_en_stock" layoutX="32.0" layoutY="260.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
-                        
-                        <Button fx:id="editarproducto" layoutX="60.0" layoutY="310.0" mnemonicParsing="false" text="Editar Producto" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" textFill="WHITE" />
+                        <Text layoutX="32.0" layoutY="221.0" text="Stock:" />
+                        <TextField fx:id="cantidad_en_stock" layoutX="32.0" layoutY="224.0" prefHeight="27.0" prefWidth="91.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                     </children>
                 </AnchorPane>
+                  
+                        <Button fx:id="editarproducto" layoutX="458.0" layoutY="265.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="115.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Editar Producto" textFill="WHITE" />
             </children>
         </AnchorPane>
     </center>

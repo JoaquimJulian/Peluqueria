@@ -48,6 +48,8 @@ public class crearClientesController {
 	    
 	    public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+
     	   	crearCliente.setOnMouseClicked(event -> {
 		       	crearCliente();
 		       	mainApp.mostrarVista("clientes.fxml");

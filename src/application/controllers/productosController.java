@@ -2,6 +2,8 @@ package application.controllers;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button; 
 import javafx.scene.control.TextField;
 import java.io.IOException;
@@ -77,6 +79,7 @@ public class productosController {
 	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
 	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearProductos.fxml"));
 	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
+	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
 	
 	btnEditar.setDisable(true);
 	tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
@@ -119,11 +122,28 @@ public class productosController {
     
     
     private void eliminarProducto() throws SQLException {
-        Producto prodcutoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+        Producto productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
         
-        Producto.eliminarproducto(prodcutoSeleccionado.getId());
+        
+        if (productoSeleccionado != null) {
+        	Producto.eliminarproducto(productoSeleccionado.getId());
+	        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+	        alerta.setTitle("Producto Eliminado");
+	        alerta.setHeaderText(null);
+	        alerta.setContentText("El producto '" + productoSeleccionado.getNombre() + "' a sido eliminado con éxito.");
+	        alerta.showAndWait();
+    	} else {
+	        // Mostrar alerta indicando que no se ha seleccionado ningún producto
+	        Alert alerta = new Alert(Alert.AlertType.WARNING);
+	        alerta.setTitle("Advertencia");
+	        alerta.setHeaderText(null);
+	        alerta.setContentText("Por favor, selecciona un producto de la tabla para eliminar.");
+	        alerta.showAndWait();
+    	}
+        
         
         cargarProductos();
+       
     }
     
     

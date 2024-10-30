@@ -57,10 +57,13 @@
                         <Image url="@../images/redondaUsuario.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="salir" fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/salir.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="482.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -120,8 +123,8 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Text>
-                  <ComboBox fx:id="precioServicio" layoutX="32.0" layoutY="66.0" prefHeight="14.0" prefWidth="55.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" />
-                  <ComboBox fx:id="duracionServicio" layoutX="32.0" layoutY="110.0" prefHeight="11.0" prefWidth="55.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" />
+                  <ComboBox fx:id="precioServicio" layoutX="32.0" layoutY="66.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" />
+                  <ComboBox fx:id="duracionServicio" layoutX="32.0" layoutY="110.0" prefHeight="27.0" prefWidth="72.0" style="-fx-background-color: D9D9D9; -fx-border-color: black;" />
                   <Text layoutX="32.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripción:">
                      <font>
                         <Font name="System Bold" size="12.0" />

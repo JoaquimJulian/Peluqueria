@@ -59,6 +59,8 @@ public class trabajadoresController {
     public void initialize() {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+
     }
 }
 

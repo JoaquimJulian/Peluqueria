@@ -50,6 +50,8 @@ public class editarClientesController {
    
        public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+
     	   	editarCliente.setOnAction(event ->  {
     	   		editarCliente();
 	         	mainApp.mostrarVista("clientes.fxml");

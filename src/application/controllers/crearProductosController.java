@@ -10,8 +10,20 @@ import javafx.scene.image.ImageView;
 
 public class crearProductosController {
 
+	// BOTONES HEADER
+    @FXML
+    private ImageView salir;
+    @FXML
+    private ImageView calendario;
+    @FXML
+    private ImageView ajustes;
+    @FXML
+    private ImageView cobrar;
+    @FXML
+    private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	
     @FXML
     private TextField nombreProducto;
     @FXML
@@ -35,6 +47,8 @@ public class crearProductosController {
     
     public void initialize() {
 	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+		salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+
 	   	crearProducto.setOnMouseClicked(event -> {
 	       	crearProducto();
 	       	mainApp.mostrarVista("productos.fxml");

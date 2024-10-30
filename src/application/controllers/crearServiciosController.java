@@ -48,6 +48,8 @@ public class crearServiciosController {
 	    
 	    public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+
     	   	crearServicio.setOnMouseClicked(event -> {
 		       	crearServicio();
 		       	mainApp.mostrarVista("servicios.fxml");

@@ -56,10 +56,13 @@
                         <Image url="@../images/redondaUsuario.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="salir" fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/salir.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="482.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>

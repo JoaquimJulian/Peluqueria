@@ -49,6 +49,8 @@ public class editarProductosController {
     
     public void initialize() {
         cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+		salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+
         editarproducto.setOnAction(event -> {
             editarProducto();
             mainApp.mostrarVista("Productos.fxml");
