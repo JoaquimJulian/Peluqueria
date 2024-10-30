@@ -13,11 +13,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import application.models.Servicio;
-import application.models.ServiciosModel;
-import application.models.Trabajador;
-import application.models.TrabajadoresModel;
-import application.models.databaseConection;
+import application.models.*;
+
 
 import java.sql.SQLException;
 
@@ -55,7 +52,7 @@ public class LogInController {
     
     private void cargarUsuarios() throws SQLException {
 
-        ObservableList<Trabajador> trabajadores = TrabajadoresModel.getTrabajadores();
+        ObservableList<Trabajador> trabajadores = Trabajador.getTrabajadores();
         tablaUsuarios.setItems(trabajadores);
     	
         columnaUsuarios.setCellValueFactory(new PropertyValueFactory<>("nombre"));

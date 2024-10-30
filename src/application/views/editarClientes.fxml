@@ -55,10 +55,13 @@
                         <Image url="@../images/redondaUsuario.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="salir" fitHeight="19.0" fitWidth="14.0" layoutX="572.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/salir.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="482.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -91,7 +94,7 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="213.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear cliente" textAlignment="CENTER" wrappingWidth="173.6640625">
+            <Text layoutX="213.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Editar cliente" textAlignment="CENTER" wrappingWidth="173.6640625">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>

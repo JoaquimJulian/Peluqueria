@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 
 import application.Main;
 import application.models.Servicio;
-import application.models.ServiciosModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -51,6 +50,8 @@ public class editarServiciosController {
    
        public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+
     	   	editarServicio.setOnAction(event ->  {
     	   		editarServicio();
 	         	mainApp.mostrarVista("servicios.fxml");
@@ -85,6 +86,6 @@ public class editarServiciosController {
 			boolean requiereReservaChecked = requiereReserva.isSelected();
 			
 			
-	        ServiciosModel.editarServicio(servicio.getId(), nombre, precio, duracion, descripcion, requiereReservaChecked);
+	        Servicio.editarServicio(servicio.getId(), nombre, precio, duracion, descripcion, requiereReservaChecked);
 	    }
 }

@@ -70,6 +70,9 @@ public class clientesController {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearClientes.fxml"));
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+
+    	
     	btnEditar.setDisable(true);
     	tablaClientes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
             btnEditar.setDisable(false);
@@ -95,7 +98,7 @@ public class clientesController {
     }
     
     private void cargarClientes() throws SQLException {
-        ObservableList<Cliente> clientes = ClientesModel.getClientes();
+        ObservableList<Cliente> clientes = Cliente.getClientes();
         tablaClientes.setItems(clientes);
     }
     
@@ -111,7 +114,7 @@ public class clientesController {
     private void eliminarCliente() throws SQLException {
         Cliente clienteSeleccionado = tablaClientes.getSelectionModel().getSelectedItem();
         
-        ClientesModel.eliminarCliente(clienteSeleccionado.getId());
+        Cliente.eliminarCliente(clienteSeleccionado.getId());
         
         cargarClientes();
     }

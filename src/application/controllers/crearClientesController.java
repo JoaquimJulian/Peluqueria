@@ -2,7 +2,7 @@ package application.controllers;
 
 import javafx.scene.control.TextField;
 import application.Main;
-import application.models.ClientesModel;
+import application.models.Cliente;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -48,6 +48,8 @@ public class crearClientesController {
 	    
 	    public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+
     	   	crearCliente.setOnMouseClicked(event -> {
 		       	crearCliente();
 		       	mainApp.mostrarVista("clientes.fxml");
@@ -64,7 +66,7 @@ public class crearClientesController {
 		        String email = emailCliente.getText();
 		        boolean lpdd = lpd.isSelected();
 		        
-		        ClientesModel.crearCliente(nombre, apellidos, telefono, email, lpdd);
+		        Cliente.crearCliente(nombre, apellidos, telefono, email, lpdd);
 	    	}else { //si los campos estan vacios te sale un aviso de que los tienes que rellenar todos
 	    		Alert alert = new Alert(Alert.AlertType.INFORMATION); 
 	            alert.setTitle("Error"); 

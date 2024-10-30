@@ -70,7 +70,8 @@ public class serviciosController {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
-    	
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+
     	
     	btnEditar.setDisable(true);
     	tablaServicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
@@ -97,7 +98,7 @@ public class serviciosController {
     }
     
     private void cargarServicios() throws SQLException {
-        ObservableList<Servicio> servicios = ServiciosModel.getServicios();
+        ObservableList<Servicio> servicios = Servicio.getServicios();
         tablaServicios.setItems(servicios);
     }
     
@@ -113,7 +114,7 @@ public class serviciosController {
     private void eliminarServicio() throws SQLException {
         Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
         
-        ServiciosModel.eliminarServicio(servicioSeleccionado.getId());
+        Servicio.eliminarServicio(servicioSeleccionado.getId());
         
         cargarServicios();
     }

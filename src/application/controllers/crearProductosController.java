@@ -1,7 +1,7 @@
 package application.controllers;
 
 import application.Main;
-import application.models.ProductosModel;
+import application.models.Producto;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,8 +10,20 @@ import javafx.scene.image.ImageView;
 
 public class crearProductosController {
 
+	// BOTONES HEADER
+    @FXML
+    private ImageView salir;
+    @FXML
+    private ImageView calendario;
+    @FXML
+    private ImageView ajustes;
+    @FXML
+    private ImageView cobrar;
+    @FXML
+    private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	
     @FXML
     private TextField nombreProducto;
     @FXML
@@ -35,6 +47,8 @@ public class crearProductosController {
     
     public void initialize() {
 	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+		salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+
 	   	crearProducto.setOnMouseClicked(event -> {
 	       	crearProducto();
 	       	mainApp.mostrarVista("productos.fxml");
@@ -49,7 +63,7 @@ public class crearProductosController {
         int stock = Integer.parseInt(stockProducto.getText());
 
         // Llama al método en ProductosModel para crear el producto
-        ProductosModel.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock);
+        Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock);
         
         // Opcional: limpiar los campos o mostrar un mensaje de éxito
         limpiarCampos();

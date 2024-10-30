@@ -2,7 +2,7 @@ package application.controllers;
 
 import javafx.scene.control.TextField;
 import application.Main;
-import application.models.ServiciosModel;
+import application.models.Servicio;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -48,6 +48,8 @@ public class crearServiciosController {
 	    
 	    public void initialize() {
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+
     	   	crearServicio.setOnMouseClicked(event -> {
 		       	crearServicio();
 		       	mainApp.mostrarVista("servicios.fxml");
@@ -67,7 +69,7 @@ public class crearServiciosController {
 		        String descripcion = descripcionServicio.getText();
 		        boolean requiereReservaChecked = requiereReserva.isSelected();
 		        
-		        ServiciosModel.crearServicio(nombre, precio, duracion, descripcion, requiereReservaChecked);
+		        Servicio.crearServicio(nombre, precio, duracion, descripcion, requiereReservaChecked);
 	    	}else { //si los campos estan vacios te sale un aviso de que los tienes que rellenar todos
 	    		Alert alert = new Alert(Alert.AlertType.INFORMATION); 
 	            alert.setTitle("Error"); 

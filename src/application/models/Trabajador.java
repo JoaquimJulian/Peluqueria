@@ -1,5 +1,12 @@
 package application.models;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Trabajador {
 	
 	private String nombre;
@@ -80,5 +87,36 @@ public class Trabajador {
 	public void setComision(Double comision) {
 		this.comision = comision;
 	}
+	
+	public static ObservableList<Trabajador> getTrabajadores() throws SQLException {
+        ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM trabajadores";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        
+        try {
+        	
+        	ResultSet rs = stmt.executeQuery(sql);
+        	
+        	while (rs.next()) {
+                trabajadores.add(new Trabajador(
+                    rs.getInt("id_trabajador"),
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getInt("telefono"),
+                    rs.getString("email"),
+                    rs.getString("foto_perfil"),
+                    rs.getString("contrasena"),
+                    rs.getBoolean("es_administrador"),
+                    rs.getDouble("comision")
+                ));
+            }
+        	
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        	
+        return trabajadores;
+    }
     
 }
