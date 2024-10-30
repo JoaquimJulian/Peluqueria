@@ -1,7 +1,7 @@
 package application.controllers;
 
 import application.Main;
-import application.models.ProductosModel;
+import application.models.Producto;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,7 +49,7 @@ public class crearProductosController {
         int stock = Integer.parseInt(stockProducto.getText());
 
         // Llama al método en ProductosModel para crear el producto
-        ProductosModel.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock);
+        Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock);
         
         // Opcional: limpiar los campos o mostrar un mensaje de éxito
         limpiarCampos();

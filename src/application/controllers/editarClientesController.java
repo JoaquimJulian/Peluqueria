@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 
 import application.Main;
 import application.models.Cliente;
-import application.models.ClientesModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -83,6 +82,6 @@ public class editarClientesController {
 			boolean lpdd = lpd.isSelected();
 			
 			
-	        ClientesModel.editarCliente(cliente.getId(), nombre, apellidos, telefono, email, lpdd);
+	        Cliente.editarCliente(cliente.getId(), nombre, apellidos, telefono, email, lpdd);
 	    }
 }

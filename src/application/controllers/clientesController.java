@@ -95,7 +95,7 @@ public class clientesController {
     }
     
     private void cargarClientes() throws SQLException {
-        ObservableList<Cliente> clientes = ClientesModel.getClientes();
+        ObservableList<Cliente> clientes = Cliente.getClientes();
         tablaClientes.setItems(clientes);
     }
     
@@ -111,7 +111,7 @@ public class clientesController {
     private void eliminarCliente() throws SQLException {
         Cliente clienteSeleccionado = tablaClientes.getSelectionModel().getSelectedItem();
         
-        ClientesModel.eliminarCliente(clienteSeleccionado.getId());
+        Cliente.eliminarCliente(clienteSeleccionado.getId());
         
         cargarClientes();
     }

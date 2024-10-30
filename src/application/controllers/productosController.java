@@ -4,17 +4,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button; 
 import javafx.scene.control.TextField;
-
 import java.io.IOException;
 import java.sql.SQLException;
-
 import application.Main;
-import application.models.Producto;
-import application.models.ProductosModel;
-import application.models.Servicio;
-import application.models.ServiciosModel;
-import application.models.Producto;
-import application.models.ProductosModel;
+import application.models.*;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -111,7 +104,7 @@ public class productosController {
     }
 
     private void cargarProductos() throws SQLException {
-        ObservableList<Producto> productos = ProductosModel.getProductos();
+        ObservableList<Producto> productos = Producto.getProductos();
         tablaProductos.setItems(productos);
     }
     
@@ -128,7 +121,7 @@ public class productosController {
     private void eliminarProducto() throws SQLException {
         Producto prodcutoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
         
-        ProductosModel.eliminarproducto(prodcutoSeleccionado.getId());
+        Producto.eliminarproducto(prodcutoSeleccionado.getId());
         
         cargarProductos();
     }

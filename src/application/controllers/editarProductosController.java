@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 
 import application.Main;
 import application.models.Producto;
-import application.models.ProductosModel;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
@@ -83,6 +82,6 @@ public class editarProductosController {
         int cantidad = Integer.parseInt(cantidad_en_stock.getText()); // Convertir a int
 
         // Llamar al método de edición en el modelo
-        ProductosModel.editarproducto(producto.getId(), nombre, descripcion, precioVenta, precioCosto, cantidad);
+        Producto.editarproducto(producto.getId(), nombre, descripcion, precioVenta, precioCosto, cantidad);
     }
 }

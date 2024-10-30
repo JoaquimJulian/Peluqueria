@@ -97,7 +97,7 @@ public class serviciosController {
     }
     
     private void cargarServicios() throws SQLException {
-        ObservableList<Servicio> servicios = ServiciosModel.getServicios();
+        ObservableList<Servicio> servicios = Servicio.getServicios();
         tablaServicios.setItems(servicios);
     }
     
@@ -113,7 +113,7 @@ public class serviciosController {
     private void eliminarServicio() throws SQLException {
         Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
         
-        ServiciosModel.eliminarServicio(servicioSeleccionado.getId());
+        Servicio.eliminarServicio(servicioSeleccionado.getId());
         
         cargarServicios();
     }
