@@ -117,7 +117,10 @@
                     </children>
                 </AnchorPane>
                   
-                        <Button fx:id="editarproducto" layoutX="458.0" layoutY="265.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="115.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Editar Producto" textFill="WHITE" />
+                        <Button fx:id="editarproducto" layoutX="458.0" layoutY="265.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="115.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Editar Producto" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             </children>
         </AnchorPane>
     </center>

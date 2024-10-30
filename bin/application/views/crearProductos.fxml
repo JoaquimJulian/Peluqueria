@@ -107,17 +107,20 @@
                         <TextField fx:id="descripcionProducto" layoutX="32.0" layoutY="70.0" prefHeight="27.0" prefWidth="176.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
                         <Text layoutX="32.0" layoutY="115.0" text="Precio de Venta:" />
-                        <TextField fx:id="precio_venta" layoutX="32.0" layoutY="120.0" prefHeight="27.0" prefWidth="80.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                        <TextField fx:id="precio_venta" layoutX="32.0" layoutY="120.0" prefHeight="27.0" prefWidth="80.0" promptText="Ej: 15.50" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
                         <Text layoutX="32.0" layoutY="166.0" text="Precio de Costo:" />
-                        <TextField fx:id="precio_costo" layoutX="32.0" layoutY="169.0" prefHeight="27.0" prefWidth="79.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                        <TextField fx:id="precio_costo" layoutX="32.0" layoutY="169.0" prefHeight="27.0" prefWidth="79.0" promptText="Ej: 15.50" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                         
                         <Text layoutX="32.0" layoutY="212.0" text="Stock:" />
                         <TextField fx:id="stockProducto" layoutX="32.0" layoutY="216.0" prefHeight="27.0" prefWidth="79.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
                     </children>
                 </AnchorPane>
                   
-                        <Button fx:id="crearProducto" layoutX="453.0" layoutY="250.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="115.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Crear Producto" textFill="WHITE" />
+                        <Button fx:id="crearProducto" layoutX="453.0" layoutY="250.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="115.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Crear Producto" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
             </children>
         </AnchorPane>
     </center>

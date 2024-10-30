@@ -129,6 +129,9 @@
                         <TableColumn fx:id="columnaCoste" prefWidth="76.00006103515625" text="Coste" />
                         <TableColumn fx:id="columnacantidad_en_stock" prefWidth="64.0" text="stock" />
                </columns>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </TableView>
             <Button fx:id="btnCrear" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
                <cursor>
