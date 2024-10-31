@@ -84,7 +84,7 @@
             </AnchorPane>
          </top>
    <center>
-      <AnchorPane prefHeight="317.0" prefWidth="498.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="900.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="productos" layoutX="265.0" layoutY="72.0" mnemonicParsing="false" text="Productos" />
             <Button fx:id="servicios" layoutX="268.0" layoutY="118.0" mnemonicParsing="false" text="Servicios" />

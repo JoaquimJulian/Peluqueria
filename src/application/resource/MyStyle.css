@@ -1,0 +1,71 @@
+/* Estilo general de la tabla */
+.table-view {
+    -fx-border-color: #D9CCC7;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+    -fx-table-cell-border-color: transparent;
+    -fx-alignment: CENTER;
+}
+
+/* Estilo para las cabeceras de las columnas */
+.table-view .column-header-background {
+    -fx-background-color: #3E403D;
+}
+
+.table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* Estilo para las celdas */
+.table-view .cell {
+    -fx-text-fill: #3E403D;
+    -fx-font-size: 13px;
+    -fx-padding: 8px;
+    -fx-alignment: CENTER;
+}
+
+/* Cambia el color de la fila seleccionada a rosa */
+.table-view .cell:selected {
+    -fx-text-fill: #FFFFFF; /* Cambia el color del texto a blanco */
+    -fx-background-color: #FF69B4; /* Color rosa para la selección */
+}
+
+/* Bordes y relleno en la tabla */
+.table-view .table-row-cell {
+    -fx-padding: 5px;
+    -fx-border-color: #A69A97;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Efecto de "hover" para las filas */
+.table-view .table-row-cell:hover {
+    -fx-background-color: #D9CCC7;
+}
+
+/* Estilo para el botón "Acceder" */
+#btnAcceder {
+    -fx-background-color: #3E403D;
+    -fx-text-fill: #F2F2F2;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+#btnAcceder:hover {
+    -fx-background-color: #736B66;
+}
+
+/* Estilo para el campo de contraseña */
+#contrasena {
+    -fx-background-color: #F2F2F2;
+    -fx-border-color: #D9CCC7;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+/* Icono de cerrar */
+#cerrar {
+    -fx-cursor: hand;
+}
