@@ -45,7 +45,7 @@ public class LogInController {
     public void initialize() throws SQLException {
         cerrar.setOnMouseClicked(event -> { Platform.exit(); });
         cargarUsuarios();
-                
+
         btnAcceder.setOnAction(event -> loguearUsuario());
 
     }

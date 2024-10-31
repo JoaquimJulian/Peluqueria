@@ -9,6 +9,9 @@ import application.models.Producto;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.application.Platform;
+import javafx.scene.input.MouseEvent;
+
 
 public class editarProductosController {
     
