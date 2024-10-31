@@ -28,7 +28,7 @@
 /* Cambia el color de la fila seleccionada a rosa */
 .table-view .cell:selected {
     -fx-text-fill: #FFFFFF; /* Cambia el color del texto a blanco */
-    -fx-background-color: #D9CCC7; /* Color rosa para la selección */
+    -fx-background-color: #FF69B4; /* Color rosa para la selección */
 }
 
 /* Bordes y relleno en la tabla */
