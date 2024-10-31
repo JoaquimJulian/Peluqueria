@@ -4,10 +4,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button; 
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
+
 import application.Main;
 import application.models.*;
 import javafx.application.Platform;
@@ -89,7 +92,17 @@ public class productosController {
 	
 	btnEliminar.setOnMouseClicked(event -> {
 		try {
-			eliminarProducto();
+			//Confirmar la eliminacion
+			Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+			alerta.setTitle("Confirmación de Eliminación");
+			alerta.setHeaderText(null);
+			alerta.setContentText("¿Estás seguro de que deseas eliminar el producto?");
+			Optional<ButtonType> respuesta = alerta.showAndWait();
+			
+			if (respuesta.get() == ButtonType.OK) {
+				eliminarProducto();
+			}
+		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,11 +140,6 @@ public class productosController {
         
         if (productoSeleccionado != null) {
         	Producto.eliminarproducto(productoSeleccionado.getId());
-	        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-	        alerta.setTitle("Producto Eliminado");
-	        alerta.setHeaderText(null);
-	        alerta.setContentText("El producto '" + productoSeleccionado.getNombre() + "' a sido eliminado con éxito.");
-	        alerta.showAndWait();
     	} else {
 	        // Mostrar alerta indicando que no se ha seleccionado ningún producto
 	        Alert alerta = new Alert(Alert.AlertType.WARNING);

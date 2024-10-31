@@ -1,9 +1,9 @@
 package application.controllers;
 
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import application.Main;
 import application.models.Producto;
@@ -81,7 +81,16 @@ public class clientesController {
     	
     	btnEliminar.setOnMouseClicked(event -> {
 			try {
-				eliminarCliente();
+				//Confirmar la eliminacion
+				Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+				alerta.setTitle("Confirmación de Eliminación");
+				alerta.setHeaderText(null);
+				alerta.setContentText("¿Estás seguro de que deseas eliminar el cliente?");
+				Optional<ButtonType> respuesta = alerta.showAndWait();
+				
+				if (respuesta.get() == ButtonType.OK) {
+					eliminarCliente();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
