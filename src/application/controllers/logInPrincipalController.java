@@ -47,7 +47,7 @@ public class logInPrincipalController {
     	boolean loginExitoso = databaseConection.verificarContraseña(user, password);
     	
     	if (loginExitoso) {
-    		mainApp.mostrarVista("diaAdmin.fxml");
+    		mainApp.mostrarVista("Agenda.fxml");
     	}
     }
     
