@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="panelPrincipal" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.crearTrabajadoresController">
+    
+    <!-- Header -->
+    <top>
+        <AnchorPane prefHeight="83.0" style="-fx-background-color: #D9CCC7;" BorderPane.alignment="CENTER">
+            <children>
+                <!-- Logo -->
+                <ImageView layoutX="20.0" layoutY="10.0" fitHeight="60.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+
+                <!-- Iconos de navegación -->
+                <ImageView fx:id="calendario" fitHeight="28.0" fitWidth="28.0" layoutX="520.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/calendario.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="cobrar" fitHeight="28.0" fitWidth="28.0" layoutX="560.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/pagar.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="ajustes" fitHeight="28.0" fitWidth="28.0" layoutX="600.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/ajustes.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="usuarios" fitHeight="28.0" fitWidth="28.0" layoutX="640.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/iconoPerfil.png" />
+                    </image>
+                </ImageView>
+
+                <!-- Botón de cerrar -->
+                <ImageView fx:id="cerrar" fitHeight="24.0" fitWidth="24.0" layoutX="760.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                    <image>
+                        <Image url="@../images/cerrarPagina.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </top>
+
+    <!-- Contenido central -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
+            <Text text="Crear Trabajador" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <AnchorPane prefWidth="400" style="-fx-background-color: #D9CCC7; -fx-background-radius: 10; -fx-padding: 20;">
+                <VBox alignment="CENTER_LEFT" spacing="15" layoutX="20.0" layoutY="20.0">
+                    <!-- Campo Nombre -->
+                    <Label text="Nombre:"/>
+                    <TextField fx:id="nombre" promptText="Ingrese el nombre" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
+
+                    <!-- Campo Apellidos -->
+                    <Label text="Apellidos:"/>
+                    <TextField fx:id="apellidos" promptText="Ingrese los apellidos" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
+
+                    <!-- Campo Telefono -->
+                    <Label text="Telefono:"/>
+                    <TextField fx:id="telefono" promptText="Ingrese el teléfono" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
+
+                    <!-- Campo Email -->
+                    <Label text="Email:"/>
+                    <TextField fx:id="email" promptText="Ingrese el email" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
+
+                    <!-- Campo Contraseña -->
+                    <Label text="Contraseña:"/>
+                    <TextField fx:id="contrasena" promptText="Ingrese la contraseña" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
+
+                    <!-- CheckBox Admin -->
+                    <Label text="Admin:"/>
+                    <CheckBox fx:id="admin" text="Es administrador" />
+
+                    <!-- Campo Comisión -->
+                    <Label text="Comisión:"/>
+                    <TextField fx:id="comision" promptText="Ej: 15.50" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
+                </VBox>
+            </AnchorPane>
+
+            <!-- Botón Crear -->
+            <Button fx:id="crearTrabajador" text="Crear Trabajador" style="-fx-background-color: #3E403D; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;"/>
+        </VBox>
+    </center>
+</BorderPane>

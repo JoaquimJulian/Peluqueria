@@ -1,3 +1,5 @@
+// Trabajador.java
+
 package application.models;
 
 import java.sql.Connection;
@@ -8,115 +10,178 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Trabajador {
-	
-	private String nombre;
-	private String apellidos;
+
+    private int id;
+    private String nombre;
+    private String apellidos;
     private int telefono;
     private String email;
-    private String foto;
     private String contrasena;
-    private Boolean admin;
-    private Double comision;
-    private int id;
-	
-    public Trabajador(int id, String nombre, String apellidos, int telefono, String email, String foto, String contrasena, Boolean admin,
-			Double comision) {
-		
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.telefono = telefono;
-		this.email = email;
-		this.contrasena = contrasena;
-		this.admin = admin;
-		this.comision = comision;
-		this.id = id;
-	}
-	
-    
+    private boolean esAdministrador;
+    private double comision;
+
+    // Constructor
+    public Trabajador(int id, String nombre, String apellidos, int telefono, String email, String contrasena, boolean esAdministrador, double comision) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.email = email;
+        this.contrasena = contrasena;
+        this.esAdministrador = esAdministrador;
+        this.comision = comision;
+    }
+
+    // Getters y Setters
     public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getNombre() {
-		return nombre;
-	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	public String getApellidos() {
-		return apellidos;
-	}
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-	public int getTelefono() {
-		return telefono;
-	}
-	public void setTelefono(int telefono) {
-		this.telefono = telefono;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getFoto() {
-		return foto;
-	}
-	public void setFoto(String foto) {
-		this.foto = foto;
-	}
-	public String getContrasena() {
-		return contrasena;
-	}
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
-	}
-	public Boolean getAdmin() {
-		return admin;
-	}
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
-	}
-	public Double getComision() {
-		return comision;
-	}
-	public void setComision(Double comision) {
-		this.comision = comision;
-	}
-	
-	public static ObservableList<Trabajador> getTrabajadores() throws SQLException {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public boolean isEsAdministrador() {
+        return esAdministrador;
+    }
+
+    public void setEsAdministrador(boolean esAdministrador) {
+        this.esAdministrador = esAdministrador;
+    }
+
+    public double getComision() {
+        return comision;
+    }
+
+    public void setComision(double comision) {
+        this.comision = comision;
+    }
+
+    // Método para crear un trabajador en la base de datos
+    public static void crearTrabajador(String nombre, String apellidos, int telefono, String email, String contrasena, boolean esAdministrador, double comision) {
+        String sql = "INSERT INTO trabajadores (nombre, apellidos, telefono, email, contrasena, es_administrador, comision) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, nombre);
+            stmt.setString(2, apellidos);
+            stmt.setInt(3, telefono);
+            stmt.setString(4, email);
+            stmt.setString(5, contrasena);
+            stmt.setBoolean(6, esAdministrador);
+            stmt.setDouble(7, comision);
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al crear el trabajador: " + e.getMessage());
+        }
+    }
+
+    // Método para actualizar un trabajador en la base de datos
+    public static boolean actualizarTrabajador(Trabajador trabajador) {
+        String sql = "UPDATE trabajadores SET nombre = ?, apellidos = ?, telefono = ?, email = ?, contrasena = ?, es_administrador = ?, comision = ? WHERE id_trabajador = ?";
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setString(1, trabajador.getNombre());
+            stmt.setString(2, trabajador.getApellidos());
+            stmt.setInt(3, trabajador.getTelefono());
+            stmt.setString(4, trabajador.getEmail());
+            stmt.setString(5, trabajador.getContrasena());
+            stmt.setBoolean(6, trabajador.isEsAdministrador());
+            stmt.setDouble(7, trabajador.getComision());
+            stmt.setInt(8, trabajador.getId());
+
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al actualizar el trabajador: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // Método para eliminar un trabajador en la base de datos
+    public static void eliminarTrabajador(int id) {
+        String sql = "DELETE FROM trabajadores WHERE id_trabajador = ?";
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al eliminar el trabajador: " + e.getMessage());
+        }
+    }
+
+    // Método para obtener la lista de todos los trabajadores de la base de datos
+    public static ObservableList<Trabajador> getTrabajadores() {
         ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
-        Connection connection = databaseConection.getConnection();
         String sql = "SELECT * FROM trabajadores";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        
-        try {
-        	
-        	ResultSet rs = stmt.executeQuery(sql);
-        	
-        	while (rs.next()) {
-                trabajadores.add(new Trabajador(
+
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Trabajador trabajador = new Trabajador(
                     rs.getInt("id_trabajador"),
                     rs.getString("nombre"),
                     rs.getString("apellidos"),
                     rs.getInt("telefono"),
                     rs.getString("email"),
-                    rs.getString("foto_perfil"),
                     rs.getString("contrasena"),
                     rs.getBoolean("es_administrador"),
                     rs.getDouble("comision")
-                ));
+                );
+                trabajadores.add(trabajador);
             }
-        	
-        }catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("Error al obtener los trabajadores: " + e.getMessage());
         }
-        	
         return trabajadores;
     }
-    
 }
