@@ -16,14 +16,16 @@ public class Producto {
     private double precioVenta;
     private double precioCosto;
     private int cantidad_en_stock;
+    private Long codigo_barras;
 
-    public Producto(int id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock) {
+    public Producto(int id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras) {
     	this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioVenta = precioVenta;
         this.precioCosto = precioCosto;
         this.cantidad_en_stock = cantidad_en_stock;
+        this.codigo_barras = codigo_barras;
     }
     
  // Getters y Setters
@@ -74,9 +76,16 @@ public class Producto {
     public void setCantidad_en_stock(int cantidad_en_stock) {
         this.cantidad_en_stock = cantidad_en_stock;
     }
+    public Long getCodigo_barras() {
+        return codigo_barras;
+    }
+
+    public void setCodigo_barras(Long codigo_barras) {
+        this.codigo_barras = codigo_barras;
+    }
     
-    public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock) {
-		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock) VALUES (?, ?, ?, ?, ?)";
+    public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras) {
+		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock, codigo_barras) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		try (Connection connection = databaseConection.getConnection();
 	             PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -87,6 +96,7 @@ public class Producto {
 	            stmt.setDouble(3, precioVenta);
 	            stmt.setDouble(4, precioCosto);
 	            stmt.setInt(5, cantidad_en_stock);
+	            stmt.setLong(6, codigo_barras);
 
 	            // Ejecutamos la inserción
 	            stmt.executeUpdate();
@@ -97,8 +107,8 @@ public class Producto {
 	        }
 	}
 	
-	public static void editarproducto(Integer id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock) {
-		String sql = "UPDATE productos SET nombre_producto = ?, descripcion = ?, precio_venta  = ?, precio_costo = ?, cantidad_en_stock = ? WHERE id_producto = ?";
+	public static void editarproducto(Integer id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras) {
+		String sql = "UPDATE productos SET nombre_producto = ?, descripcion = ?, precio_venta  = ?, precio_costo = ?, cantidad_en_stock = ?, codigo_barras = ? WHERE id_producto = ?";
 		
 		try (Connection connection = databaseConection.getConnection();
 				PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -108,7 +118,8 @@ public class Producto {
 	            stmt.setDouble(3, precioVenta);
 	            stmt.setDouble(4, precioCosto);
 	            stmt.setInt(5, cantidad_en_stock);
-				stmt.setInt(6, id);
+				stmt.setLong(6, codigo_barras);
+				stmt.setInt(7, id);
 				
 				stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -149,10 +160,11 @@ public class Producto {
                      rs.getString("descripcion"),
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
-                     rs.getInt("cantidad_en_stock")
+                     rs.getInt("cantidad_en_stock"),
+                     rs.getLong("codigo_barras")
                  ));
              }
-        	
+        
         }catch (Exception e) {
             e.printStackTrace();
         }

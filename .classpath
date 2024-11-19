@@ -6,47 +6,82 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.base.jar">
+	<classpathentry kind="lib" path="C:/Program Files/conectorJDBC/mysql-connector-j-8.4.0/mysql-connector-j-8.4.0.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.controls.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.base.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.fxml.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.controls.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.graphics.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.fxml.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.media.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.graphics.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.swing.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.media.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx.web.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.swing.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/openjfx-23_windows-x64_bin-sdk/javafx-sdk-23/lib/javafx-swt.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx.web.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/isard/Downloads/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar">
+	<classpathentry kind="lib" path="C:/Program Files/javafx-sdk-23/lib/javafx-swt.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXApp/target/application-11.12.7.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXView/target/view-11.12.7.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXView/target/view-11.12.7-javadoc.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXView/target/view-11.12.7-sources.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXResourceApp/target/resources-11.12.7.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXGoogle/target/google-11.12.7.jar">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/2DAW/libreria Agenda/CalendarFX/CalendarFXSchedulerApp/target/scheduler-11.12.7.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>

@@ -9,13 +9,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity"  minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.LogInController" stylesheets="@../resource/MyStyle.css" >
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../resource/MyStyle.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.LogInController">
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tablaUsuarios" layoutX="2.0" prefHeight="400.0" prefWidth="300.0">
+            <TableView fx:id="tablaUsuarios" layoutX="2.0" prefHeight="768.0" prefWidth="398.0">
 			    <columns>
-			        <TableColumn fx:id="columnaUsuarios" prefWidth="250.0" text="Selecciona un usuario" />
+			        <TableColumn fx:id="columnaUsuarios" prefWidth="376.2666606903076" text="Selecciona un usuario" />
 			    </columns>
 			</TableView>
 
@@ -24,9 +24,9 @@
       </AnchorPane>
    </center>
    <right>
-      <AnchorPane prefHeight="400.0" prefWidth="413.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="768.0" prefWidth="965.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="241.0" fitWidth="310.0" layoutX="52.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="285.0" fitWidth="857.0" layoutX="109.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/logo.png" />
                </image>
@@ -36,8 +36,8 @@
                   <Image url="@../images/cerrarPagina.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="contrasena" layoutX="123.0" layoutY="219.0" prefHeight="26.0" prefWidth="167.0" promptText="Contraseña" />
-            <Button fx:id="btnAcceder" layoutX="177.0" layoutY="259.0" mnemonicParsing="false" text="Acceder" />
+            <PasswordField fx:id="contrasena" layoutX="334.0" layoutY="382.0" prefHeight="36.0" prefWidth="318.0" promptText="Contraseña" />
+            <Button fx:id="btnAcceder" layoutX="425.0" layoutY="450.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="143.0" text="Acceder" />
          </children>
       </AnchorPane>
    </right>
