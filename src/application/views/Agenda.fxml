@@ -7,10 +7,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="diaAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.AgendaController">
+<BorderPane fx:id="diaAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.AgendaController">
          <top>
             <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
@@ -70,33 +68,13 @@
    <center>
       <AnchorPane prefHeight="478.0" prefWidth="851.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tablaCItas" layoutX="7.0" layoutY="259.0" prefHeight="450.0" prefWidth="1182.0">
+            <TableView fx:id="tablaCItas" layoutX="1.0" layoutY="71.0" prefHeight="629.0" prefWidth="1358.0">
               <columns>
-                <TableColumn prefWidth="117.0" text="HORA" />
-                <TableColumn prefWidth="220.0" text="TRABAJADOR 1" />
-                  <TableColumn prefWidth="236.4" text="TRABAJADOR 2" />
-                  <TableColumn prefWidth="236.4" text="TRABAJADOR 3" />
-                  <TableColumn prefWidth="236.4" text="TRABAJADOR 4" />
-              </columns>
-            </TableView>
-            <Text layoutX="20.0" layoutY="98.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="CITAS ACTUALES" textAlignment="CENTER" wrappingWidth="108.713623046875">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
-            <TableView fx:id="ClienteActual" layoutX="151.0" layoutY="62.0" prefHeight="171.0" prefWidth="327.0">
-              <columns>
-                <TableColumn prefWidth="326.0" text="CLIENTE" />
-              </columns>
-            </TableView>
-            <Text layoutX="623.0" layoutY="98.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="PROXIMAS CITAS" textAlignment="CENTER" wrappingWidth="108.713623046875">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
-            <TableView fx:id="ProximoCliente" layoutX="753.0" layoutY="62.0" prefHeight="179.0" prefWidth="327.0">
-              <columns>
-                <TableColumn prefWidth="326.0" text="CLIENTE" />
+                <TableColumn prefWidth="273.2" text="HORA" />
+                <TableColumn prefWidth="273.2" text="TRABAJADOR 1" />
+                  <TableColumn prefWidth="273.2" text="TRABAJADOR 2" />
+                  <TableColumn prefWidth="273.2" text="TRABAJADOR 3" />
+                  <TableColumn prefWidth="273.2" text="TRABAJADOR 4" />
               </columns>
             </TableView>
             <TextField fx:id="barraBusqueda" layoutX="61.0" layoutY="14.0" />
