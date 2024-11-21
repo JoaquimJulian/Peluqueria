@@ -121,13 +121,14 @@
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <TableView fx:id="tablaProductos" editable="true" layoutX="5.0" layoutY="50.0" prefHeight="260.0" prefWidth="590.0" style="-fx-background-color: D9CCC7;">
+            <TableView fx:id="tablaProductos" editable="true" layoutX="5.0" layoutY="50.0" prefHeight="260.0" prefWidth="717.0" style="-fx-background-color: D9CCC7;">
                <columns>
                  		<TableColumn fx:id="columnaNombre" prefWidth="120.00006103515625" text="Nombre" />
                         <TableColumn fx:id="columnaDescripcion" prefWidth="252.800048828125" text="Descripcion" />
                         <TableColumn fx:id="columnaPrecioVenta" prefWidth="76.79998779296875" text="PrecioVenta" />
                         <TableColumn fx:id="columnaCoste" prefWidth="76.00006103515625" text="Coste" />
                         <TableColumn fx:id="columnacantidad_en_stock" prefWidth="64.0" text="stock" />
+                  <TableColumn fx:id="columnacodigo_barras" prefWidth="124.79995117187502" text="codigoBarras" />
                </columns>
                <cursor>
                   <Cursor fx:constant="HAND" />

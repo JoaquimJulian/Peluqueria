@@ -40,6 +40,8 @@ public class editarProductosController {
     @FXML
     private TextField cantidad_en_stock;
     @FXML
+    private TextField codigo_barras;
+    @FXML
     private Button editarproducto;
     
     private Main mainApp; // Referencia a Main
@@ -71,6 +73,7 @@ public class editarProductosController {
         PrecioVenta.setText(String.valueOf(producto.getPrecioVenta())); // Cambiado a setText()
         PrecioCosto.setText(String.valueOf(producto.getPrecioCosto())); // Cambiado a setText()
         cantidad_en_stock.setText(String.valueOf(producto.getCantidad_en_stock())); // Cargar la cantidad en stock
+        codigo_barras.setText(String.valueOf(producto.getCodigo_barras()));
     }
     
     public void editarProducto() {
@@ -85,8 +88,11 @@ public class editarProductosController {
         
         String descripcion = descripcionProducto.getText();
         int cantidad = Integer.parseInt(cantidad_en_stock.getText()); // Convertir a int
+        String codigoBarrasTexto = codigo_barras.getText();
+        codigoBarrasTexto = codigoBarrasTexto.replaceAll("^\\^", "");
+        Long codigoBarras = Long.parseLong(codigoBarrasTexto);
 
         // Llamar al método de edición en el modelo
-        Producto.editarproducto(producto.getId(), nombre, descripcion, precioVenta, precioCosto, cantidad);
+        Producto.editarproducto(producto.getId(), nombre, descripcion, precioVenta, precioCosto, cantidad, codigoBarras);
     }
 }

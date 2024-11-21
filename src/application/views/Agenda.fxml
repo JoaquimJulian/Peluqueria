@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -26,6 +27,9 @@
                      <image>
                         <Image url="@../images/cerrarPagina.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="1129.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -46,21 +50,33 @@
                      <image>
                         <Image url="@../images/salir.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="19.0" fitWidth="14.0" layoutX="1063.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ficha.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fitHeight="17.0" fitWidth="20.0" layoutX="1099.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ajustes.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                   <ImageView fx:id="logIn" fitHeight="19.0" fitWidth="14.0" layoutX="1136.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/iconoPerfil.png" />
                      </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
                   </ImageView>
                </children>
             </AnchorPane>

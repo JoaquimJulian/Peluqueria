@@ -10,9 +10,9 @@
 
 <BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.logInPrincipalController">
          <top>
-            <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="164.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="83.0" fitWidth="218.0" layoutX="191.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="149.0" fitWidth="426.0" layoutX="497.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/logo.png" />
                      </image>
@@ -28,9 +28,9 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <PasswordField fx:id="contraseña" layoutX="225.0" layoutY="145.0" promptText="Contraseña" style="-fx-background-color: D9CCC7;" />
-            <TextField fx:id="usuario" layoutX="226.0" layoutY="96.0" promptText="Usuario" style="-fx-background-color: D9CCC7;" />
-            <Button fx:id="btnAcceder" layoutX="254.0" layoutY="195.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="92.0" style="-fx-background-color: D9CCC7;" text="Acceder" />
+            <PasswordField fx:id="contraseña" layoutX="495.0" layoutY="248.0" prefHeight="39.0" prefWidth="404.0" promptText="Contraseña" style="-fx-background-color: D9CCC7;" />
+            <Button fx:id="btnAcceder" layoutX="597.0" layoutY="344.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="206.0" style="-fx-background-color: D9CCC7;" text="Acceder" />
+            <TextField fx:id="usuario" layoutX="493.0" layoutY="161.0" prefHeight="39.0" prefWidth="404.0" promptText="Usuario" style="-fx-background-color: D9CCC7;" />
          </children>
       </AnchorPane>
    </center>

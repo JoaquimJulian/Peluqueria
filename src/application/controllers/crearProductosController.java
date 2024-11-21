@@ -35,6 +35,8 @@ public class crearProductosController {
     @FXML
     private TextField stockProducto;
     @FXML
+    private TextField codigo_barras;
+    @FXML
     private Button crearProducto;
     
     private Main mainApp; // Referencia a Main
@@ -61,9 +63,12 @@ public class crearProductosController {
         double precio_ventaValue = Double.parseDouble(precio_venta.getText());
         double precioCostoValue = Double.parseDouble(precio_costo.getText());
         int stock = Integer.parseInt(stockProducto.getText());
+        String codigoBarrasTexto = codigo_barras.getText();
+        codigoBarrasTexto = codigoBarrasTexto.replaceAll("^\\^", "");
+        Long codigoBarras = Long.parseLong(codigoBarrasTexto);
 
         // Llama al método en ProductosModel para crear el producto
-        Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock);
+        Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock, codigoBarras);
         
         // Opcional: limpiar los campos o mostrar un mensaje de éxito
         limpiarCampos();
