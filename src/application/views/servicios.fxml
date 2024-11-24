@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.serviciosController">
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.productosController">
          <top>
             <AnchorPane prefHeight="143.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
@@ -107,44 +107,44 @@
                </children>
             </AnchorPane>
          </top>
-   <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+   <right>
+      <AnchorPane prefHeight="675.0" prefWidth="1368.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="25.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios" wrappingWidth="108.713623046875">
+            <Text layoutX="38.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios" wrappingWidth="227.11358642578125">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="40.0" />
                </font>
             </Text>
-            <TextField fx:id="barraBusqueda" layoutX="166.0" layoutY="13.0" prefHeight="26.0" prefWidth="188.0" style="-fx-background-color: #D9D9D9;" />
-            <ImageView fitHeight="13.0" fitWidth="14.0" layoutX="335.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+            <TextField fx:id="barraBusqueda" layoutX="469.0" layoutY="23.0" prefHeight="31.0" prefWidth="352.0" style="-fx-background-color: #D9D9D9;" />
+            <ImageView fitHeight="23.0" fitWidth="20.0" layoutX="795.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <TableView fx:id="tablaServicios" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
+            <TableView fx:id="tablaServicios" editable="true" layoutY="108.0" prefHeight="515.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;">
                <columns>
-                  <TableColumn fx:id="columnaNombre" prefWidth="95.20001220703125" text="Nombre" />
-                  <TableColumn fx:id="columnaDescripcion" prefWidth="260.800048828125" text="Descripcion" />
-                  <TableColumn fx:id="columnaPrecio" prefWidth="73.5999755859375" text="Precio" />
-                  <TableColumn fx:id="columnaDuracion" minWidth="0.0" prefWidth="75.20001220703125" text="Duracion" />
-                  <TableColumn fx:id="columnaReserva" prefWidth="75.99993896484375" text="Reserva" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="229.0" text="Nombre" />
+                  <TableColumn fx:id="columnaDescripcion" prefWidth="828.0" text="Descripcion" />
+                  <TableColumn fx:id="columnaPrecio" prefWidth="112.0" text="Precio" />
+                  <TableColumn fx:id="columnaDuracion" minWidth="0.0" prefWidth="102.0" text="Duracion" />
+                  <TableColumn fx:id="columnaReserva" prefWidth="94.0" text="Reserva" />
                </columns>
             </TableView>
-            <Button fx:id="btnCrear" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
+            <Button fx:id="btnCrear" layoutX="909.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="btnEditar" layoutX="462.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
+            <Button fx:id="btnEditar" layoutX="1039.0" layoutY="22.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEliminar" layoutX="519.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
+            <Button fx:id="btnEliminar" layoutX="1168.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="170.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
          </children>
       </AnchorPane>
-   </center>
+   </right>
       </BorderPane>
