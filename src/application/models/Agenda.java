@@ -9,13 +9,16 @@ public class Agenda {
 	private Date fecha;
 	private Time hora;
 	private String descripcion;
+	private int id_trabajador;
 	
-	public Agenda(int id_reserva, Date fecha, Time hora, String descripcion) {
+	public Agenda(int id_reserva, Date fecha, Time hora, String descripcion, int id_trabajador) {
 		this.id_reserva = id_reserva;
 		this.fecha = fecha;
 		this.hora = hora;
 		this.descripcion = descripcion;
+		this.id_trabajador = id_trabajador;
 	}
+	
 	
 	public int getId_reserva() {
 		return id_reserva;
@@ -40,6 +43,12 @@ public class Agenda {
 	}
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+	public int getId_trabajador() {
+		return id_trabajador;
+	}
+	public void setId_trabajador(int id_trabajador) {
+		this.id_trabajador = id_trabajador;
 	}
 	
 	

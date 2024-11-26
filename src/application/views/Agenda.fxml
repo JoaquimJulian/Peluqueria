@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <BorderPane fx:id="diaAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.AgendaController">
          <top>
@@ -107,37 +108,39 @@
            <center>
       <AnchorPane prefHeight="478.0" prefWidth="851.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="dia" layoutX="29.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Martes 13" wrappingWidth="88.478515625">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-            <Text fx:id="mes" layoutX="1224.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SEPTIEMBRE">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-            <ImageView fx:id="adelantarDia" fitHeight="12.0" fitWidth="15.0" layoutX="128.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/flechaDerecha.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="adelantarMes" fitHeight="12.0" fitWidth="15.0" layoutX="1343.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/flechaDerecha.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="atrasarDia" fitHeight="12.0" fitWidth="15.0" layoutX="5.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/flechaIzquierda.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="atrasarMes" fitHeight="12.0" fitWidth="15.0" layoutX="1197.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/flechaIzquierda.png" />
-               </image>
-            </ImageView>
-            <TableView fx:id="tablaAgenda" layoutX="5.0" layoutY="38.0" prefHeight="583.0" prefWidth="1355.0" />
+            <GridPane fx:id="gridPane" hgap="10" vgap="10" xmlns:fx="http://javafx.com/fxml">
+    <rowConstraints>
+        <!-- Se definen 22 filas (rowConstraints) con vgrow para que se estiren -->
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <!-- Las celdas (como Labels o TextFields) se agregarán dinámicamente en el controlador -->
+    </children>
+</GridPane>
+            <TableView fx:id="tablaAgenda" editable="true" layoutX="-2.0" layoutY="43.0" prefHeight="581.0" prefWidth="1366.0" />
+            <DatePicker layoutX="47.0" layoutY="5.0" prefHeight="34.0" prefWidth="201.0" />
+
          </children>
       </AnchorPane>
    </center>
