@@ -24,6 +24,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Text;
 
+import javafx.scene.control.TextField; // Para los TextField en las celdas
+import javafx.scene.control.cell.TextFieldTableCell; // Para usar el TextField en las celdas de la tabla
+import javafx.beans.property.SimpleStringProperty; // Para trabajar con propiedades de String en las celdas
+import javafx.scene.control.TableColumn; // Para las columnas de la TableView
+
+
 
 public class AgendaController {
 	
@@ -69,8 +75,11 @@ public class AgendaController {
   
     @FXML
     public void initialize() {
-       configurarTabla(); 
-       tablaAgenda.setFixedCellSize(100); 
+    	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	
+    	configurarTabla(); 
+    	tablaAgenda.setFixedCellSize(100);
+       
     }
     
     private void configurarTabla() {
@@ -102,7 +111,23 @@ public class AgendaController {
             columnaTrabajador.setResizable(false);
             columnaTrabajador.setPrefWidth(anchoPorColumna);
             columnaTrabajador.setEditable(true);
-            columnaTrabajador.setCellFactory(TextFieldTableCell.forTableColumn());
+            columnaTrabajador.setCellFactory(column -> new TextFieldTableCell<>() {
+                @Override
+                public void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+
+                    if (!empty && item != null) {
+                        TextField textField = new TextField(item);
+                        textField.setPrefHeight(100); // Establece la altura fija de 100px
+                        textField.textProperty().addListener((observable, oldValue, newValue) -> commitEdit(newValue));
+                        setGraphic(textField);
+                    } else {
+                        setGraphic(null); // Limpiar la celda si está vacía
+                    }
+                }
+            });
+            
+            
             columnaTrabajador.setOnEditCommit(event -> {
                 Map<Integer, String> fila = event.getRowValue();
                 fila.put(trabajador.getId(), event.getNewValue());

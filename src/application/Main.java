@@ -6,6 +6,7 @@ import application.models.Servicio;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -26,6 +27,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage; // Guarda la referencia a la ventana principal
         mostrarVista("logInPrincipal.fxml"); // Muestra la vista de inicio de sesión al inicio
+        
+        
+        primaryStage.setFullScreen(true);
     }
 
     public void mostrarVista(String vista) { //sobrecargamos el metodo para que no haga falta pasarle dos parametros siempre
@@ -42,6 +46,9 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.setTitle(vista);
+            
+            primaryStage.setFullScreen(true);
+            
             
             // Obtener el controlador de la vista cargada
             Object controller = loader.getController();
