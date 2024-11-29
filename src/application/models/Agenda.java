@@ -1,6 +1,9 @@
 package application.models;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Time;
 
 public class Agenda {
@@ -51,5 +54,23 @@ public class Agenda {
 		this.id_trabajador = id_trabajador;
 	}
 	
+	public static void crearReserva(Date fecha, Time hora, String descripcion, int id_trabajador) throws SQLException {
+		String sql = "INSERT INTO agenda (fecha, hora, descripcion, id_trabajador) VALUES (?, ?, ?, ?)";
+		
+		try (Connection connection = databaseConection.getConnection();
+	             PreparedStatement stmt = connection.prepareStatement(sql)) {
+			
+			stmt.setDate(1, fecha);
+			stmt.setTime(2, hora);
+			stmt.setString(3, descripcion);
+			stmt.setInt(4, id_trabajador);
+			
+			stmt.executeUpdate();
+		}catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al crear la reserva: " + e.getMessage());
+        }
+		
+	}
 	
 }

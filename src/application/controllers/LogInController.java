@@ -51,9 +51,10 @@ public class LogInController {
     }
     
     private void cargarUsuarios() throws SQLException {
-
-        ObservableList<Trabajador> trabajadores = Trabajador.getTrabajadores();
-        tablaUsuarios.setItems(trabajadores);
+    	Trabajador trabajadores = new Trabajador();
+    	
+        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadores();
+        tablaUsuarios.setItems(trabajador);
     	
         columnaUsuarios.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     }

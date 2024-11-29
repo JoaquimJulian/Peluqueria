@@ -84,6 +84,7 @@ public class editarTrabajadoresController {
 
     // Método para guardar los cambios del trabajador
     public void editarTrabajador() {
+    	Trabajador trabajador = new Trabajador();
         // Obtener los valores ingresados en los campos
         String nuevoNombre = nombre.getText();
         String nuevosApellidos = apellidos.getText();
@@ -103,6 +104,6 @@ public class editarTrabajadoresController {
         trabajadorActual.setComision(nuevaComision);
 
         // Llamar al método de edición en el modelo
-        Trabajador.actualizarTrabajador(trabajadorActual);
+        trabajador.actualizarTrabajador(trabajadorActual);
     }
 }

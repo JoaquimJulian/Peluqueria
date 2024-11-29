@@ -107,8 +107,9 @@ public class trabajadoresController {
     }
 
     private void cargarTrabajadores() throws SQLException {
-        ObservableList<Trabajador> trabajadores = Trabajador.getTrabajadores();
-        tablaTrabajadores.setItems(trabajadores);
+    	Trabajador trabajadores = new Trabajador();
+        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadores();
+        tablaTrabajadores.setItems(trabajador);
     }
 
     private void eliminarTrabajador(Trabajador trabajador) {
@@ -117,7 +118,7 @@ public class trabajadoresController {
         alerta.setHeaderText(null);
         alerta.setContentText("¿Estás seguro de que deseas eliminar el trabajador?");
         if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            Trabajador.eliminarTrabajador(trabajador.getId());
+            trabajador.eliminarTrabajador(trabajador.getId());
             try {
                 cargarTrabajadores();
             } catch (SQLException e) {

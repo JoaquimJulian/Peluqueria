@@ -72,6 +72,7 @@ public class crearTrabajadoresController {
 
     @FXML
     private void crearTrabajador() {
+    	Trabajador trabajador = new Trabajador();
         try {
             String nombreText = nombre.getText();
             String apellidosText = apellidos.getText();
@@ -81,7 +82,7 @@ public class crearTrabajadoresController {
             boolean adminCheck = admin.isSelected();
             Double comisionDouble = Double.parseDouble(comision.getText());
 
-            Trabajador.crearTrabajador(nombreText, apellidosText, telefonoInt, emailText, contrasenaText, adminCheck, comisionDouble);
+            trabajador.crearTrabajador(nombreText, apellidosText, telefonoInt, emailText, contrasenaText, adminCheck, comisionDouble);
         } catch (Exception e) {
             e.printStackTrace();
             // Mostrar una alerta si algo falla

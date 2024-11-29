@@ -1,35 +1,20 @@
 package application.controllers;
 
-import java.awt.Label;
-import java.sql.SQLException;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
+import javafx.scene.control.Button;
+import java.time.LocalDate;
 
 import application.Main;
-import application.models.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
+import application.models.Trabajador;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.text.Text;
-
-import javafx.scene.control.TextField; // Para los TextField en las celdas
-import javafx.scene.control.cell.TextFieldTableCell; // Para usar el TextField en las celdas de la tabla
-import javafx.beans.property.SimpleStringProperty; // Para trabajar con propiedades de String en las celdas
-import javafx.scene.control.TableColumn; // Para las columnas de la TableView
-
-
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class AgendaController {
 	
@@ -47,24 +32,16 @@ public class AgendaController {
     @FXML
     private ImageView salir;
     
-    @FXML
-    private BorderPane diaAdmin;
     
     @FXML
-    private TableView<Map<Integer, String>> tablaAgenda;
+    private BorderPane diaAdmin;
     @FXML
-    private ImageView adelantarDia;
+    private DatePicker calendarioAgenda;
     @FXML
-    private ImageView adelantarMes;
+    private HBox hboxAgenda;
     @FXML
-    private ImageView atrasarDia;
-    @FXML
-    private ImageView atrasarMes;
-    @FXML
-    private Text dia;
-    @FXML
-    private Text mes;
-	
+    private Button guardarAgenda;
+  
     
 	private Main mainApp; // Referencia a Main
     
@@ -76,91 +53,86 @@ public class AgendaController {
     @FXML
     public void initialize() {
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-    	
-    	configurarTabla(); 
-    	tablaAgenda.setFixedCellSize(100);
-       
+    	crearTabla();
     }
     
-    private void configurarTabla() {
+    
+    public void crearTabla() {
+    	Trabajador trabajador = new Trabajador();
     	
-    	double anchoTotalTableView = 1366;
-        // Obtener la lista de trabajadores
-        List<Trabajador> trabajadores = Trabajador.getTrabajadores();
-
-        // Configurar la columna de horas (intervalos de tiempo)
-        TableColumn<Map<Integer, String>, String> columnaHoras = new TableColumn<>("Horas");
-        columnaHoras.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(-1))); // -1 será la clave para las horas
-        tablaAgenda.getColumns().add(columnaHoras);
-        double anchoFijoHoras = 100;
-        columnaHoras.setPrefWidth(anchoFijoHoras);
-        columnaHoras.setResizable(false);
-        
-        int numeroColumnasDinamicas = trabajadores.size();
-        double anchoDisponible = anchoTotalTableView - anchoFijoHoras;
-        double anchoPorColumna = anchoDisponible / numeroColumnasDinamicas;
-        
-        // Crear columnas dinámicas para cada trabajador
-        for (Trabajador trabajador : trabajadores) {
-            TableColumn<Map<Integer, String>, String> columnaTrabajador = new TableColumn<>(trabajador.getNombre());
-            columnaTrabajador.setCellValueFactory(cellData -> {
-                Map<Integer, String> fila = cellData.getValue();
-                return new SimpleStringProperty(fila.get(trabajador.getId()));
-            });
-            
-            columnaTrabajador.setResizable(false);
-            columnaTrabajador.setPrefWidth(anchoPorColumna);
-            columnaTrabajador.setEditable(true);
-            columnaTrabajador.setCellFactory(column -> new TextFieldTableCell<>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (!empty && item != null) {
-                        TextField textField = new TextField(item);
-                        textField.setPrefHeight(100); // Establece la altura fija de 100px
-                        textField.textProperty().addListener((observable, oldValue, newValue) -> commitEdit(newValue));
-                        setGraphic(textField);
-                    } else {
-                        setGraphic(null); // Limpiar la celda si está vacía
-                    }
-                }
-            });
-            
-            
-            columnaTrabajador.setOnEditCommit(event -> {
-                Map<Integer, String> fila = event.getRowValue();
-                fila.put(trabajador.getId(), event.getNewValue());
-            });
-            tablaAgenda.getColumns().add(columnaTrabajador);
-        }
-
-        // Llenar los datos en la tabla
-        tablaAgenda.setItems(generarFilas(trabajadores));
+    	String[] horas= {
+                "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+                "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+                "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+                "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
+                "20:00"
+            };
+    	
+    	ObservableList<Trabajador> trabajadores = trabajador.getTrabajadores();
+    	
+    	// CREAR COLUMNA DE HORAS
+    	
+    	VBox vbox2 = new VBox();
+    	
+    	for (int i = -1; i<horas.length; i++) {
+			Label label2 = new Label();
+			label2.setPrefHeight(100);
+			if (i == -1) {
+				label2.setText(null);
+			}else {
+				
+				label2.setText(horas[i]);
+			}
+			vbox2.getChildren().add(label2);
+		}
+    	hboxAgenda.getChildren().add(vbox2);
+    	
+    	// CREAR COLUMNA PARA CADA TRABAJADOR CON LOS TEXTFIELD CON ID
+    	
+    	for (Trabajador t : trabajadores) {
+    		VBox vbox = new VBox();
+    		Label label = new Label();
+    		label.setPrefHeight(100);
+    		label.setText(t.getNombre());
+    		vbox.getChildren().add(label);
+    		
+    		LocalDate fecha = LocalDate.now();
+    		calendarioAgenda.setValue(fecha);
+    		
+    		for (int i = 0; i<horas.length; i++) {
+    			TextField textField = new TextField();
+    			textField.setPrefHeight(100);
+    			textField.setId(calendarioAgenda.getValue().toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
+    			vbox.getChildren().add(textField);
+    		}
+    		
+    		hboxAgenda.getChildren().add(vbox);
+    	}
     }
-
-    private ObservableList<Map<Integer, String>> generarFilas(List<Trabajador> trabajadores) {
-        ObservableList<Map<Integer, String>> filas = FXCollections.observableArrayList();
-
-        // Intervalos de tiempo (de 9:00 a 19:30, cada 30 minutos)
-        LocalTime horaInicio = LocalTime.of(9, 0);
-        LocalTime horaFin = LocalTime.of(19, 30);
-
-        while (!horaInicio.isAfter(horaFin)) {
-            Map<Integer, String> fila = new HashMap<>();
-            fila.put(-1, horaInicio.toString()); // -1 para la columna de horas
-
-            // Inicializar reservas vacías para cada trabajador
-            for (Trabajador trabajador : trabajadores) {
-                fila.put(trabajador.getId(), ""); // Valor inicial vacío
-            }
-
-            filas.add(fila);
-            horaInicio = horaInicio.plusMinutes(30);
-        }
-
-        return filas;
-    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 }

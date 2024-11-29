@@ -31,6 +31,10 @@ public class Trabajador {
         this.esAdministrador = esAdministrador;
         this.comision = comision;
     }
+    // Constructor vacio
+    public Trabajador() {
+        
+    }
 
     // Getters y Setters
     public int getId() {
@@ -98,7 +102,7 @@ public class Trabajador {
     }
 
     // Método para crear un trabajador en la base de datos
-    public static void crearTrabajador(String nombre, String apellidos, int telefono, String email, String contrasena, boolean esAdministrador, double comision) {
+    public void crearTrabajador(String nombre, String apellidos, int telefono, String email, String contrasena, boolean esAdministrador, double comision) {
         String sql = "INSERT INTO trabajadores (nombre, apellidos, telefono, email, contrasena, es_administrador, comision) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = databaseConection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -119,7 +123,7 @@ public class Trabajador {
     }
 
     // Método para actualizar un trabajador en la base de datos
-    public static boolean actualizarTrabajador(Trabajador trabajador) {
+    public boolean actualizarTrabajador(Trabajador trabajador) {
         String sql = "UPDATE trabajadores SET nombre = ?, apellidos = ?, telefono = ?, email = ?, contrasena = ?, es_administrador = ?, comision = ? WHERE id_trabajador = ?";
         try (Connection connection = databaseConection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -143,7 +147,7 @@ public class Trabajador {
     }
 
     // Método para eliminar un trabajador en la base de datos
-    public static void eliminarTrabajador(int id) {
+    public void eliminarTrabajador(int id) {
         String sql = "DELETE FROM trabajadores WHERE id_trabajador = ?";
         try (Connection connection = databaseConection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -157,7 +161,7 @@ public class Trabajador {
     }
 
     // Método para obtener la lista de todos los trabajadores de la base de datos
-    public static ObservableList<Trabajador> getTrabajadores() {
+    public ObservableList<Trabajador> getTrabajadores() {
         ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
         String sql = "SELECT * FROM trabajadores";
 
@@ -183,5 +187,17 @@ public class Trabajador {
             System.out.println("Error al obtener los trabajadores: " + e.getMessage());
         }
         return trabajadores;
+    }
+    
+    public String toString() {
+        return "Trabajador{" +
+               "id=" + id +
+               ", nombre='" + nombre + '\'' +
+               ", apellidos='" + apellidos + '\'' +
+               ", telefono=" + telefono +
+               ", email='" + email + '\'' +
+               ", esAdministrador=" + esAdministrador +
+               ", comision=" + comision +
+               '}';
     }
 }

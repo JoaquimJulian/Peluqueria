@@ -29,7 +29,7 @@ public class Main extends Application {
         mostrarVista("logInPrincipal.fxml"); // Muestra la vista de inicio de sesión al inicio
         
         
-        primaryStage.setFullScreen(true);
+        
     }
 
     public void mostrarVista(String vista) { //sobrecargamos el metodo para que no haga falta pasarle dos parametros siempre
@@ -47,7 +47,7 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle(vista);
             
-            primaryStage.setFullScreen(true);
+           
             
             
             // Obtener el controlador de la vista cargada
