@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import java.time.LocalDate;
 
 import application.Main;
@@ -68,6 +69,10 @@ public class AgendaController {
                 "20:00"
             };
     	
+    	int tamanoScrollPane = 1250;
+    	int numTrabajadores = trabajador.getTrabajadores().size();
+    	int tamanoColumna = tamanoScrollPane/numTrabajadores;
+    	
     	ObservableList<Trabajador> trabajadores = trabajador.getTrabajadores();
     	
     	// CREAR COLUMNA DE HORAS
@@ -102,12 +107,25 @@ public class AgendaController {
     		for (int i = 0; i<horas.length; i++) {
     			TextField textField = new TextField();
     			textField.setPrefHeight(100);
+    			textField.setPrefWidth(tamanoColumna);
     			textField.setId(calendarioAgenda.getValue().toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
+    			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+    				textField.focusedProperty().addListener((observablee, oldValuee, newValuee) -> {
+    					System.out.println(newValue + "  " + textField.getId());
+    				});
+    			});
     			vbox.getChildren().add(textField);
     		}
     		
     		hboxAgenda.getChildren().add(vbox);
     	}
+    }
+    
+    public String guardarAgenda(String reserva) {
+    	
+    	
+    	
+		return reserva;
     }
     
     

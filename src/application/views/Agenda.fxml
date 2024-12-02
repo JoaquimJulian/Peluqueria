@@ -109,9 +109,9 @@
       <AnchorPane prefHeight="478.0" prefWidth="851.0" BorderPane.alignment="CENTER">
          <children>
             <DatePicker fx:id="calendarioAgenda" layoutX="48.0" layoutY="14.0" prefHeight="34.0" prefWidth="201.0" />
-            <ScrollPane layoutX="27.0" layoutY="60.0" prefHeight="533.0" prefWidth="1253.0">
+            <ScrollPane layoutX="4.0" layoutY="60.0" prefHeight="559.0" prefWidth="1357.0">
                <content>
-                  <HBox fx:id="hboxAgenda" prefHeight="886.0" prefWidth="1254.0" />
+                  <HBox fx:id="hboxAgenda" prefHeight="886.0" prefWidth="1346.0" />
                </content>
             </ScrollPane>
             <Button fx:id="guardarAgenda" layoutX="327.0" layoutY="19.0" mnemonicParsing="false" text="Guardar" />
