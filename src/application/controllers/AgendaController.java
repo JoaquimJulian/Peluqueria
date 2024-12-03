@@ -91,7 +91,7 @@ public class AgendaController {
 				label2.setText(null);
 			}else {
 				
-				label2.setText(horas[i]);
+				label2.setText(horas[i]); ///aaaaaaaaaaaaaaaaaaaaaaaaaa
 			}
 			vbox2.getChildren().add(label2);
 		}
