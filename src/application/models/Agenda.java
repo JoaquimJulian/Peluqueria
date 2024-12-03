@@ -54,8 +54,8 @@ public class Agenda {
 		this.id_trabajador = id_trabajador;
 	}
 	
-	public static void crearReserva(Date fecha, Time hora, String descripcion, int id_trabajador) throws SQLException {
-		String sql = "INSERT INTO agenda (fecha, hora, descripcion, id_trabajador) VALUES (?, ?, ?, ?)";
+	public static void crearReserva(Date fecha, Time hora, String descripcion, String id_reserva, int id_trabajador) throws SQLException {
+		String sql = "INSERT INTO agenda (fecha, hora, descripcion, id_reserva, id_trabajador) VALUES (?, ?, ?, ?, ?)";
 		
 		try (Connection connection = databaseConection.getConnection();
 	             PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -63,7 +63,9 @@ public class Agenda {
 			stmt.setDate(1, fecha);
 			stmt.setTime(2, hora);
 			stmt.setString(3, descripcion);
-			stmt.setInt(4, id_trabajador);
+			stmt.setString(4, id_reserva);
+			stmt.setInt(5, id_trabajador);
+			
 			
 			stmt.executeUpdate();
 		}catch (SQLException e) {
@@ -73,4 +75,7 @@ public class Agenda {
 		
 	}
 	
+	
 }
+	
+	

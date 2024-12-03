@@ -6,9 +6,14 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import application.Main;
+import application.models.Agenda;
 import application.models.Trabajador;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -99,6 +104,7 @@ public class AgendaController {
     		Label label = new Label();
     		label.setPrefHeight(100);
     		label.setText(t.getNombre());
+    		int id_trabaj = (t.getId());
     		vbox.getChildren().add(label);
     		
     		LocalDate fecha = LocalDate.now();
@@ -110,9 +116,33 @@ public class AgendaController {
     			textField.setPrefWidth(tamanoColumna);
     			textField.setId(calendarioAgenda.getValue().toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
     			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-    				textField.focusedProperty().addListener((observablee, oldValuee, newValuee) -> {
-    					System.out.println(newValue + "  " + textField.getId());
-    				});
+    				if (!newValue) {
+    					System.out.println(textField.getText() + "__" + textField.getId());
+    					String id_reserva = textField.getText() + "__" + textField.getId();
+    					 String descripcion = textField.getText();
+                         if (!descripcion.isEmpty()) {
+                             String[] partes = textField.getId().split("__");
+                             LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
+                             LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
+                             
+                             // Insertar en la base de datos
+                             try {
+                                 Agenda.crearReserva(
+                                         Date.valueOf(fechaCampo),
+                                         Time.valueOf(horaCampo),
+                                          descripcion, 
+                                          id_reserva,
+                                          id_trabaj
+                                 );
+                                 System.out.println("Reserva creada: " + descripcion + " para " + trabajador);
+                             } catch (Exception e) {
+                                 System.err.println("Error al insertar la reserva: " + e.getMessage());
+                             }
+                         }
+                         
+                         // se hace el insert en la base de datos, pero hay que mirar que poner en el id
+                     }
+
     			});
     			vbox.getChildren().add(textField);
     		}
@@ -127,30 +157,4 @@ public class AgendaController {
     	
 		return reserva;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
