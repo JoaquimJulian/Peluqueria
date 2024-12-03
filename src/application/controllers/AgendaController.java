@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -57,13 +58,26 @@ public class AgendaController {
     }
   
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-    	crearTabla();
+    	crearTabla(LocalDate.now());
+    	calendarioAgenda.setValue(LocalDate.now());
+		calendarioAgenda.getValue();
+    	calendarioAgenda.valueProperty().addListener((observable, oldValue, newValue) -> {
+    	    if (newValue != null) {
+    	        try {
+					crearTabla(newValue);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} // Método para actualizar los datos
+    	    }
+    	});
     }
     
     
-    public void crearTabla() {
+    public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
+    	hboxAgenda.getChildren().removeIf(node -> node instanceof VBox);
     	Trabajador trabajador = new Trabajador();
     	
     	String[] horas= {
@@ -106,24 +120,31 @@ public class AgendaController {
     		label.setText(t.getNombre());
     		int id_trabaj = (t.getId());
     		vbox.getChildren().add(label);
+  
     		
-    		LocalDate fecha = LocalDate.now();
-    		calendarioAgenda.setValue(fecha);
+    		
     		
     		for (int i = 0; i<horas.length; i++) {
+    			
     			TextField textField = new TextField();
     			textField.setPrefHeight(100);
     			textField.setPrefWidth(tamanoColumna);
-    			textField.setId(calendarioAgenda.getValue().toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
+    			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
+    			 String[] partes = textField.getId().split("__");
+                 LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
+                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
+                 String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
+                 if(reserva != "") {
+                	 System.out.print(reserva);
+                	 textField.setText(reserva);
+                 }
     			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
     				if (!newValue) {
-    					System.out.println(textField.getText() + "__" + textField.getId());
+    					System.out.println(textField.getText() +  textField.getId());
     					String id_reserva = textField.getText() + "__" + textField.getId();
     					 String descripcion = textField.getText();
                          if (!descripcion.isEmpty()) {
-                             String[] partes = textField.getId().split("__");
-                             LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
-                             LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
+                           
                              
                              // Insertar en la base de datos
                              try {

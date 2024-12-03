@@ -3,8 +3,11 @@ package application.models;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Agenda {
 	
@@ -74,6 +77,34 @@ public class Agenda {
         }
 		
 	}
+	
+	public static String rellenartabla(LocalDate fecha, LocalTime hora, int id_trabajador) throws SQLException {
+		String sql = "SELECT descripcion FROM agenda WHERE fecha = ? AND hora = ? AND id_trabajador = ?";
+		 String descripcion = null;
+		 
+		try (Connection connection = databaseConection.getConnection();
+	             PreparedStatement stmt = connection.prepareStatement(sql)) {
+			
+			stmt.setDate(1, java.sql.Date.valueOf(fecha)); // Convertir LocalDate a java.sql.Date
+		    stmt.setTime(2, java.sql.Time.valueOf(hora));
+			stmt.setInt(3, id_trabajador);
+
+			
+			 try (ResultSet rs = stmt.executeQuery()) {
+		            if (rs.next()) { // Si hay un resultado
+		                descripcion = rs.getString("descripcion"); // Obtener el valor del campo "descripcion"
+		            }
+		        }
+			 return descripcion; // Retorna la descripción (o null si no se encontró)
+			 
+		}catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al crear la reserva: " + e.getMessage());
+        }
+		return descripcion;
+		
+	}
+	
 	
 	
 }
