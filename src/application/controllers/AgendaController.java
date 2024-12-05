@@ -131,7 +131,7 @@ public class AgendaController {
     			textField.setPrefWidth(tamanoColumna);
     			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
     			String[] partes = textField.getId().split("__");
-                LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
+                LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fecha
                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
                 String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
                 if(reserva != "") {
@@ -141,16 +141,14 @@ public class AgendaController {
                  
     			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
     				
-    				
+    				// cuando entras
     				if (!oldValue) {
-    					descripcion = textField.getText();
+    					descripcion = textField.getText(); // descripcion == null si el textField esta vacio
     				}
+    				// cuando sales
     				else if (!newValue) {
-    					System.out.println(textField.getText());
-    					
-    					String id_reserva = textField.getId();
-    					if (descripcion != "" && descripcion != null && textField.getText() != "") {
-    						
+    					if (descripcion != null && textField.getText() != "") {
+    						// Actualizar reserva
     						try {
 								Agenda.actualizarReserva(
 								        textField.getText(), 
@@ -161,8 +159,8 @@ public class AgendaController {
 								e.printStackTrace();
 							}
     					}
-    					if (descripcion == null && textField.getText() != "" && textField.getText() != null) {
-                             // Insertar en la base de datos
+    					else if (descripcion == null && textField.getText() != "" && textField.getText() != null) {
+                            // Insertar en la base de datos
                         	try {
                         		Agenda.crearReserva(
                         				Date.valueOf(fechaCampo),
@@ -173,10 +171,11 @@ public class AgendaController {
                         		);
                                  
                             } catch (Exception e) {
-                            	System.err.println("Error al insertar la reserva: " + e.getMessage());
+                            	e.printStackTrace();
                             }
                         }
-                        if (textField.getText() == "") {
+    					else if (textField.getText() == "") {
+                        	// Eliminar reserva
                         	try {
 								Agenda.eliminarReserva(
 										textField.getId()
