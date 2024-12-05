@@ -105,7 +105,35 @@ public class Agenda {
 		
 	}
 	
-	
+	public static void actualizarReserva(String nueva, String id_reserva) throws SQLException {
+		String sql = "UPDATE agenda SET descripcion = ? WHERE id_reserva = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+	             PreparedStatement stmt = connection.prepareStatement(sql)) {
+			
+			stmt.setString(1, nueva);
+			stmt.setString(2, id_reserva);
+			
+			stmt.executeUpdate();
+		}catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al actualizar la reserva: " + e.getMessage());
+        }
+	}
+	public static void eliminarReserva(String id_reserva) throws SQLException {
+		String sql = "DELETE FROM agenda WHERE id_reserva = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+	             PreparedStatement stmt = connection.prepareStatement(sql)) {
+			
+			stmt.setString(1, id_reserva);
+			
+			stmt.executeUpdate();
+		}catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al eliminar la reserva: " + e.getMessage());
+        }
+	}
 	
 }
 	

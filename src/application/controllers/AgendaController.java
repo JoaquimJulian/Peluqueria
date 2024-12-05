@@ -49,6 +49,8 @@ public class AgendaController {
   
     
 	private Main mainApp; // Referencia a Main
+	
+	String descripcion = "";
     
 	// Este método se llamará desde Main para establecer la referencia
     public void setMainApp(Main mainApp) {
@@ -128,40 +130,64 @@ public class AgendaController {
     			textField.setPrefHeight(100);
     			textField.setPrefWidth(tamanoColumna);
     			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
-    			 String[] partes = textField.getId().split("__");
-                 LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
-                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
-                 String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
-                 if(reserva != "") {
-                	 System.out.print(reserva);
+    			String[] partes = textField.getId().split("__");
+                LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
+                LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
+                String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
+                if(reserva != "") {
+                
                 	 textField.setText(reserva);
-                 }
+                }
+                 
     			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-    				if (!newValue) {
-    					System.out.println(textField.getText() +  textField.getId());
-    					String id_reserva = textField.getText() + "__" + textField.getId();
-    					 String descripcion = textField.getText();
-                         if (!descripcion.isEmpty()) {
-                           
-                             
+    				
+    				
+    				if (!oldValue) {
+    					descripcion = textField.getText();
+    				}
+    				else if (!newValue) {
+    					System.out.println(textField.getText());
+    					
+    					String id_reserva = textField.getId();
+    					if (descripcion != "" && descripcion != null && textField.getText() != "") {
+    						
+    						try {
+								Agenda.actualizarReserva(
+								        textField.getText(), 
+								        textField.getId()  
+								);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+    					}
+    					if (descripcion == null && textField.getText() != "" && textField.getText() != null) {
                              // Insertar en la base de datos
-                             try {
-                                 Agenda.crearReserva(
-                                         Date.valueOf(fechaCampo),
-                                         Time.valueOf(horaCampo),
-                                          descripcion, 
-                                          id_reserva,
-                                          id_trabaj
-                                 );
-                                 System.out.println("Reserva creada: " + descripcion + " para " + trabajador);
-                             } catch (Exception e) {
-                                 System.err.println("Error al insertar la reserva: " + e.getMessage());
-                             }
-                         }
-                         
-                         // se hace el insert en la base de datos, pero hay que mirar que poner en el id
-                     }
-
+                        	try {
+                        		Agenda.crearReserva(
+                        				Date.valueOf(fechaCampo),
+                                        Time.valueOf(horaCampo),
+                                        textField.getText(), 
+                                        textField.getId(),
+                                        id_trabaj
+                        		);
+                                 
+                            } catch (Exception e) {
+                            	System.err.println("Error al insertar la reserva: " + e.getMessage());
+                            }
+                        }
+                        if (textField.getText() == "") {
+                        	try {
+								Agenda.eliminarReserva(
+										textField.getId()
+								);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                        }
+                     
+    				}
     			});
     			vbox.getChildren().add(textField);
     		}
