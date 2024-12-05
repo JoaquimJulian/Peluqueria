@@ -14,34 +14,21 @@
          <top>
             <AnchorPane prefHeight="143.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
-            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="975.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1036.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/redondaUsuario.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="909.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="970.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/redondaUsuario.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1042.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1103.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/redondaUsuario.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1109.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/redondaUsuario.png" />
-               </image>
-            </ImageView>
-                  <ImageView fx:id="ajustes" fitHeight="30.0" fitWidth="30.0" layoutX="1119.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" scaleZ="2.0">
-                     <image>
-                        <Image url="@../images/ajustes.png" />
-                     </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-                  </ImageView>
                   <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1245.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/redondaUsuario.png" />
@@ -70,7 +57,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1115.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ficha.png" />
                      </image>
@@ -78,7 +65,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-                  <ImageView fx:id="calendario" fitHeight="27.0" fitWidth="33.0" layoutX="919.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="calendario" fitHeight="27.0" fitWidth="33.0" layoutX="980.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/calendario.png" />
                      </image>
@@ -86,7 +73,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-                  <ImageView fx:id="cobrar" fitHeight="26.0" fitWidth="28.0" layoutX="986.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="cobrar" fitHeight="26.0" fitWidth="28.0" layoutX="1047.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/pagar.png" />
                      </image>

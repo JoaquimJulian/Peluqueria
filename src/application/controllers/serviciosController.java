@@ -43,7 +43,7 @@ public class serviciosController {
 	@FXML
 	private Button btnEliminar;
 	
-	// TABLA PRODUCTOS
+	// TABLA SERVICIOS
 	@FXML
 	private TableView<Servicio> tablaServicios;
 	@FXML

@@ -1,37 +1,186 @@
 package application.controllers;
 
-import application.Main;
-import javafx.application.Platform;
-import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
+import java.sql.Date;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import application.Main;
+import application.models.Agenda;
+import application.models.Trabajador;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class diaAdminController {
-	@FXML
-	private ImageView cerrar;
-	@FXML
-	private Button trabajadores;
-	@FXML
-	private Button servicios;
-	@FXML
-	private Button productos;
-	@FXML
-	private Button clientes;
-
-    private Main mainApp; // Referencia a Main
+	
+	// BOTONES HEADER
+    @FXML
+    private ImageView calendario;
+    @FXML
+    private ImageView ajustes;
+    @FXML
+    private ImageView cerrar;
+    @FXML
+    private ImageView cobrar;
+    @FXML
+    private ImageView logIn;
+    @FXML
+    private ImageView salir;
     
- // Este método se llamará desde Main para establecer la referencia
+    
+    @FXML
+    private BorderPane diaAdmin;
+    @FXML
+    private DatePicker calendarioAgenda;
+    @FXML
+    private HBox hboxAgenda;
+    @FXML
+    private Button guardarAgenda;
+  
+    
+	private Main mainApp; // Referencia a Main
+    
+	// Este método se llamará desde Main para establecer la referencia
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
+  
+    @FXML
+    public void initialize() throws SQLException {
+    	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	crearTabla(LocalDate.now());
+    	calendarioAgenda.setValue(LocalDate.now());
+		calendarioAgenda.getValue();
+    	calendarioAgenda.valueProperty().addListener((observable, oldValue, newValue) -> {
+    	    if (newValue != null) {
+    	        try {
+					crearTabla(newValue);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} // Método para actualizar los datos
+    	    }
+    	});
+    }
+    
+    
+    public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
+    	hboxAgenda.getChildren().removeIf(node -> node instanceof VBox);
+    	Trabajador trabajador = new Trabajador();
+    	
+    	String[] horas= {
+                "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
+                "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
+                "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
+                "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
+                "20:00"
+            };
+    	
+    	int tamanoScrollPane = 1250;
+    	int numTrabajadores = trabajador.getTrabajadores().size();
+    	int tamanoColumna = tamanoScrollPane/numTrabajadores;
+    	
+    	ObservableList<Trabajador> trabajadores = trabajador.getTrabajadores();
+    	
+    	// CREAR COLUMNA DE HORAS
+    	
+    	VBox vbox2 = new VBox();
+    	
+    	for (int i = -1; i<horas.length; i++) {
+			Label label2 = new Label();
+			label2.setPrefHeight(100);
+			if (i == -1) {
+				label2.setText(null);
+			}else {
+				
+				label2.setText(horas[i]); ///aaaaaaaaaaaaaaaaaaaaaaaaaa
+			}
+			vbox2.getChildren().add(label2);
+		}
+    	hboxAgenda.getChildren().add(vbox2);
+    	
+    	// CREAR COLUMNA PARA CADA TRABAJADOR CON LOS TEXTFIELD CON ID
+    	
+    	for (Trabajador t : trabajadores) {
+    		VBox vbox = new VBox();
+    		Label label = new Label();
+    		label.setPrefHeight(100);
+    		label.setText(t.getNombre());
+    		int id_trabaj = (t.getId());
+    		vbox.getChildren().add(label);
+  
+    		for (int i = 0; i<horas.length; i++) {
+    			
+    			TextField textField = new TextField();
+    			textField.setPrefHeight(100);
+    			textField.setPrefWidth(tamanoColumna);
+    			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
+    			 String[] partes = textField.getId().split("__");
+                 LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
+                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
+                 String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
+                 if(reserva != "") {
+                	 textField.setText(reserva);
+                 }
+                 textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                	 if(newValue) {
+                		 
+                		 String contenidoActual = textField.getText();
+                		 
+                	     if (!contenidoActual.isEmpty()) {
+                	    	 System.out.println("actualizar");
+                	     }
+                	 }else {
+            	    	 System.out.println("llenar");
+         					String id_reserva = textField.getText() + "__" + textField.getId();
+         					String descripcion = textField.getText();
+                             if (!descripcion.isEmpty()) {  
+                                 // Insertar en la base de datos
+                                 try {
+                                	 System.out.println("select");
+                                 	Agenda.crearReserva(
+     	                                Date.valueOf(fechaCampo),
+     	                                Time.valueOf(horaCampo),
+     	                                descripcion, 
+     	                                id_reserva,
+     	                                id_trabaj
+                                 	);
+                                      
+     	                         } catch (Exception e) {
+     	                             System.err.println("Error al insertar la reserva: " + e.getMessage());
+     	                         }
+                              }
+                              
+                              // se hace el insert en la base de datos, pero hay que mirar que poner en el id
+                          
+            	     }
+    				
 
-	public void initialize() {
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	productos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
-    	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
-    	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
-    	clientes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-	}
+    			});
+    			vbox.getChildren().add(textField);
+    		}
+    		
+    		hboxAgenda.getChildren().add(vbox);
+    	}
+    }
+    
+    public String guardarAgenda(String reserva) {
+    	
+    	
+    	
+		return reserva;
+    }
 }

@@ -27,8 +27,6 @@ public class AgendaController {
 	
 	// BOTONES HEADER
     @FXML
-    private ImageView ajustes;
-    @FXML
     private ImageView calendario;
     @FXML
     private ImageView cerrar;
