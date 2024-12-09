@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="diaAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.inventarioController">
+         <top>
+            <AnchorPane prefHeight="143.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
+               <children>
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="975.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/redondaUsuario.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="909.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/redondaUsuario.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1042.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/redondaUsuario.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1109.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/redondaUsuario.png" />
+               </image>
+            </ImageView>
+                  <ImageView fx:id="ajustes" fitHeight="30.0" fitWidth="30.0" layoutX="1119.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" scaleZ="2.0">
+                     <image>
+                        <Image url="@../images/ajustes.png" />
+                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                  </ImageView>
+                  <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1245.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="149.0" fitWidth="385.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="cerrar" fitHeight="30.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="10.0">
+                     <image>
+                        <Image url="@../images/cerrarPagina.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="1174.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/redondaUsuario.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="salir" fitHeight="25.0" fitWidth="21.0" layoutX="1258.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/salir.png" />
+                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                  </ImageView>
+                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/ficha.png" />
+                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                  </ImageView>
+                  <ImageView fx:id="calendario" fitHeight="27.0" fitWidth="33.0" layoutX="919.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/calendario.png" />
+                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                  </ImageView>
+                  <ImageView fx:id="cobrar" fitHeight="26.0" fitWidth="28.0" layoutX="986.0" layoutY="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/pagar.png" />
+                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                  </ImageView>
+                  <ImageView fx:id="logIn" fitHeight="25.0" fitWidth="21.0" layoutX="1188.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/iconoPerfil.png" />
+                     </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </top>
+           <center>
+      <AnchorPane prefHeight="478.0" prefWidth="851.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="243.0" fitWidth="269.0" layoutX="56.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/productos.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Text layoutX="99.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Rectangle fx:id="productos" arcHeight="30.0" arcWidth="30.0" fill="#2197ff00" height="273.0" layoutX="31.0" layoutY="154.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="296.0" />
+            <ImageView fitHeight="181.0" fitWidth="186.0" layoutX="417.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/servicios.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Text layoutX="441.0" layoutY="394.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Rectangle fx:id="servicios" arcHeight="30.0" arcWidth="30.0" fill="#2197ff00" height="273.0" layoutX="364.0" layoutY="154.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="296.0" />
+            <ImageView fitHeight="181.0" fitWidth="186.0" layoutX="748.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/peluquero.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Text layoutX="741.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trabajadores" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Rectangle fx:id="trabajadores" arcHeight="30.0" arcWidth="30.0" fill="#2197ff00" height="273.0" layoutX="695.0" layoutY="152.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="296.0" />
+            <ImageView fitHeight="181.0" fitWidth="186.0" layoutX="1083.0" layoutY="178.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/clientes.png" />
+               </image>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </ImageView>
+            <Text layoutX="1110.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Text>
+            <Rectangle fx:id="clientes" arcHeight="30.0" arcWidth="30.0" fill="#2197ff00" height="273.0" layoutX="1030.0" layoutY="152.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="2.0" width="296.0" />
+         </children>
+      </AnchorPane>
+   </center>
+      </BorderPane>
