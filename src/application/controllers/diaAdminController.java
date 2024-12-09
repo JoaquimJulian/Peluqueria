@@ -12,12 +12,15 @@ import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 import application.Main;
 import application.models.Agenda;
 import application.models.Trabajador;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -48,8 +51,12 @@ public class diaAdminController {
     private HBox hboxAgenda;
     @FXML
     private Button guardarAgenda;
-  
+    @FXML
+    private Label nombreFecha;
     
+    
+    String descripcion = "";
+  
 	private Main mainApp; // Referencia a Main
     
 	// Este método se llamará desde Main para establecer la referencia
@@ -77,8 +84,15 @@ public class diaAdminController {
     }
     
     
-    public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
-    	hboxAgenda.getChildren().removeIf(node -> node instanceof VBox);
+public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
+    	
+    	// Poner fecha en escrito al lado del date picker
+    	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new Locale("es", "ES"));
+    	String fechaFormateada = fechaSeleccionada.format(formatoFecha);
+    	nombreFecha.setText(fechaFormateada);
+    	
+    	hboxAgenda.getChildren().removeIf(node -> node instanceof VBox); //eliminar todos los vbox del hbox cuando cambiamos de fecha
+    	
     	Trabajador trabajador = new Trabajador();
     	
     	String[] horas= {
@@ -117,70 +131,93 @@ public class diaAdminController {
     	for (Trabajador t : trabajadores) {
     		VBox vbox = new VBox();
     		Label label = new Label();
-    		label.setPrefHeight(100);
+    		label.getStyleClass().add("label");
+    		label.setPrefHeight(300);
+    		vbox.setAlignment(Pos.CENTER);
     		label.setText(t.getNombre());
     		int id_trabaj = (t.getId());
     		vbox.getChildren().add(label);
   
+    		
+    		
+    		
     		for (int i = 0; i<horas.length; i++) {
     			
     			TextField textField = new TextField();
-    			textField.setPrefHeight(100);
+    			textField.setPrefHeight(300);
     			textField.setPrefWidth(tamanoColumna);
     			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
-    			 String[] partes = textField.getId().split("__");
-                 LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fehca
-                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
-                 String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
-                 if(reserva != "") {
-                	 textField.setText(reserva);
-                 }
-                 textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                	 if(newValue) {
-                		 
-                		 String contenidoActual = textField.getText();
-                		 
-                	     if (!contenidoActual.isEmpty()) {
-                	    	 System.out.println("actualizar");
-                	     }
-                	 }else {
-            	    	 System.out.println("llenar");
-         					String id_reserva = textField.getText() + "__" + textField.getId();
-         					String descripcion = textField.getText();
-                             if (!descripcion.isEmpty()) {  
-                                 // Insertar en la base de datos
-                                 try {
-                                	 System.out.println("select");
-                                 	Agenda.crearReserva(
-     	                                Date.valueOf(fechaCampo),
-     	                                Time.valueOf(horaCampo),
-     	                                descripcion, 
-     	                                id_reserva,
-     	                                id_trabaj
-                                 	);
-                                      
-     	                         } catch (Exception e) {
-     	                             System.err.println("Error al insertar la reserva: " + e.getMessage());
-     	                         }
-                              }
-                              
-                              // se hace el insert en la base de datos, pero hay que mirar que poner en el id
-                          
-            	     }
+    			String[] partes = textField.getId().split("__");
+                LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fecha
+                LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
+                String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
+                if(reserva != null) {
+                	textField.getStyleClass().add("textRelleno");	
+                	textField.setText(reserva);
+                }else {
+                	textField.getStyleClass().add("textNoRelleno");
+                }
+                 
+    			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
     				
-
+    				// cuando entras
+    				if (!oldValue) {
+    					descripcion = textField.getText(); // descripcion == null si el textField esta vacio
+    				}
+    				// cuando sales
+    				else if (!newValue) {
+    					if (descripcion != "" && textField.getText() != "") {
+    						// Actualizar reserva
+    						try {
+								Agenda.actualizarReserva(
+								        textField.getText(), 
+								        textField.getId()  
+								);
+								textField.getStyleClass().add("textRelleno");
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+    					}
+    					else if (descripcion == "" && textField.getText() != "") {
+                            // Insertar en la base de datos
+                        	try {
+                        		Agenda.crearReserva(
+                        				Date.valueOf(fechaCampo),
+                                        Time.valueOf(horaCampo),
+                                        textField.getText(), 
+                                        textField.getId(),
+                                        id_trabaj
+                        		);
+                        		textField.getStyleClass().add("textRelleno");
+                                 
+                            } catch (Exception e) {
+                            	e.printStackTrace();
+                            }
+                        }
+    					else if (textField.getText() == "") {
+    						textField.getStyleClass().remove("textRelleno");
+    						textField.getStyleClass().add("textNoRelleno");
+                        	// Eliminar reserva
+                        	try {
+								Agenda.eliminarReserva(
+										textField.getId()
+								);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                        	
+                        }
+                     
+    				}
     			});
     			vbox.getChildren().add(textField);
+    			
     		}
     		
     		hboxAgenda.getChildren().add(vbox);
     	}
     }
     
-    public String guardarAgenda(String reserva) {
-    	
-    	
-    	
-		return reserva;
-    }
 }
