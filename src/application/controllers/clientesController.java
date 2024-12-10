@@ -70,7 +70,7 @@ public class clientesController {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearClientes.fxml"));
-    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
     	
     	btnEditar.setDisable(true);

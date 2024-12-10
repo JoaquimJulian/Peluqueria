@@ -107,7 +107,7 @@
            <center>
       <AnchorPane prefHeight="478.0" prefWidth="851.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="243.0" fitWidth="269.0" layoutX="56.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="194.0" fitWidth="181.0" layoutX="88.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/productos.png" />
                </image>

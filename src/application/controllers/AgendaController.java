@@ -18,6 +18,7 @@ import java.util.Locale;
 import application.Main;
 import application.models.Agenda;
 import application.models.Trabajador;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -65,6 +66,7 @@ public class AgendaController {
   
     @FXML
     public void initialize() throws SQLException {
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	crearTabla(LocalDate.now());
     	calendarioAgenda.setValue(LocalDate.now());

@@ -69,7 +69,7 @@ public class trabajadoresController {
         Platform.runLater(() -> panelPrincipal.requestFocus());
 
         cerrar.setOnMouseClicked(event -> Platform.exit());
-        salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+        salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
         btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearTrabajadores.fxml"));
         

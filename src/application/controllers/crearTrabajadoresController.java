@@ -52,11 +52,8 @@ public class crearTrabajadoresController {
 
     public void initialize() {
         // Verifica si cerrar y salir están inicializados correctamente
-        if (cerrar != null) {
-            cerrar.setOnMouseClicked(event -> Platform.exit());
-        } else {
-            System.out.println("Error: 'cerrar' ImageView es null");
-        }
+        cerrar.setOnMouseClicked(event -> Platform.exit());
+        
 
         if (salir != null) {
             salir.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));

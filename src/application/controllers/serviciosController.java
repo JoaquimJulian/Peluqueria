@@ -70,7 +70,7 @@ public class serviciosController {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
-    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
     	
     	btnEditar.setDisable(true);

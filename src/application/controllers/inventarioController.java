@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import application.Main;
 import application.models.Agenda;
 import application.models.Trabajador;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
@@ -60,6 +61,8 @@ public class inventarioController {
   
     @FXML
     public void initialize() throws SQLException {
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    	
     	productos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
     	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));

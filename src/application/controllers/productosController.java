@@ -84,7 +84,7 @@ public class productosController {
 	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
 	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearProductos.fxml"));
 	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
-	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 	
 	btnEditar.setDisable(true);
 	tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar

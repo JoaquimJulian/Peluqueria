@@ -18,6 +18,7 @@ import java.util.Locale;
 import application.Main;
 import application.models.Agenda;
 import application.models.Trabajador;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -66,6 +67,7 @@ public class diaAdminController {
   
     @FXML
     public void initialize() throws SQLException {
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
     	crearTabla(LocalDate.now());
