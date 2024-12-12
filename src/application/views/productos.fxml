@@ -110,7 +110,7 @@
    <right>
       <AnchorPane prefHeight="675.0" prefWidth="1368.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="38.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos" wrappingWidth="227.11358642578125">
+            <Text layoutX="28.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos activos" wrappingWidth="396.713623046875">
                <font>
                   <Font name="System Bold" size="40.0" />
                </font>
@@ -134,16 +134,21 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TableView>
-            <Button fx:id="btnCrear" layoutX="909.0" layoutY="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
+            <Button fx:id="btnCrear" layoutX="855.0" layoutY="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="btnEditar" layoutX="1039.0" layoutY="54.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
+            <Button fx:id="btnEditar" layoutX="956.0" layoutY="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEliminar" layoutX="1168.0" layoutY="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="170.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
+            <Button fx:id="btnDesactivar" layoutX="1056.0" layoutY="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" style="-fx-background-color: #3E403D;" text="Desactivar producto" textFill="#d9d9d9">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="inactivos" layoutX="1217.0" layoutY="53.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Inactivos" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

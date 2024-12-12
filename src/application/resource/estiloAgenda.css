@@ -27,3 +27,9 @@
     -fx-text-fill: #333333;         
     -fx-font-size: 13px;           
 }
+.date-picker-popup {
+	-fx-pref-width: 1000px;  
+}
+.date-picker-popup .month-view {
+    -fx-pref-width: 500px;  
+}

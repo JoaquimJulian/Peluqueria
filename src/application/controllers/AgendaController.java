@@ -50,7 +50,7 @@ public class AgendaController {
     @FXML
     private HBox hboxAgenda;
     @FXML
-    private Button guardarAgenda;
+    private Button expandirReserva;
     @FXML
     private Label nombreFecha;
   

@@ -50,7 +50,9 @@ public class productosController {
 	@FXML
 	private Button btnEditar;
 	@FXML
-	private Button btnEliminar;
+	private Button btnDesactivar;
+	@FXML
+	private Button inactivos;
 	
 		
 	@FXML
@@ -92,24 +94,18 @@ public class productosController {
         btnEditar.setOnAction(event -> abrirVistaEdicion());
     });
 	
-	btnEliminar.setOnMouseClicked(event -> {
+	btnDesactivar.setOnMouseClicked(event -> {
 		try {
-			//Confirmar la eliminacion
-			Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-			alerta.setTitle("Confirmación de Eliminación");
-			alerta.setHeaderText(null);
-			alerta.setContentText("¿Estás seguro de que deseas eliminar el producto?");
-			Optional<ButtonType> respuesta = alerta.showAndWait();
-			
-			if (respuesta.get() == ButtonType.OK) {
-				eliminarProducto();
-			}
-		
+			desactivarProducto();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	});
+	inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("productosInactivos.fxml"));
+			
+		
+		
         // Configurar las columnas
         columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -123,7 +119,7 @@ public class productosController {
     }
 
     private void cargarProductos() throws SQLException {
-        ObservableList<Producto> productos = Producto.getProductos();
+        ObservableList<Producto> productos = Producto.getProductosActivos();
         tablaProductos.setItems(productos);
     }
     
@@ -137,12 +133,12 @@ public class productosController {
     }
     
     
-    private void eliminarProducto() throws SQLException {
+    private void desactivarProducto() throws SQLException {
         Producto productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
         
         
         if (productoSeleccionado != null) {
-        	Producto.eliminarproducto(productoSeleccionado.getId());
+        	Producto.desactivarProducto(productoSeleccionado.getId());
     	} else {
 	        // Mostrar alerta indicando que no se ha seleccionado ningún producto
 	        Alert alerta = new Alert(Alert.AlertType.WARNING);
