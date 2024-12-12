@@ -65,10 +65,22 @@ public class LogInController {
     	String usuario = usuarioSeleccionado.getNombre();
     	String password = contrasena.getText();
     	
-    	boolean loginExitoso = databaseConection.verificarContraseña(usuario, password);
+    	String loginExitoso = databaseConection.verificarContraseñaAdmin(usuario, password);
     	
-    	if (loginExitoso) {
+    	if (loginExitoso == "exitoso") {
     		mainApp.mostrarVista("diaAdmin.fxml");
+    	}else if (loginExitoso == "No es admin") {
+    		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+			alerta.setTitle("Acceso denegado");
+			alerta.setHeaderText(null);
+			alerta.setContentText("El usuario no tiene permiso para acceder a este apartado");
+			alerta.show();
+    	}else if (loginExitoso == "Contraseña incorrecta") {
+    		Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+			alerta.setTitle("Acceso denegado");
+			alerta.setHeaderText(null);
+			alerta.setContentText("Contraseña incorrecta");
+			alerta.show();
     	}
     }
 }

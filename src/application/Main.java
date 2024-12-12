@@ -47,12 +47,12 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.setTitle(vista);
             
-           
+            
             
             
             // Obtener el controlador de la vista cargada
             Object controller = loader.getController();
-
+            
             // Compruebo si el controlador cargado contiene el metodo 'setMainApp' y lo ejecuta para proporcionar una referencia de main al controlador.
             Method method = controller.getClass().getMethod("setMainApp", Main.class);
             method.invoke(controller, this);
@@ -60,9 +60,9 @@ public class Main extends Application {
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
+        }	
+    }		
+    		
     public static void main(String[] args) {
         launch(args);
     }

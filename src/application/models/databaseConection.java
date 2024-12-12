@@ -54,4 +54,62 @@ public class databaseConection {
             }
         }
     }
+    
+    public static String verificarContraseñaAdmin(String usuario, String contrasena) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String resultado = "";
+        
+        String sql2 = "SELECT * FROM trabajadores WHERE nombre = ? AND contrasena = ?";
+        
+        try {
+            conn = getConnection();
+            stmt = conn.prepareStatement(sql2);
+            stmt.setString(1, usuario);
+            stmt.setString(2, contrasena);
+
+            rs = stmt.executeQuery();
+            //return rs.next(); // Si hay un resultado, significa que la contraseña es correcta
+            if (rs.next()) {
+            	
+            	String sql = "SELECT * FROM trabajadores WHERE nombre = ? AND contrasena = ? AND es_administrador = 1";
+                
+                try {
+                    conn = getConnection();
+                    stmt = conn.prepareStatement(sql);
+                    stmt.setString(1, usuario);
+                    stmt.setString(2, contrasena);
+
+                    rs = stmt.executeQuery();
+                    
+                    if (rs.next()) {
+                    	resultado = "exitoso";
+                    }else {
+                    	resultado = "No es admin";
+                    }
+                    //return rs.next(); // Si hay un resultado, significa que la contraseña es correcta
+                    
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                 
+                } finally {
+                    try {
+                        if (rs != null) rs.close();
+                        if (stmt != null) stmt.close();
+                        if (conn != null) conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+            	resultado = "Contraseña incorrecta";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+          
+        }
+        
+        return resultado;
+    }
 }
