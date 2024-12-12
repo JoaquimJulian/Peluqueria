@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.crearTrabajadoresController">
-    
-    <!-- Header -->
-    <top>
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.crearTrabajadoresController">
+         <top>
             <AnchorPane prefHeight="143.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
             <ImageView fitHeight="46.0" fitWidth="55.0" layoutX="975.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
@@ -105,46 +106,98 @@
                </children>
             </AnchorPane>
          </top>
-
-    <!-- Contenido central -->
-    <center>
-        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
-            <Text text="Crear Trabajador" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-
-            <AnchorPane prefWidth="400" style="-fx-background-color: #D9CCC7; -fx-background-radius: 10; -fx-padding: 20;">
-                <VBox alignment="CENTER_LEFT" spacing="15" layoutX="20.0" layoutY="20.0">
-                    <!-- Campo Nombre -->
-                    <Label text="Nombre:"/>
-                    <TextField fx:id="nombre" promptText="Ingrese el nombre" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
-
-                    <!-- Campo Apellidos -->
-                    <Label text="Apellidos:"/>
-                    <TextField fx:id="apellidos" promptText="Ingrese los apellidos" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
-
-                    <!-- Campo Telefono -->
-                    <Label text="Telefono:"/>
-                    <TextField fx:id="telefono" promptText="Ingrese el teléfono" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
-
-                    <!-- Campo Email -->
-                    <Label text="Email:"/>
-                    <TextField fx:id="email" promptText="Ingrese el email" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
-
-                    <!-- Campo Contraseña -->
-                    <Label text="Contraseña:"/>
-                    <TextField fx:id="contrasena" promptText="Ingrese la contraseña" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
-
-                    <!-- CheckBox Admin -->
-                    <Label text="Admin:"/>
-                    <CheckBox fx:id="admin" text="Es administrador" />
-
-                    <!-- Campo Comisión -->
-                    <Label text="Comisión:"/>
-                    <TextField fx:id="comision" promptText="Ej: 15.50" style="-fx-background-color: #E6E6E6; -fx-border-color: black;"/>
-                </VBox>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text layoutX="523.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Crear trabajador" textAlignment="CENTER" wrappingWidth="358.1974182128906">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Text>
+            <AnchorPane layoutX="310.0" layoutY="81.0" prefHeight="395.0" prefWidth="757.0" style="-fx-background-color: D9CCC7; -fx-background-radius: 10;">
+               <children>
+                  <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="nombre" layoutX="38.0" layoutY="38.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="41.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="40.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="40.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <CheckBox fx:id="admin" layoutX="480.0" layoutY="119.0" mnemonicParsing="false">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField fx:id="apellidos" layoutX="39.0" layoutY="112.0" prefHeight="31.0" prefWidth="318.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="telefono" layoutX="39.0" layoutY="191.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="email" layoutX="39.0" layoutY="272.0" prefHeight="31.0" prefWidth="320.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="400.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="contrasena" layoutX="400.0" layoutY="37.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="401.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="400.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comisión:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="comision" layoutX="400.0" layoutY="191.0" prefHeight="31.0" prefWidth="319.0" promptText="Ejemplo: 15.50" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="505.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecciona si es administrador" wrappingWidth="173.60345458984375" />
+               </children>
             </AnchorPane>
-
-            <!-- Botón Crear -->
-            <Button fx:id="crearTrabajador" text="Crear Trabajador" style="-fx-background-color: #3E403D; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;"/>
-        </VBox>
-    </center>
-</BorderPane>
+            <Button fx:id="crearTrabajador" layoutX="602.0" layoutY="506.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="176.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Crear Trabajador" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Button>
+         </children>
+      </AnchorPane>
+   </center>
+   
+      </BorderPane>

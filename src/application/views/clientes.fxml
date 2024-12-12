@@ -110,36 +110,36 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="25.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes" wrappingWidth="108.713623046875">
+            <Text layoutX="28.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes" wrappingWidth="180.18031311035156">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="40.0" />
                </font>
             </Text>
-            <TextField fx:id="barraBusqueda" layoutX="166.0" layoutY="13.0" prefHeight="26.0" prefWidth="188.0" style="-fx-background-color: #D9D9D9;" />
-            <ImageView fitHeight="13.0" fitWidth="14.0" layoutX="335.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+            <TextField fx:id="barraBusqueda" layoutX="522.0" layoutY="20.0" prefHeight="34.0" prefWidth="298.0" style="-fx-background-color: #D9D9D9;" />
+            <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="789.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <TableView fx:id="tablaClientes" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
+            <TableView fx:id="tablaClientes" editable="true" layoutX="11.0" layoutY="75.0" prefHeight="542.0" prefWidth="1345.0" style="-fx-background-color: D9CCC7;">
                <columns>
-                  <TableColumn fx:id="columnaNombre" prefWidth="95.20001220703125" text="Nombre" />
-                  <TableColumn fx:id="columnaApellidos" prefWidth="142.0" text="Apellidos" />
-                  <TableColumn fx:id="columnaTelefono" prefWidth="144.0" text="Telefono" />
-                  <TableColumn fx:id="columnaEmail" minWidth="0.0" prefWidth="147.0" text="Email" />
-                  <TableColumn fx:id="columnaLpd" prefWidth="44.0" text="lpd" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="261.3333330154419" text="Nombre" />
+                  <TableColumn fx:id="columnaApellidos" prefWidth="314.6666564941406" text="Apellidos" />
+                  <TableColumn fx:id="columnaTelefono" prefWidth="275.73329162597656" text="Telefono" />
+                  <TableColumn fx:id="columnaEmail" minWidth="0.0" prefWidth="412.5333251953125" text="Email" />
+                  <TableColumn fx:id="columnaLpd" prefWidth="82.39996337890625" text="lpd" />
                </columns>
             </TableView>
-            <Button fx:id="btnCrear" layoutX="406.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
+            <Button fx:id="btnCrear" layoutX="959.0" layoutY="17.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="btnEditar" layoutX="462.0" layoutY="13.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
+            <Button fx:id="btnEditar" layoutX="1076.0" layoutY="17.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEliminar" layoutX="519.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
+            <Button fx:id="btnEliminar" layoutX="1192.0" layoutY="17.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="152.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

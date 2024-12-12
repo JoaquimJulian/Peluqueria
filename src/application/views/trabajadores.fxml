@@ -110,42 +110,42 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="14.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trabajadores" wrappingWidth="118.3135986328125">
+            <Text layoutX="33.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trabajadores" wrappingWidth="278.31361389160156">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="40.0" />
                </font>
             </Text>
-            <TextField fx:id="barraBusqueda" layoutX="183.0" layoutY="13.0" prefHeight="26.0" prefWidth="188.0" style="-fx-background-color: #D9D9D9;" />
-            <ImageView fitHeight="13.0" fitWidth="14.0" layoutX="350.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Peluqueria/Peluqueria/src/application/images/lupa.png" />
-               </image>
-            </ImageView>
-            <TableView fx:id="tablaTrabajadores" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="260.0" prefWidth="574.0" style="-fx-background-color: D9CCC7;">
+            <TextField fx:id="barraBusqueda" layoutX="547.0" layoutY="20.0" prefHeight="34.0" prefWidth="298.0" style="-fx-background-color: #D9D9D9;" />
+            <TableView fx:id="tablaTrabajadores" editable="true" layoutX="11.0" layoutY="80.0" prefHeight="533.0" prefWidth="1343.0" style="-fx-background-color: D9CCC7;">
                <columns>
-                  <TableColumn fx:id="columnaNombre" prefWidth="80.800048828125" text="Nombre" />
-                  <TableColumn fx:id="columnaApellidos" prefWidth="114.39996337890625" text="Apellidos" />
-                  <TableColumn fx:id="columnaTelefono" prefWidth="110.39996337890625" text="Telefono" />
-                  <TableColumn fx:id="columnaEmail" minWidth="0.0" prefWidth="138.4000244140625" text="Email" />
-                  <TableColumn fx:id="columnaAdmin" prefWidth="74.39990234375" text="Admin" />
-                  <TableColumn fx:id="columnaComision" prefWidth="56.800048828125" text="Comision" />
+                  <TableColumn fx:id="columnaNombre" prefWidth="225.59998035430908" text="Nombre" />
+                  <TableColumn fx:id="columnaApellidos" prefWidth="304.80003356933594" text="Apellidos" />
+                  <TableColumn fx:id="columnaTelefono" prefWidth="262.66668701171875" text="Telefono" />
+                  <TableColumn fx:id="columnaEmail" minWidth="0.0" prefWidth="326.13330078125" text="Email" />
+                  <TableColumn fx:id="columnaAdmin" prefWidth="116.2664794921875" text="Admin" />
+                  <TableColumn fx:id="columnaComision" prefWidth="110.9334716796875" text="Comision" />
                </columns>
             </TableView>
-            <Button fx:id="btnCrear" layoutX="393.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
+            <Button fx:id="btnCrear" layoutX="960.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEditar" layoutX="458.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
+            <Button fx:id="btnEditar" layoutX="1072.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEliminar" layoutX="519.0" layoutY="13.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
+            <Button fx:id="btnEliminar" layoutX="1184.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="152.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
+            <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="814.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/lupa.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </center>

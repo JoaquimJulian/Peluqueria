@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 
 public class editarServiciosController {
 	
@@ -34,7 +35,7 @@ public class editarServiciosController {
     @FXML
     private ComboBox<Integer> duracionServicio;
     @FXML
-    private TextField descripcionServicio;
+    private TextArea descripcionServicio;
     @FXML
     private CheckBox requiereReserva;
     @FXML
