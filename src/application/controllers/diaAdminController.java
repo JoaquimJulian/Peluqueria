@@ -70,6 +70,7 @@ public class diaAdminController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
     	crearTabla(LocalDate.now());
     	calendarioAgenda.setValue(LocalDate.now());
 		calendarioAgenda.getValue();
