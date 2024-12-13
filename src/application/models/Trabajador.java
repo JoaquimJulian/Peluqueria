@@ -147,6 +147,32 @@ public class Trabajador {
     }
 
     // Método para eliminar un trabajador en la base de datos
+    public void desactivarTrabajador(int id) {
+        String sql = "UPDATE trabajadores SET activo = 0 WHERE id_trabajador = ?";
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al desactivar el trabajador: " + e.getMessage());
+        }
+    }
+    
+    public void activarTrabajador(int id) {
+        String sql = "UPDATE trabajadores SET activo = 1 WHERE id_trabajador = ?";
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al activar el trabajador: " + e.getMessage());
+        }
+    }
+    
     public void eliminarTrabajador(int id) {
         String sql = "DELETE FROM trabajadores WHERE id_trabajador = ?";
         try (Connection connection = databaseConection.getConnection();
@@ -164,6 +190,62 @@ public class Trabajador {
     public ObservableList<Trabajador> getTrabajadores() {
         ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
         String sql = "SELECT * FROM trabajadores";
+
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Trabajador trabajador = new Trabajador(
+                    rs.getInt("id_trabajador"),
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getInt("telefono"),
+                    rs.getString("email"),
+                    rs.getString("contrasena"),
+                    rs.getBoolean("es_administrador"),
+                    rs.getDouble("comision")
+                );
+                trabajadores.add(trabajador);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al obtener los trabajadores: " + e.getMessage());
+        }
+        return trabajadores;
+    }
+    
+    public ObservableList<Trabajador> getTrabajadoresActivos() {
+        ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM trabajadores WHERE activo = 1";
+
+        try (Connection connection = databaseConection.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Trabajador trabajador = new Trabajador(
+                    rs.getInt("id_trabajador"),
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getInt("telefono"),
+                    rs.getString("email"),
+                    rs.getString("contrasena"),
+                    rs.getBoolean("es_administrador"),
+                    rs.getDouble("comision")
+                );
+                trabajadores.add(trabajador);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al obtener los trabajadores: " + e.getMessage());
+        }
+        return trabajadores;
+    }
+    
+    public ObservableList<Trabajador> getTrabajadoresInactivos() {
+        ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM trabajadores WHERE activo = 0";
 
         try (Connection connection = databaseConection.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql);

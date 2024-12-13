@@ -28,8 +28,6 @@ public class Main extends Application {
         this.primaryStage = primaryStage; // Guarda la referencia a la ventana principal
         mostrarVista("logInPrincipal.fxml"); // Muestra la vista de inicio de sesión al inicio
         
-        
-        
     }
 
     public void mostrarVista(String vista) { //sobrecargamos el metodo para que no haga falta pasarle dos parametros siempre

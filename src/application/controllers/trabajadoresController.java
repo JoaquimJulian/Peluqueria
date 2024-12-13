@@ -38,7 +38,9 @@ public class trabajadoresController {
     @FXML
     private Button btnEditar;
     @FXML
-    private Button btnEliminar;
+    private Button btnDesactivar;
+    @FXML
+    private Button inactivos;
 
     @FXML
     private TextField barraBusqueda;
@@ -72,13 +74,13 @@ public class trabajadoresController {
         salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
         btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearTrabajadores.fxml"));
-        
         btnEditar.setDisable(true);
-        btnEliminar.setDisable(true);
+        btnDesactivar.setDisable(true);
+        inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadoresInactivos.fxml"));
         
         tablaTrabajadores.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            btnEditar.setDisable(newValue == null);
-            btnEliminar.setDisable(newValue == null);
+            btnEditar.setDisable(false);
+            btnDesactivar.setDisable(false);
         });
 
         btnEditar.setOnAction(event -> {
@@ -88,10 +90,10 @@ public class trabajadoresController {
             }
         });
 
-        btnEliminar.setOnAction(event -> {
+        btnDesactivar.setOnAction(event -> {
             Trabajador trabajadorSeleccionado = tablaTrabajadores.getSelectionModel().getSelectedItem();
             if (trabajadorSeleccionado != null) {
-                eliminarTrabajador(trabajadorSeleccionado);
+                desactivarTrabajador(trabajadorSeleccionado);
             }
         });
 
@@ -108,22 +110,17 @@ public class trabajadoresController {
 
     private void cargarTrabajadores() throws SQLException {
     	Trabajador trabajadores = new Trabajador();
-        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadores();
+        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadoresActivos();
         tablaTrabajadores.setItems(trabajador);
     }
 
-    private void eliminarTrabajador(Trabajador trabajador) {
-        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-        alerta.setTitle("Confirmación de Eliminación");
-        alerta.setHeaderText(null);
-        alerta.setContentText("¿Estás seguro de que deseas eliminar el trabajador?");
-        if (alerta.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            trabajador.eliminarTrabajador(trabajador.getId());
-            try {
-                cargarTrabajadores();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    private void desactivarTrabajador(Trabajador trabajador) {
+        trabajador.desactivarTrabajador(trabajador.getId());
+        try {
+            cargarTrabajadores();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+    
 }

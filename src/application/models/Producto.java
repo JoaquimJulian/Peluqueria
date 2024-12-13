@@ -158,6 +158,21 @@ public class Producto {
         }
 	}
 	
+	public static void eliminarProducto(Integer id) {
+		String sql = "DELETE FROM productos WHERE id_producto = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al eliminar el producto: " + e.getMessage());
+        }
+	}
+	
 	public static ObservableList<Producto> getProductos() throws SQLException {
         ObservableList<Producto> productos = FXCollections.observableArrayList();
         Connection connection = databaseConection.getConnection();

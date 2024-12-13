@@ -94,14 +94,19 @@ public class productosController {
         btnEditar.setOnAction(event -> abrirVistaEdicion());
     });
 	
-	btnDesactivar.setOnMouseClicked(event -> {
-		try {
-			desactivarProducto();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	});
+	btnDesactivar.setDisable(true);
+	tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+        btnDesactivar.setDisable(false);
+        btnDesactivar.setOnMouseClicked(event -> {
+    		try {
+    			desactivarProducto();
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	});
+    });
+	
 	inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("productosInactivos.fxml"));
 			
 		
