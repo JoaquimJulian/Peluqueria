@@ -33,6 +33,8 @@ public class LogInController {
     private BorderPane panelPrincipal;
     @FXML
     private ImageView cerrar;
+    @FXML
+    private ImageView salir;
 
     private Main mainApp; // Referencia a Main
 
@@ -44,6 +46,7 @@ public class LogInController {
     @FXML
     public void initialize() throws SQLException {
         cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+        salir.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         cargarUsuarios();
 
         btnAcceder.setOnAction(event -> loguearUsuario());

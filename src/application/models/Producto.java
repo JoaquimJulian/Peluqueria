@@ -128,8 +128,8 @@ public class Producto {
         }
 	}
 	
-	public static void eliminarproducto(Integer id) {
-		String sql = "DELETE FROM productos WHERE id_producto = ?";
+	public static void desactivarProducto(Integer id) {
+		String sql = "UPDATE productos SET activo = 0 WHERE id_producto = ?";
 		
 		try (Connection connection = databaseConection.getConnection();
 				PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -139,7 +139,22 @@ public class Producto {
 				stmt.executeUpdate();
 		} catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Error al eliminar el producto: " + e.getMessage());
+            System.out.println("Error al desactivar el producto: " + e.getMessage());
+        }
+	}
+	
+	public static void activarProducto(Integer id) {
+		String sql = "UPDATE productos SET activo = 1 WHERE id_producto = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al desactivar el producto: " + e.getMessage());
         }
 	}
 	
@@ -171,5 +186,62 @@ public class Producto {
         	
         return productos;
     }
+	
+	public static ObservableList<Producto> getProductosActivos() throws SQLException {
+        ObservableList<Producto> productos = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM productos WHERE activo = 1";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        
+        try {
+        	
+        	ResultSet rs = stmt.executeQuery(sql);
+        	
+        	 while (rs.next()) {
+                 productos.add(new Producto(
+                	 rs.getInt("id_producto"),
+                     rs.getString("nombre_producto"),
+                     rs.getString("descripcion"),
+                     rs.getDouble("precio_venta"),
+                     rs.getDouble("precio_costo"), 
+                     rs.getInt("cantidad_en_stock"),
+                     rs.getLong("codigo_barras")
+                 ));
+             }
+        
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        	
+        return productos;
+    }
     
+	public static ObservableList<Producto> getProductosInactivos() throws SQLException {
+        ObservableList<Producto> productos = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM productos WHERE activo = 0";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        
+        try {
+        	
+        	ResultSet rs = stmt.executeQuery(sql);
+        	
+        	 while (rs.next()) {
+                 productos.add(new Producto(
+                	 rs.getInt("id_producto"),
+                     rs.getString("nombre_producto"),
+                     rs.getString("descripcion"),
+                     rs.getDouble("precio_venta"),
+                     rs.getDouble("precio_costo"), 
+                     rs.getInt("cantidad_en_stock"),
+                     rs.getLong("codigo_barras")
+                 ));
+             }
+        
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        	
+        return productos;
+    }
 }
