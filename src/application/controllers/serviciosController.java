@@ -41,7 +41,9 @@ public class serviciosController {
 	@FXML
 	private Button btnEditar;
 	@FXML
-	private Button btnEliminar;
+	private Button btnDesactivar;
+	@FXML
+	private Button inactivos;
 	
 	// TABLA SERVICIOS
 	@FXML
@@ -71,26 +73,18 @@ public class serviciosController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("serviciosInactivos.fxml"));
 
-    	
     	btnEditar.setDisable(true);
     	tablaServicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
             btnEditar.setDisable(false);
             btnEditar.setOnAction(event -> abrirVistaEdicion());
         });
     	
-    	btnEliminar.setOnMouseClicked(event -> {
+    	btnDesactivar.setOnMouseClicked(event -> {
 			try {
-				//Confirmar la eliminacion
-				Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-				alerta.setTitle("Confirmación de Eliminación");
-				alerta.setHeaderText(null);
-				alerta.setContentText("¿Estás seguro de que deseas eliminar el servicio?");
-				Optional<ButtonType> respuesta = alerta.showAndWait();
+				desactivarServicio();
 				
-				if (respuesta.get() == ButtonType.OK) {
-					eliminarServicio();
-				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -107,7 +101,7 @@ public class serviciosController {
     }
     
     private void cargarServicios() throws SQLException {
-        ObservableList<Servicio> servicios = Servicio.getServicios();
+        ObservableList<Servicio> servicios = Servicio.getServiciosActivos();
         tablaServicios.setItems(servicios);
     }
     
@@ -120,10 +114,10 @@ public class serviciosController {
         
     }
     
-    private void eliminarServicio() throws SQLException {
+    private void desactivarServicio() throws SQLException {
         Servicio servicioSeleccionado = tablaServicios.getSelectionModel().getSelectedItem();
         
-        Servicio.eliminarServicio(servicioSeleccionado.getId());
+        Servicio.desactivarServicio(servicioSeleccionado.getId());
         
         cargarServicios();
     }

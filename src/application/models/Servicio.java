@@ -131,10 +131,96 @@ public class Servicio {
         }
 	}
 	
+	public static void desactivarServicio(Integer id) {
+		String sql = "UPDATE servicios SET activo = 0 WHERE id_servicio = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al desactivar el servicio: " + e.getMessage());
+        }
+	}
+	
+	public static void activarServicio(Integer id) {
+		String sql = "UPDATE servicios SET activo = 1 WHERE id_servicio = ?";
+		
+		try (Connection connection = databaseConection.getConnection();
+				PreparedStatement stmt = connection.prepareStatement(sql)) {
+				
+				stmt.setInt(1, id);
+				
+				stmt.executeUpdate();
+		} catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al activar el servicio: " + e.getMessage());
+        }
+	}
+	
 	public static ObservableList<Servicio> getServicios() throws SQLException {
         ObservableList<Servicio> servicios = FXCollections.observableArrayList();
         Connection connection = databaseConection.getConnection();
         String sql = "SELECT * FROM servicios";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        
+        try {
+        	
+        	ResultSet rs = stmt.executeQuery(sql);
+        	
+        	while (rs.next()) {
+                servicios.add(new Servicio(
+                    rs.getInt("id_servicio"),
+                    rs.getString("nombre_servicio"),
+                    rs.getString("descripcion"),
+                    rs.getDouble("precio"),
+                    rs.getInt("duracion_estimada"),
+                    rs.getBoolean("requiere_reserva")
+                ));
+            }
+        	
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        	
+        return servicios;
+    }
+	
+	public static ObservableList<Servicio> getServiciosActivos() throws SQLException {
+        ObservableList<Servicio> servicios = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM servicios WHERE activo = 1";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        
+        try {
+        	
+        	ResultSet rs = stmt.executeQuery(sql);
+        	
+        	while (rs.next()) {
+                servicios.add(new Servicio(
+                    rs.getInt("id_servicio"),
+                    rs.getString("nombre_servicio"),
+                    rs.getString("descripcion"),
+                    rs.getDouble("precio"),
+                    rs.getInt("duracion_estimada"),
+                    rs.getBoolean("requiere_reserva")
+                ));
+            }
+        	
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        	
+        return servicios;
+    }
+	
+	public static ObservableList<Servicio> getServiciosInactivos() throws SQLException {
+        ObservableList<Servicio> servicios = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM servicios WHERE activo = 0";
         PreparedStatement stmt = connection.prepareStatement(sql);
         
         try {

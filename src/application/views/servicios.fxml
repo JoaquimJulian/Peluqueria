@@ -121,7 +121,7 @@
                   <Image url="@../images/lupa.png" />
                </image>
             </ImageView>
-            <TableView fx:id="tablaServicios" editable="true" layoutY="108.0" prefHeight="515.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;">
+            <TableView fx:id="tablaServicios" editable="true" layoutY="83.0" prefHeight="540.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;">
                <columns>
                   <TableColumn fx:id="columnaNombre" prefWidth="229.0" text="Nombre" />
                   <TableColumn fx:id="columnaDescripcion" prefWidth="828.0" text="Descripcion" />
@@ -130,16 +130,21 @@
                   <TableColumn fx:id="columnaReserva" prefWidth="94.0" text="Reserva" />
                </columns>
             </TableView>
-            <Button fx:id="btnCrear" layoutX="909.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
+            <Button fx:id="btnCrear" layoutX="848.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></Button>
-            <Button fx:id="btnEditar" layoutX="1039.0" layoutY="22.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
+            <Button fx:id="btnEditar" layoutX="966.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="btnEliminar" layoutX="1168.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="170.0" style="-fx-background-color: #3E403D;" text="Eliminar" textFill="#d9d9d9">
+            <Button fx:id="btnDesactivar" layoutX="1083.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="156.0" style="-fx-background-color: #3E403D;" text="Desactivar servicio" textFill="#d9d9d9">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="inactivos" layoutX="1248.0" layoutY="21.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #3E403D;" text="Inactivos" textFill="#d9d9d9">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
