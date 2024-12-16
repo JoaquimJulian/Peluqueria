@@ -14,6 +14,7 @@ import java.util.Optional;
 import application.Main;
 import application.models.*;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -125,7 +126,17 @@ public class productosController {
 
     private void cargarProductos() throws SQLException {
         ObservableList<Producto> productos = Producto.getProductosActivos();
-        tablaProductos.setItems(productos);
+        ObservableList<Producto> filtroBusqueda = FXCollections.observableArrayList(productos);
+        tablaProductos.setItems(filtroBusqueda);
+        
+        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroBusqueda.clear();
+            for (Producto producto : productos) {
+                if (producto.getNombre().toLowerCase().contains(newValue.toLowerCase()) || producto.getDescripcion().toLowerCase().contains(newValue.toLowerCase())) {
+                    filtroBusqueda.add(producto);
+                }
+            }
+        });
     }
     
     @FXML

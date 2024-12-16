@@ -115,7 +115,7 @@
                   <Font name="System Bold" size="40.0" />
                </font>
             </Text>
-            <TextField fx:id="barraBusqueda" layoutX="547.0" layoutY="20.0" prefHeight="34.0" prefWidth="298.0" style="-fx-background-color: #D9D9D9;" />
+            <TextField fx:id="barraBusqueda" layoutX="547.0" layoutY="20.0" prefHeight="34.0" prefWidth="298.0" promptText="Buscar..." style="-fx-background-color: #D9D9D9;" />
             <TableView fx:id="tablaTrabajadores" editable="true" layoutX="11.0" layoutY="80.0" prefHeight="533.0" prefWidth="1343.0" style="-fx-background-color: D9CCC7;">
                <columns>
                   <TableColumn fx:id="columnaNombre" prefWidth="225.59998035430908" text="Nombre" />

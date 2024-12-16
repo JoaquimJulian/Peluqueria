@@ -215,7 +215,7 @@ public class Trabajador {
         return trabajadores;
     }
     
-    public ObservableList<Trabajador> getTrabajadoresActivos() {
+    public static ObservableList<Trabajador> getTrabajadoresActivos() {
         ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
         String sql = "SELECT * FROM trabajadores WHERE activo = 1";
 
@@ -243,7 +243,7 @@ public class Trabajador {
         return trabajadores;
     }
     
-    public ObservableList<Trabajador> getTrabajadoresInactivos() {
+    public static ObservableList<Trabajador> getTrabajadoresInactivos() {
         ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
         String sql = "SELECT * FROM trabajadores WHERE activo = 0";
 

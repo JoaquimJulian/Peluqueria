@@ -9,6 +9,7 @@ import application.Main;
 import application.models.Producto;
 import application.models.*;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -108,8 +109,19 @@ public class clientesController {
     
     private void cargarClientes() throws SQLException {
         ObservableList<Cliente> clientes = Cliente.getClientes();
-        tablaClientes.setItems(clientes);
+        ObservableList<Cliente> filtroBusqueda = FXCollections.observableArrayList(clientes);
+        tablaClientes.setItems(filtroBusqueda);
+
+        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroBusqueda.clear();
+            for (Cliente cliente : clientes) {
+                if (cliente.getNombre().toLowerCase().contains(newValue.toLowerCase()) || cliente.getApellido().toLowerCase().contains(newValue.toLowerCase())) {
+                    filtroBusqueda.add(cliente);
+                }
+            }
+        });
     }
+
     
     @FXML
     private void abrirVistaEdicion() {

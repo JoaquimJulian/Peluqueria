@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import application.Main;
 import application.models.Trabajador;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -109,9 +110,18 @@ public class trabajadoresController {
     }
 
     private void cargarTrabajadores() throws SQLException {
-    	Trabajador trabajadores = new Trabajador();
-        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadoresActivos();
-        tablaTrabajadores.setItems(trabajador);
+        ObservableList<Trabajador> trabajadores = Trabajador.getTrabajadoresActivos();
+        ObservableList<Trabajador> filtroBusqueda = FXCollections.observableArrayList(trabajadores);
+        tablaTrabajadores.setItems(filtroBusqueda);
+
+        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroBusqueda.clear();
+            for (Trabajador trabajador : trabajadores) {
+                if (trabajador.getNombre().toLowerCase().contains(newValue.toLowerCase())) {
+                    filtroBusqueda.add(trabajador);
+                }
+            }
+        });
     }
 
     private void desactivarTrabajador(Trabajador trabajador) {

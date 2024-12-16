@@ -9,6 +9,7 @@ import application.Main;
 import application.models.Producto;
 import application.models.*;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -102,7 +103,17 @@ public class serviciosController {
     
     private void cargarServicios() throws SQLException {
         ObservableList<Servicio> servicios = Servicio.getServiciosActivos();
-        tablaServicios.setItems(servicios);
+        ObservableList<Servicio> filtroBusqueda = FXCollections.observableArrayList(servicios);
+        tablaServicios.setItems(filtroBusqueda);
+        
+        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroBusqueda.clear();
+            for (Servicio servicio : servicios) {
+                if (servicio.getNombre().toLowerCase().contains(newValue.toLowerCase()) || servicio.getDescripcion().toLowerCase().contains(newValue.toLowerCase())) {
+                    filtroBusqueda.add(servicio);
+                }
+            }
+        });
     }
     
     @FXML
