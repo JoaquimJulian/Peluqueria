@@ -105,7 +105,48 @@ public class clientesController {
         columnaLpd.setCellValueFactory(new PropertyValueFactory<>("lpd"));
     
     	cargarClientes();
+    	cargarCliente();
     }
+    
+    private void cargarCliente() throws SQLException {
+        ObservableList<Cliente> clientes = Cliente.getClientes();
+        tablaClientes.setItems(clientes);
+        
+        tablaClientes.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Verifica si son 2 clics
+                Cliente clienteSeleccionado = tablaClientes.getSelectionModel().getSelectedItem();
+                if (clienteSeleccionado != null) { // Asegúrate de que hay una fila seleccionada
+                    mostrarInformacionCliente(clienteSeleccionado);
+                }
+            }
+        });
+
+
+        
+    }
+    
+    @FXML
+    private void mostrarInformacionCliente(Cliente cliente) {
+        // Crear el pop-up
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Información del Cliente");
+        alerta.setHeaderText("Detalles del Cliente");
+        
+        // Configurar el contenido
+        StringBuilder contenido = new StringBuilder();
+        contenido.append("Nombre: ").append(cliente.getNombre()).append("\n");
+        contenido.append("Apellidos: ").append(cliente.getApellido()).append("\n");
+        contenido.append("Teléfono: ").append(cliente.getTelefono()).append("\n");
+        contenido.append("Email: ").append(cliente.getEmail()).append("\n");
+        contenido.append("LPD: ").append(cliente.isLpd() ? "Sí" : "No");
+        
+        alerta.setContentText(contenido.toString());
+        
+        // Mostrar el pop-up
+        alerta.showAndWait();
+    }
+    
+    
     
     private void cargarClientes() throws SQLException {
         ObservableList<Cliente> clientes = Cliente.getClientes();
@@ -121,6 +162,8 @@ public class clientesController {
             }
         });
     }
+    
+    
 
     
     @FXML
@@ -138,6 +181,7 @@ public class clientesController {
         Cliente.eliminarCliente(clienteSeleccionado.getId());
         
         cargarClientes();
+        cargarCliente();
     }
 }
 
