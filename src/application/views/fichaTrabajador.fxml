@@ -2,8 +2,7 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.trabajadoresController">
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.fichaTrabajadorController">
          <top>
             <AnchorPane prefHeight="143.0" prefWidth="1366.0" style="-fx-background-color: D9CCC7;" BorderPane.alignment="CENTER">
                <children>
@@ -72,7 +71,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-                  <ImageView fx:id="ficha" fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ficha.png" />
                      </image>
@@ -104,7 +103,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-            <Text fx:id="nombreSesion" layoutX="568.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="229.336669921875">
+            <Text fx:id="nombreSesion" layoutX="543.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="279.73675537109375">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -115,48 +114,94 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <Text layoutX="33.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trabajadores" wrappingWidth="278.31361389160156">
+            <Text layoutX="523.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ficha trabajador" textAlignment="CENTER" wrappingWidth="358.1974182128906">
                <font>
-                  <Font name="System Bold" size="40.0" />
+                  <Font name="System Bold" size="36.0" />
                </font>
             </Text>
-            <TextField fx:id="barraBusqueda" layoutX="547.0" layoutY="20.0" prefHeight="34.0" prefWidth="298.0" promptText="Buscar..." style="-fx-background-color: #D9D9D9;" />
-            <TableView fx:id="tablaTrabajadores" editable="true" layoutX="11.0" layoutY="80.0" prefHeight="533.0" prefWidth="1343.0" style="-fx-background-color: D9CCC7;">
-               <columns>
-                  <TableColumn fx:id="columnaNombre" prefWidth="225.59998035430908" text="Nombre" />
-                  <TableColumn fx:id="columnaApellidos" prefWidth="304.80003356933594" text="Apellidos" />
-                  <TableColumn fx:id="columnaTelefono" prefWidth="262.66668701171875" text="Telefono" />
-                  <TableColumn fx:id="columnaEmail" minWidth="0.0" prefWidth="326.13330078125" text="Email" />
-                  <TableColumn fx:id="columnaAdmin" prefWidth="116.2664794921875" text="Admin" />
-                  <TableColumn fx:id="columnaComision" prefWidth="110.9334716796875" text="Comision" />
-               </columns>
-            </TableView>
-            <Button fx:id="btnCrear" layoutX="878.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Crear" textFill="#d9d9d9">
+            <AnchorPane layoutX="310.0" layoutY="81.0" prefHeight="395.0" prefWidth="757.0" style="-fx-background-color: D9CCC7; -fx-background-radius: 10;">
+               <children>
+                  <Text layoutX="38.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="nombre" layoutX="38.0" layoutY="38.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="41.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellidos:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="40.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="40.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <CheckBox fx:id="admin" layoutX="480.0" layoutY="119.0" mnemonicParsing="false">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </CheckBox>
+                  <TextField fx:id="apellidos" layoutX="39.0" layoutY="112.0" prefHeight="31.0" prefWidth="318.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="telefono" layoutX="39.0" layoutY="191.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <TextField fx:id="email" layoutX="39.0" layoutY="272.0" prefHeight="31.0" prefWidth="320.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="400.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contraseña:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="contrasena" layoutX="400.0" layoutY="37.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+                  <Text layoutX="401.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="400.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comisión:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="comision" layoutX="400.0" layoutY="191.0" prefHeight="31.0" prefWidth="319.0" promptText="Ejemplo: 15.50" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
+                  </TextField>
+               </children>
+            </AnchorPane>
+            <Button fx:id="guardarCambios" layoutX="602.0" layoutY="506.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="176.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Guardar Cambios" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </Button>
-            <Button fx:id="btnEditar" layoutX="989.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Editar" textFill="#d9d9d9">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="btnDesactivar" layoutX="1100.0" layoutY="21.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="152.0" style="-fx-background-color: #3E403D;" text="Desactivar trabajador" textFill="#d9d9d9">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="814.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/lupa.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="inactivos" layoutX="1263.0" layoutY="20.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="95.0" style="-fx-background-color: #3E403D;" text="Inactivos" textFill="#d9d9d9">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font></Button>
          </children>
       </AnchorPane>
    </center>
+   
       </BorderPane>

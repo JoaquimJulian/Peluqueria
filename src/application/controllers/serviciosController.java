@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import application.Main;
-import application.models.Producto;
 import application.models.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -15,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 public class serviciosController {
 	@FXML
@@ -33,6 +33,10 @@ public class serviciosController {
 	private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	@FXML
+	private Text nombreSesion;
+	@FXML
+    private ImageView ficha;
 	
 	// CONTROLES GENERICOS PARA CRUD
 	@FXML
@@ -70,12 +74,20 @@ public class serviciosController {
     }
     
     public void initialize() throws SQLException {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
-    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	cerrar.setOnMouseClicked(event -> Platform.exit());
+        salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+        ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	
     	inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("serviciosInactivos.fxml"));
 
+    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearServicios.fxml"));
     	btnEditar.setDisable(true);
     	tablaServicios.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
             btnEditar.setDisable(false);

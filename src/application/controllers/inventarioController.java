@@ -24,6 +24,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class inventarioController {
 	
@@ -40,6 +41,10 @@ public class inventarioController {
     private ImageView logIn;
     @FXML
     private ImageView salir;
+    @FXML
+    private ImageView ficha;
+    @FXML
+    private Text nombreSesion;
     
     
     @FXML
@@ -61,16 +66,22 @@ public class inventarioController {
   
     @FXML
     public void initialize() throws SQLException {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	
     	productos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
     	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
     	clientes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	
-    	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+    	
     }
     
     

@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="diaAdmin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" stylesheets="@../resource/estiloAgenda.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.diaAdminController">
          <top>
@@ -72,7 +73,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ficha" fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ficha.png" />
                      </image>
@@ -104,6 +105,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
+            <Text fx:id="nombreSesion" layoutX="543.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="279.73675537109375">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
                </children>
             </AnchorPane>
          </top>

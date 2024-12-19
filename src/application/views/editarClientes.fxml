@@ -71,7 +71,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ficha" fitHeight="25.0" fitWidth="26.0" layoutX="1054.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ficha.png" />
                      </image>
@@ -103,6 +103,11 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
+            <Text fx:id="nombreSesion" layoutX="543.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="279.73675537109375">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
                </children>
             </AnchorPane>
          </top>

@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 public class serviciosInactivosController {
 	@FXML
@@ -31,6 +32,10 @@ public class serviciosInactivosController {
 	private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	@FXML
+	private Text nombreSesion;
+	@FXML
+    private ImageView ficha;
 	
 	// CONTROLES GENERICOS PARA CRUD
 	@FXML
@@ -64,13 +69,18 @@ public class serviciosInactivosController {
     }
     
     public void initialize() throws SQLException {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-
-    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	cerrar.setOnMouseClicked(event -> Platform.exit());
+        salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+        ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	
     	activos.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
-    	
-    	
     	
     	btnActivar.setOnMouseClicked(event -> {
 			try {

@@ -72,36 +72,24 @@ public class databaseConection {
             rs = stmt.executeQuery();
             //return rs.next(); // Si hay un resultado, significa que la contraseña es correcta
             if (rs.next()) {
-            	
-            	String sql = "SELECT * FROM trabajadores WHERE nombre = ? AND contrasena = ? AND es_administrador = 1";
                 
-                try {
-                    conn = getConnection();
-                    stmt = conn.prepareStatement(sql);
-                    stmt.setString(1, usuario);
-                    stmt.setString(2, contrasena);
+            	int id = rs.getInt("id_trabajador");
+                String nombre = rs.getString("nombre");
+                String apellidos = rs.getString("apellidos");
+                int telefono = rs.getInt("telefono");
+                String email = rs.getString("email");
+                String contrasenaDB = rs.getString("contrasena");
+                boolean esAdministrador = rs.getBoolean("es_administrador");
+                double comision = rs.getDouble("comision");
+                
+                // Crear un objeto Trabajador con los datos obtenidos de la base de datos
+                Trabajador trabajador = new Trabajador(id, nombre, apellidos, telefono, email, contrasenaDB, esAdministrador, comision);
 
-                    rs = stmt.executeQuery();
+                // Almacenar el trabajador logueado en la variable estática de la clase Trabajador
+                Trabajador.setTrabajadorLogueado(trabajador);
+        
+                resultado = "exitoso";
                     
-                    if (rs.next()) {
-                    	resultado = "exitoso";
-                    }else {
-                    	resultado = "No es admin";
-                    }
-                    //return rs.next(); // Si hay un resultado, significa que la contraseña es correcta
-                    
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                 
-                } finally {
-                    try {
-                        if (rs != null) rs.close();
-                        if (stmt != null) stmt.close();
-                        if (conn != null) conn.close();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }
             } else {
             	resultado = "Contraseña incorrecta";
             }

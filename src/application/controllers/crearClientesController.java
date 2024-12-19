@@ -3,10 +3,13 @@ package application.controllers;
 import javafx.scene.control.TextField;
 import application.Main;
 import application.models.Cliente;
+import application.models.Trabajador;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 
 public class crearClientesController {
 	
@@ -23,6 +26,10 @@ public class crearClientesController {
 	private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	@FXML
+	private ImageView ficha;
+	@FXML
+	private Text nombreSesion;
 	
 	// INPUTS DE LOS DATOS DEL NUEVO CLIENTE
 	@FXML
@@ -47,9 +54,22 @@ public class crearClientesController {
 	    }
 	    
 	    public void initialize() {
+    	   	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+        	nombreSesion.setText(trabajadorLogueado.getNombre());
+	    	
     	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-
+        	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+        	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+        	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+        	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+        	if (!trabajadorLogueado.isEsAdministrador()) {
+				Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
+				ajustes.setImage(imagenCliente);
+				ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+			}else {
+				ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+			}
+    		
     	   	crearCliente.setOnMouseClicked(event -> {
 		       	crearCliente();
 		       	mainApp.mostrarVista("clientes.fxml");

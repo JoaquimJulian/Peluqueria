@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import application.Main;
 import application.models.Producto;
+import application.models.Trabajador;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 public class productosInactivosController {
 	// BOTONES HEADER
@@ -32,6 +34,10 @@ public class productosInactivosController {
 		private ImageView usuarios;
 		@FXML
 		private ImageView cerrar;
+		@FXML
+		private Text nombreSesion;
+		@FXML
+	    private ImageView ficha;
 		
 		// CONTROLES GENERICOS PARA CRUD
 		@FXML
@@ -70,39 +76,44 @@ public class productosInactivosController {
 	       }
 	    @FXML
 	    public void initialize() throws SQLException {
+	    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+	    	nombreSesion.setText(trabajadorLogueado.getNombre());
 	    
-	    Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
-		cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-		salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-		
-		
-		btnActivar.setDisable(true);
-		tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
-	        btnActivar.setDisable(false);
-	        btnActivar.setOnMouseClicked(event -> {
-	    		try {
-	    			activarProducto();
-	    		} catch (SQLException e) {
-	    			// TODO Auto-generated catch block
-	    			e.printStackTrace();
-	    		}
-	    	});
-	    });
-		
-		btnEliminar.setDisable(true);
-		tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
-	        btnEliminar.setDisable(false);
-	        btnEliminar.setOnMouseClicked(event -> {
-	    		try {
-	    			eliminarProducto();
-	    		} catch (SQLException e) {
-	    			// TODO Auto-generated catch block
-	    			e.printStackTrace();
-	    		}
-	    	});
-	    });
-		
-		activos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+		    Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+		    cerrar.setOnMouseClicked(event -> Platform.exit());
+	        salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+	        ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+			calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+	    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+	    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+			
+			btnActivar.setDisable(true);
+			tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+		        btnActivar.setDisable(false);
+		        btnActivar.setOnMouseClicked(event -> {
+		    		try {
+		    			activarProducto();
+		    		} catch (SQLException e) {
+		    			// TODO Auto-generated catch block
+		    			e.printStackTrace();
+		    		}
+		    	});
+		    });
+			
+			btnEliminar.setDisable(true);
+			tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+		        btnEliminar.setDisable(false);
+		        btnEliminar.setOnMouseClicked(event -> {
+		    		try {
+		    			eliminarProducto();
+		    		} catch (SQLException e) {
+		    			// TODO Auto-generated catch block
+		    			e.printStackTrace();
+		    		}
+		    	});
+		    });
+			
+			activos.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
 			
 			
 	        // Configurar las columnas

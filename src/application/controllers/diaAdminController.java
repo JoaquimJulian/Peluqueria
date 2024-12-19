@@ -22,10 +22,12 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class diaAdminController {
 	
@@ -42,6 +44,8 @@ public class diaAdminController {
     private ImageView logIn;
     @FXML
     private ImageView salir;
+    @FXML
+    private ImageView ficha;
     
     
     @FXML
@@ -54,6 +58,8 @@ public class diaAdminController {
     private Button guardarAgenda;
     @FXML
     private Label nombreFecha;
+    @FXML
+    private Text nombreSesion;
     
     
     String descripcion = "";
@@ -67,10 +73,23 @@ public class diaAdminController {
   
     @FXML
     public void initialize() throws SQLException {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	if (!trabajadorLogueado.isEsAdministrador()) {
+    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
+    		ajustes.setImage(imagenCliente);
+    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+    	}else {
+    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	}
+    	
+    	
     	crearTabla(LocalDate.now());
     	calendarioAgenda.setValue(LocalDate.now());
 		calendarioAgenda.getValue();

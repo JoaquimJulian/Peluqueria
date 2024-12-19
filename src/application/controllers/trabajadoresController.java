@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 public class trabajadoresController {
 
@@ -32,6 +33,10 @@ public class trabajadoresController {
     private ImageView usuarios;
     @FXML
     private ImageView cerrar;
+    @FXML
+	private Text nombreSesion;
+    @FXML
+    private ImageView ficha;
 
     // BOTONES CRUD
     @FXML
@@ -69,11 +74,18 @@ public class trabajadoresController {
     }
 
     public void initialize() throws SQLException {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
         Platform.runLater(() -> panelPrincipal.requestFocus());
 
         cerrar.setOnMouseClicked(event -> Platform.exit());
         salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-
+        ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+        
         btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearTrabajadores.fxml"));
         btnEditar.setDisable(true);
         btnDesactivar.setDisable(true);

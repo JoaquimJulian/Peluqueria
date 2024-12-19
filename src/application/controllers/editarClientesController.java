@@ -1,11 +1,14 @@
 package application.controllers;
 
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 
 import application.Main;
 import application.models.Cliente;
+import application.models.Trabajador;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -26,6 +29,10 @@ public class editarClientesController {
 		private ImageView usuarios;
 		@FXML
 		private ImageView cerrar;
+		@FXML
+		private ImageView ficha;
+		@FXML
+		private Text nombreSesion;
 	
 		@FXML
 	    private TextField nombreCliente;
@@ -49,13 +56,29 @@ public class editarClientesController {
        }
    
        public void initialize() {
-    	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-
-    	   	editarCliente.setOnAction(event ->  {
-    	   		editarCliente();
-	         	mainApp.mostrarVista("clientes.fxml");
-    	   	});
+    	   	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+        	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	   	
+			cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+			salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+			ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+			usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+			calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+			salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+			if (!trabajadorLogueado.isEsAdministrador()) {
+				Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
+				ajustes.setImage(imagenCliente);
+				ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+			}else {
+				ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+			}
+			
+			editarCliente.setOnAction(event ->  {
+				editarCliente();
+			 	mainApp.mostrarVista("clientes.fxml");
+			});
+        	
+        	
        }
        
        // Método para cargar los datos del cliente en los campos

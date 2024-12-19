@@ -6,15 +6,16 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import application.Main;
-import application.models.Producto;
 import application.models.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
 public class clientesController {
 	@FXML
@@ -33,6 +34,8 @@ public class clientesController {
 	private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	@FXML
+    private ImageView ficha;
 	
 	// CONTROLES GENERICOS PARA CRUD
 	@FXML
@@ -43,6 +46,8 @@ public class clientesController {
 	private Button btnEditar;
 	@FXML
 	private Button btnEliminar;
+	@FXML
+	private Text nombreSesion;
 	
 	// TABLA PRODUCTOS
 	@FXML
@@ -69,11 +74,23 @@ public class clientesController {
     
     public void initialize() throws SQLException {
     	Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que cargen todos los componentes, la applicacion pone el focus del usuario en el panel principal
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearClientes.fxml"));
-    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
     	
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	if (!trabajadorLogueado.isEsAdministrador()) {
+    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
+    		ajustes.setImage(imagenCliente);
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+    	}else {
+    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	}
+    	
+    	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearClientes.fxml"));
     	btnEditar.setDisable(true);
     	tablaClientes.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
             btnEditar.setDisable(false);

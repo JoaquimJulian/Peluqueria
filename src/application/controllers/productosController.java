@@ -23,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class productosController {
@@ -42,6 +43,10 @@ public class productosController {
 	private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	@FXML
+	private Text nombreSesion;
+	@FXML
+    private ImageView ficha;
 	
 	// CONTROLES GENERICOS PARA CRUD
 	@FXML
@@ -82,34 +87,42 @@ public class productosController {
        }
     @FXML
     public void initialize() throws SQLException {
-    
-    Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
-	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-	btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearProductos.fxml"));
-	cerrar.setOnMouseClicked(event -> { Platform.exit(); }); //cerrar aplicacion cuando pulsar boton cerrar
-	salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-	
-	btnEditar.setDisable(true);
-	tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
-        btnEditar.setDisable(false);
-        btnEditar.setOnAction(event -> abrirVistaEdicion());
-    });
-	
-	btnDesactivar.setDisable(true);
-	tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
-        btnDesactivar.setDisable(false);
-        btnDesactivar.setOnMouseClicked(event -> {
-    		try {
-    			desactivarProducto();
-    		} catch (SQLException e) {
-    			// TODO Auto-generated catch block
-    			e.printStackTrace();
-    		}
-    	});
-    });
-	
-	inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("productosInactivos.fxml"));
-			
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
+	    Platform.runLater(() -> panelPrincipal.requestFocus()); //despues de que carguen todos los componentes, la applicacion pone el focus del usuario en el panel principal
+		cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+		
+		cerrar.setOnMouseClicked(event -> Platform.exit());
+	    salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+	    ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+		usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+
+		
+		btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearProductos.fxml"));
+		btnEditar.setDisable(true);
+		tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+	        btnEditar.setDisable(false);
+	        btnEditar.setOnAction(event -> abrirVistaEdicion());
+	    });
+		
+		btnDesactivar.setDisable(true);
+		tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
+	        btnDesactivar.setDisable(false);
+	        btnDesactivar.setOnMouseClicked(event -> {
+	    		try {
+	    			desactivarProducto();
+	    		} catch (SQLException e) {
+	    			// TODO Auto-generated catch block
+	    			e.printStackTrace();
+	    		}
+	    	});
+	    });
+		
+		inactivos.setOnMouseClicked(event -> mainApp.mostrarVista("productosInactivos.fxml"));
+				
 		
 		
         // Configurar las columnas

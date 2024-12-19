@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 
 public class Trabajador {
 
+	private static Trabajador trabajadorLogueado;
     private int id;
     private String nombre;
     private String apellidos;
@@ -19,8 +20,10 @@ public class Trabajador {
     private String contrasena;
     private boolean esAdministrador;
     private double comision;
+    private boolean activo;
 
-    // Constructor
+    
+	// Constructor
     public Trabajador(int id, String nombre, String apellidos, int telefono, String email, String contrasena, boolean esAdministrador, double comision) {
         this.id = id;
         this.nombre = nombre;
@@ -99,6 +102,22 @@ public class Trabajador {
 
     public void setComision(double comision) {
         this.comision = comision;
+    }
+    public boolean isActivo() {
+		return activo;
+	}
+	public void setActivo(boolean activo) {
+		this.activo = activo;
+	}
+    
+ // Método para establecer al trabajador logueado
+    public static void setTrabajadorLogueado(Trabajador trabajador) {
+        trabajadorLogueado = trabajador;
+    }
+
+    // Método para obtener al trabajador logueado
+    public static Trabajador getTrabajadorLogueado() {
+        return trabajadorLogueado;
     }
 
     // Método para crear un trabajador en la base de datos

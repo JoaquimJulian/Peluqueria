@@ -69,6 +69,7 @@ public class AgendaController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
+    	
     	crearTabla(LocalDate.now());
     	calendarioAgenda.setValue(LocalDate.now());
 		calendarioAgenda.getValue();
