@@ -23,6 +23,8 @@ public class crearServiciosController {
 	private ImageView usuarios;
 	@FXML
 	private ImageView cerrar;
+	@FXML
+    private ImageView ficha;
 	
 	// INPUTS DE LOS DATOS DEL NUEVO SERVICIO
 	@FXML
@@ -47,8 +49,12 @@ public class crearServiciosController {
 	    }
 	    
 	    public void initialize() {
-    	   	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+	    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+	    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+	    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+	    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+	    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
+	    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
     	   	crearServicio.setOnMouseClicked(event -> {
 		       	crearServicio();

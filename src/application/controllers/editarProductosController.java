@@ -28,6 +28,8 @@ public class editarProductosController {
     private ImageView usuarios;
     @FXML
     private ImageView cerrar;
+    @FXML
+    private ImageView ficha;
     
     @FXML
     private TextField nombreProducto;
@@ -53,8 +55,12 @@ public class editarProductosController {
     }
     
     public void initialize() {
-        cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-		salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
+    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
         editarproducto.setOnAction(event -> {
             editarProducto();

@@ -26,6 +26,8 @@ public class editarTrabajadoresController {
     private ImageView usuarios;
     @FXML
     private ImageView cerrar;
+    @FXML
+    private ImageView ficha;
 
     // CAMPOS DE EDICIÓN DE TRABAJADOR
     @FXML
@@ -55,10 +57,12 @@ public class editarTrabajadoresController {
 
     @FXML
     public void initialize() {
-        if (cerrar != null) {
-            cerrar.setOnMouseClicked(event -> Platform.exit());
-        }
-        salir.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
+    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
+    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
    
 
         guardarCambios.setOnAction(event -> {
