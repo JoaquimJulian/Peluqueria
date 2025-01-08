@@ -123,7 +123,7 @@
                </content>
             </ScrollPane>
             <Label fx:id="nombreFecha" layoutX="267.0" layoutY="18.0" prefHeight="26.0" prefWidth="431.0" />
-            <Button fx:id="guardarAgenda" layoutX="1165.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3E403D;" text="Expandir reserva" textFill="#d9d9d9">
+            <Button fx:id="expandirReserva" layoutX="1165.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: #3E403D;" text="Expandir reserva" textFill="#d9d9d9">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>

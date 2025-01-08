@@ -55,11 +55,12 @@ public class diaAdminController {
     @FXML
     private HBox hboxAgenda;
     @FXML
-    private Button guardarAgenda;
+    private Button expandirReserva;
     @FXML
     private Label nombreFecha;
     @FXML
     private Text nombreSesion;
+   
     
     
     String descripcion = "";
@@ -103,6 +104,14 @@ public class diaAdminController {
 				} // Método para actualizar los datos
     	    }
     	});
+    	
+    	if (expandirReserva != null) {
+
+            expandirReserva.setFocusTraversable(false); // Evita que el botón tome el foco
+
+            expandirReserva.setOnAction(event -> onExpandirReserva());
+
+        }
     }
     
     
@@ -168,7 +177,7 @@ public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
     			TextField textField = new TextField();
     			textField.setPrefHeight(300);
     			textField.setPrefWidth(tamanoColumna);
-    			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getNombre()); //le doy id a cada textField
+    			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getId()); //le doy id a cada textField
     			String[] partes = textField.getId().split("__");
                 LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fecha
                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
@@ -241,5 +250,143 @@ public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
     		hboxAgenda.getChildren().add(vbox);
     	}
     }
+
+private void onExpandirReserva() {
+	
+    javafx.scene.Node focusedNode = diaAdmin.getScene().getFocusOwner();
+
+
+
+    if (focusedNode instanceof TextField) {
+
+        TextField currentTextField = (TextField) focusedNode;
+
+        String contenido = currentTextField.getText();
+
+     
+
+
+
+        String[] partesId = currentTextField.getId().split("__");
+
+
+
+        if (partesId.length >= 3) {
+
+            try {
+
+                // Calcula la hora siguiente y genera el ID del siguiente TextField
+
+                LocalTime horaActual = LocalTime.parse(partesId[1]);
+
+                LocalTime horaSiguiente = horaActual.plusMinutes(30);
+
+                String nuevoId = partesId[0] + "__" + horaSiguiente + "__" + partesId[2];
+
+               
+
+
+
+                // Busca manualmente el siguiente TextField en hboxAgenda
+
+                TextField siguienteTextField = buscarTextFieldEnHBox(hboxAgenda, nuevoId);
+
+
+
+                if (siguienteTextField != null) {
+
+                    // Copia el contenido al siguiente TextField
+
+                    siguienteTextField.setText(contenido);
+
+                    siguienteTextField.getStyleClass().add("textRelleno");
+
+                    siguienteTextField.requestFocus(); // Mueve el focus al siguiente TextField
+
+                    
+
+                    System.out.println(nuevoId);
+
+                    // Inserta en la base de datos
+
+                    Agenda.crearReserva(
+
+                            Date.valueOf(partesId[0]),
+
+                            Time.valueOf(horaSiguiente),
+
+                            contenido,
+
+                            nuevoId,
+
+                            Integer.parseInt(partesId[2]) // ID del trabajador numérico
+
+                    );
+
+                    System.out.println(partesId[2]);
+
+                } else {
+
+                    System.err.println("No se encontró el TextField con ID: " + nuevoId);
+
+                }
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+            }
+
+        } else {
+
+            System.err.println("El ID del TextField actual no tiene el formato esperado.");
+
+        }
+
+    } else {
+
+        System.err.println("El nodo enfocado no es un TextField.");
+
+    }
+
+}
+
+
+
+
+
+private TextField buscarTextFieldEnHBox(HBox hbox, String idBuscado) {
+
+    for (javafx.scene.Node node : hbox.getChildren()) {
+
+        if (node instanceof VBox) {
+
+            VBox vbox = (VBox) node;
+
+
+
+            for (javafx.scene.Node childNode : vbox.getChildren()) {
+
+                if (childNode instanceof TextField) {
+
+                    TextField textField = (TextField) childNode;
+
+                    if (idBuscado.equals(textField.getId())) {
+
+                        return textField;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return null; // Si no encuentra el TextField
+
+}
     
 }

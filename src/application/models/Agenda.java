@@ -78,6 +78,7 @@ public class Agenda {
 		
 	}
 	
+	
 	public static String rellenartabla(LocalDate fecha, LocalTime hora, int id_trabajador) throws SQLException {
 		String sql = "SELECT descripcion FROM agenda WHERE fecha = ? AND hora = ? AND id_trabajador = ?";
 		 String descripcion = null;
