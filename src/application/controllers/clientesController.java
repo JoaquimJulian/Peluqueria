@@ -142,43 +142,34 @@ public class clientesController {
         
     }
     
+    
     @FXML
     private void mostrarInformacionCliente(Cliente cliente) {
-        // Crear el pop-up
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Información del Cliente");
-        alerta.setHeaderText("Detalles del Cliente");
-        
-        // Configurar el contenido
-        StringBuilder contenido = new StringBuilder();
-        contenido.append("Nombre: ").append(cliente.getNombre()).append("\n");
-        contenido.append("Apellidos: ").append(cliente.getApellido()).append("\n");
-        contenido.append("Teléfono: ").append(cliente.getTelefono()).append("\n");
-        contenido.append("Email: ").append(cliente.getEmail()).append("\n");
-        contenido.append("LPD: ").append(cliente.isLpd() ? "Sí" : "No");
-        
-        alerta.setContentText(contenido.toString());
-        
-        // Mostrar el pop-up
-        alerta.showAndWait();
+        // Cambiar a mostrar la vista fichaCliente
+        mainApp.mostrarVista("fichaCliente.fxml", cliente); // Pasa la vista y el cliente seleccionado
     }
-    
+
     
     
     private void cargarClientes() throws SQLException {
         ObservableList<Cliente> clientes = Cliente.getClientes();
-        ObservableList<Cliente> filtroBusqueda = FXCollections.observableArrayList(clientes);
-        tablaClientes.setItems(filtroBusqueda);
-
-        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtroBusqueda.clear();
-            for (Cliente cliente : clientes) {
-                if (cliente.getNombre().toLowerCase().contains(newValue.toLowerCase()) || cliente.getApellido().toLowerCase().contains(newValue.toLowerCase())) {
-                    filtroBusqueda.add(cliente);
+        tablaClientes.setItems(clientes);
+        
+        tablaClientes.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Verifica si son 2 clics
+                Cliente clienteSeleccionado = tablaClientes.getSelectionModel().getSelectedItem();
+                if (clienteSeleccionado != null) { // Asegúrate de que hay una fila seleccionada
+                    abrirFichaCliente(clienteSeleccionado);
                 }
             }
         });
     }
+
+    private void abrirFichaCliente(Cliente cliente) {
+    	
+        mainApp.mostrarVista("fichaCliente.fxml", cliente);  // Método para abrir la vista de edición en Main
+    }
+
     
     
 

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,6 +99,45 @@ public class Cliente {
 	        }
 	}
 	
+    
+    
+    public static ObservableList<Map<String, Object>> cargarDatos(int id_cliente) throws SQLException {
+        ObservableList<Map<String, Object>> facturaciones = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT f.fecha, s.nombre_servicio AS nombre_servicio, p.nombre_producto AS nombre_producto, f.monto_total " +
+                     "FROM facturacion f " +
+                     "LEFT JOIN servicios s ON f.id_servicio = s.id_servicio " +
+                     "LEFT JOIN productos p ON f.id_producto = p.id_producto " +
+                     "WHERE f.id_cliente = ?;";
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id_cliente);  // Establece el parámetro id_cliente
+
+        try (ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                // Crear un mapa para almacenar los datos de la fila
+                Map<String, Object> facturacion = new HashMap<>();
+                facturacion.put("fecha", rs.getDate("fecha"));
+                facturacion.put("nombre_servicio", rs.getString("nombre_servicio"));
+                facturacion.put("nombre_producto", rs.getString("nombre_producto"));
+                facturacion.put("monto_total", rs.getDouble("monto_total"));
+
+                // Agregar el mapa a la lista observable
+                facturaciones.add(facturacion);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Manejo de excepciones
+        } finally {
+            if (connection != null) {
+                connection.close();  // Cerrar la conexión después de usarla
+            }
+        }
+
+        return facturaciones;  // Devolver la lista con los resultados
+    }
+
+    
+    
 	public static void editarCliente(Integer id, String nombre, String apellido, Integer telefono, String email, Boolean lpd) {
 		String sql = "UPDATE clientes SET nombre = ?, apellidos = ?, telefono = ?, email = ?, lpd = ? WHERE id_cliente = ?";
 		
