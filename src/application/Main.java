@@ -29,6 +29,7 @@ public class Main extends Application {
         mostrarVista("logInPrincipal.fxml"); // Muestra la vista de inicio de sesión al inicio
         
     }
+    
 
     public void mostrarVista(String vista) { //sobrecargamos el metodo para que no haga falta pasarle dos parametros siempre
     	mostrarVista(vista, null);

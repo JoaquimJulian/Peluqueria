@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.collections.FXCollections;
@@ -101,9 +103,11 @@ public class Cliente {
 	
     
     
-    public static ObservableList<Map<String, Object>> cargarDatos(int id_cliente) throws SQLException {
-        ObservableList<Map<String, Object>> facturaciones = FXCollections.observableArrayList();
+    public static List<String[]> cargarDatos(int id_cliente) throws SQLException {
+        List<String[]> resultados = new ArrayList<>();
+        
         Connection connection = databaseConection.getConnection();
+
         String sql = "SELECT f.fecha, s.nombre_servicio AS nombre_servicio, p.nombre_producto AS nombre_producto, f.monto_total " +
                      "FROM facturacion f " +
                      "LEFT JOIN servicios s ON f.id_servicio = s.id_servicio " +
@@ -111,29 +115,27 @@ public class Cliente {
                      "WHERE f.id_cliente = ?;";
 
         PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id_cliente);  // Establece el parámetro id_cliente
-
+        stmt.setInt(1, id_cliente);
+        
         try (ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                // Crear un mapa para almacenar los datos de la fila
-                Map<String, Object> facturacion = new HashMap<>();
-                facturacion.put("fecha", rs.getDate("fecha"));
-                facturacion.put("nombre_servicio", rs.getString("nombre_servicio"));
-                facturacion.put("nombre_producto", rs.getString("nombre_producto"));
-                facturacion.put("monto_total", rs.getDouble("monto_total"));
+                // Obtener los datos de cada fila
+                String fecha = rs.getString("fecha");
+                String servicio = rs.getString("nombre_servicio");
+                String producto = rs.getString("nombre_producto");
+                String montoTotal = rs.getString("monto_total");
 
-                // Agregar el mapa a la lista observable
-                facturaciones.add(facturacion);
+                // Agregar los datos como un array de Strings
+                resultados.add(new String[]{fecha, servicio, producto, montoTotal});
             }
         } catch (SQLException e) {
-            e.printStackTrace();  // Manejo de excepciones
+            e.printStackTrace();
         } finally {
-            if (connection != null) {
-                connection.close();  // Cerrar la conexión después de usarla
-            }
+            stmt.close();
+            connection.close();
         }
 
-        return facturaciones;  // Devolver la lista con los resultados
+        return resultados;
     }
 
     

@@ -113,7 +113,8 @@
             <TableView fx:id="tableViewServicios" layoutX="37.0" layoutY="27.0" prefHeight="360.0" prefWidth="1319.0">
 			    <columns>
 			        <TableColumn fx:id="columnFecha" prefWidth="322.66668701171875" text="FECHA" />
-			        <TableColumn fx:id="columnProductosServicios" minWidth="0.0" prefWidth="709.0" text="PRODUCTOS/SERVICIOS" />
+			        <TableColumn fx:id="columnProductos" minWidth="0.0" prefWidth="709.0" text="PRODUCTOS" />
+			        <TableColumn fx:id="columnServicios" minWidth="0.0" prefWidth="709.0" text="SERVICIOS" />
 			        <TableColumn fx:id="columnPrecio" prefWidth="286.0" text="PRECIO" />
 			    </columns>
 			</TableView>
