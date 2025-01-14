@@ -104,7 +104,7 @@
             </Label>
    
                <!-- Botón Crear -->
-               <Button fx:id="NuevoServicio" layoutX="978.0" layoutY="494.0" prefHeight="55.0" prefWidth="348.0" style="-fx-background-color: green; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="NUEVO SERVICIO">
+               <Button fx:id="btnNuevoServicio" layoutX="978.0" layoutY="494.0" prefHeight="55.0" prefWidth="348.0" style="-fx-background-color: green; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="NUEVO SERVICIO" >
                <font>
                   <Font size="24.0" />
                </font>

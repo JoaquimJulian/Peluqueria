@@ -1,61 +1,54 @@
 package application.controllers;
 
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 import application.Main;
-import application.models.Agenda;
-import application.models.Trabajador;
-import application.models.cobro;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TextField;
+import application.models.Cliente;  // Asegúrate de que Cliente esté correctamente importado
 
 public class CobroController {
-	
-	// BOTONES HEADER
-    @FXML
-    private ImageView calendario;
-    @FXML
-    private ImageView cerrar;
-    @FXML
-    private ImageView cobrar;
-    @FXML
-    private ImageView salir;
-    
-    
-    @FXML
-    private BorderPane diaAdmin;
-    @FXML
-    private BorderPane cobro;
-  
-    
-	private Main mainApp; // Referencia a Main
-	
-	
-	// Este método se llamará desde Main para establecer la referencia
+
+	// CobroController.java
+	@FXML
+	private TextField clienteNombreField;  // Este es el TextField donde mostrarás el nombre del cliente
+
+	 
+	 
+	private Main mainApp;  // Referencia a la aplicación principal
+
+    // Este método se llamará desde Main para establecer la referencia
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
-  
     
-    
+    public void setClienteNombre(String clienteNombre) {
+    		System.out.println("nombre del cliente 2: " + clienteNombre);
+    	    clienteNombreField.setText(clienteNombre); // Establece el nombre en el TextField
+    	}
+
+    // Método para cargar y mostrar el nombre del cliente
+    public void cargarNombreCliente() throws SQLException {
+    	
+    	
+    	// Obtén el nombre del cliente
+   	 Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
+       String clienteNombre = null;
+		try {
+			clienteNombre = Cliente.nombreCliente(cliente.getId());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+       
+       System.out.println("nombre del cliente4: " + clienteNombre);
+       // Llama a la función para mostrar la vista y pasar el nombre del cliente
+    }
+
+    // Método para manejar la acción del botón "Nuevo Servicio"
+    @FXML
+    public void onNuevoServicioClicked() throws SQLException {
+        // Al hacer clic en "Nuevo Servicio", cargar el nombre del cliente
+        cargarNombreCliente();
+    }
 }

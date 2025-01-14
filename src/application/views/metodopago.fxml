@@ -99,7 +99,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-                 <TextField fx:id="ClienteNombre" layoutX="575.0" layoutY="190.0" promptText="Ingrese el nombre" style="-fx-background-color: #E6E6E6; -fx-border-color: black;">
+                 <TextField fx:id="ClienteNombreField" layoutX="575.0" layoutY="190.0" promptText="Ingrese el nombre" style="-fx-background-color: #E6E6E6; -fx-border-color: black;">
                <font>
                   <Font size="18.0" />
                </font>

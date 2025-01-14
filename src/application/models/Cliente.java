@@ -138,6 +138,31 @@ public class Cliente {
         return resultados;
     }
 
+    public static String nombreCliente(int id_cliente) throws SQLException {
+        String resultados = null;  // Inicializamos la variable con null
+
+        Connection connection = databaseConection.getConnection();
+        
+        String sql = "SELECT nombre FROM clientes WHERE id_cliente = ?;";
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id_cliente);  // Establecer el id_cliente como parámetro en la consulta
+        
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                // Asignamos el valor de la columna 'nombre_cliente' al String resultados
+                resultados = rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            stmt.close();
+            connection.close();
+        }
+
+        return resultados;  // Retorna el nombre del cliente
+    }
+
     
     
 	public static void editarCliente(Integer id, String nombre, String apellido, Integer telefono, String email, Boolean lpd) {

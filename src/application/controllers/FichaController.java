@@ -10,10 +10,15 @@ import application.models.Serviciovendido;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 
 public class FichaController {
@@ -32,6 +37,8 @@ public class FichaController {
 
     @FXML
     private TableColumn<Serviciovendido, Double> columnPrecio;
+    @FXML
+    private Button btnNuevoServicio;
 
 private Main mainApp; // Referencia a Main
     
@@ -51,20 +58,32 @@ private Main mainApp; // Referencia a Main
         columnProductos.setCellValueFactory(new PropertyValueFactory<>("producto"));
         columnServicios.setCellValueFactory(new PropertyValueFactory<>("servicio"));
         columnPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        
+     // FichaController.java
+        btnNuevoServicio.setOnMouseClicked(event -> {
+            // Obtén el nombre del cliente
+        	 Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
+            String clienteNombre = null;
+			try {
+				clienteNombre = Cliente.nombreCliente(cliente.getId());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+            
+            System.out.println("nombre del cliente: " + clienteNombre);
+            // Llama a la función para mostrar la vista y pasar el nombre del cliente
+            mainApp.mostrarVista("metodopago.fxml", clienteNombre);
+        });
+
     }
 
     
     public void cargarDatos() throws SQLException {
-        if (mainApp == null) {
-            System.err.println("Error: mainApp no está inicializado.");
-            return;
-        }
+        
 
         Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
-        if (cliente == null) {
-            System.err.println("Error: No hay datos compartidos en mainApp.");
-            return;
-        }
+        
 
         // Obtener los datos desde el modelo (Método modificado en Cliente para obtener los datos)
         List<String[]> datos = Cliente.cargarDatos(cliente.getId());
@@ -86,6 +105,8 @@ private Main mainApp; // Referencia a Main
         // Cargar los datos en el TableView
         tableViewServicios.setItems(serviciosVendidos);
     }
+    
+    
 
 
 
