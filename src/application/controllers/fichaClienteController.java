@@ -7,6 +7,7 @@ import java.util.List;
 import application.Main;
 import application.models.Cliente;
 import application.models.Serviciovendido;
+import application.models.Trabajador;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -36,11 +38,13 @@ public class fichaClienteController {
     @FXML
     private ImageView cobrar;
     @FXML
-    private ImageView logIn;
+    private ImageView usuarios;
     @FXML
     private ImageView salir;
     @FXML
     private ImageView ficha;
+    @FXML
+	private Text nombreSesion;
 
 	@FXML
     private TableView<Serviciovendido> tableViewServicios;
@@ -76,12 +80,24 @@ public class fichaClienteController {
 
     @FXML
     public void initialize() {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText(trabajadorLogueado.getNombre());
+    	
+    	if (!trabajadorLogueado.isEsAdministrador()) {
+    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
+    		ajustes.setImage(imagenCliente);
+    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+    	}else {
+    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	}
+    	
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
+    	
+    	
     	
         // Configurar las columnas
         columnFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));

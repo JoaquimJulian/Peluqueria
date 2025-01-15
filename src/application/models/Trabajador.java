@@ -253,7 +253,9 @@ public class Trabajador {
                     rs.getBoolean("es_administrador"),
                     rs.getDouble("comision")
                 );
-                trabajadores.add(trabajador);
+                if (!rs.getString("nombre").equals("dreams")) {
+                    trabajadores.add(trabajador);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

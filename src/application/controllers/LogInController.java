@@ -65,7 +65,7 @@ public class LogInController {
         Trabajador trabajadores = new Trabajador();
 
         // Cargar usuarios desde la base de datos o modelo
-        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadores();
+        ObservableList<Trabajador> trabajador = trabajadores.getTrabajadoresActivos();
         tablaUsuarios.setItems(trabajador);
 
         columnaUsuarios.setCellValueFactory(new PropertyValueFactory<>("nombre"));
