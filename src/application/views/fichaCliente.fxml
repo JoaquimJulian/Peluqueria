@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.FichaController">
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.FichaController">
     
     <!-- Header -->
      <top>
@@ -60,7 +60,7 @@
                      </image>
                
                   </ImageView>
-                  <ImageView fitHeight="25.0" fitWidth="26.0" layoutX="1115.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="ficha" fitHeight="25.0" fitWidth="26.0" layoutX="1115.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ficha.png" />
                      </image>
@@ -84,16 +84,16 @@
                      </image>
                
                   </ImageView>
+               <Text layoutX="608.0" layoutY="119.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="FICHA CLIENTE" wrappingWidth="173.56719970703125" />
                </children>
             </AnchorPane>
          </top>
 
     <!-- Contenido central -->
     <center>
-        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
-            <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="FICHA CLIENTE" />
+        <VBox alignment="CENTER" prefHeight="686.0" prefWidth="1366.0" spacing="20" BorderPane.alignment="CENTER">
 
-            <AnchorPane prefWidth="400" style="-fx-background-color: #D9CCC7; -fx-background-radius: 10; -fx-padding: 20;">
+            <AnchorPane prefHeight="626.0" prefWidth="1366.0" style="-fx-background-color: #D9CCC7; -fx-background-radius: 10; -fx-padding: 20;">
                 <VBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" spacing="15" />
 
                  <!-- Campo Email -->
@@ -104,18 +104,18 @@
             </Label>
    
                <!-- Botón Crear -->
-               <Button fx:id="btnNuevoServicio" layoutX="978.0" layoutY="494.0" prefHeight="55.0" prefWidth="348.0" style="-fx-background-color: green; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="NUEVO SERVICIO" >
+               <Button fx:id="btnNuevoServicio" layoutX="908.0" layoutY="497.0" prefHeight="55.0" prefWidth="348.0" style="-fx-background-color: green; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="NUEVO SERVICIO">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
             <TextArea layoutX="41.0" layoutY="448.0" prefHeight="132.0" prefWidth="760.0" />
-            <TableView fx:id="tableViewServicios" layoutX="37.0" layoutY="27.0" prefHeight="360.0" prefWidth="1319.0">
+            <TableView fx:id="tableViewServicios" layoutX="37.0" layoutY="27.0" prefHeight="360.0" prefWidth="1284.0">
 			    <columns>
-			        <TableColumn fx:id="columnFecha" prefWidth="322.66668701171875" text="FECHA" />
-			        <TableColumn fx:id="columnProductos" minWidth="0.0" prefWidth="709.0" text="PRODUCTOS" />
-			        <TableColumn fx:id="columnServicios" minWidth="0.0" prefWidth="709.0" text="SERVICIOS" />
-			        <TableColumn fx:id="columnPrecio" prefWidth="286.0" text="PRECIO" />
+			        <TableColumn fx:id="columnFecha" prefWidth="302.39997482299805" text="FECHA" />
+			        <TableColumn fx:id="columnProductos" minWidth="0.0" prefWidth="327.2000427246094" text="PRODUCTOS" />
+			        <TableColumn fx:id="columnServicios" minWidth="0.0" prefWidth="428.53338623046875" text="SERVICIOS" />
+			        <TableColumn fx:id="columnPrecio" prefWidth="227.7332763671875" text="PRECIO" />
 			    </columns>
 			</TableView>
 
