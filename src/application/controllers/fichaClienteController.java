@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,7 +24,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 
-public class FichaController {
+public class fichaClienteController {
 	
 	// BOTONES HEADER
     @FXML
@@ -55,10 +56,13 @@ public class FichaController {
 
     @FXML
     private TableColumn<Serviciovendido, Double> columnPrecio;
+    
     @FXML
     private Button btnNuevoServicio;
+    @FXML
+    private Text nombreCliente;
 
-private Main mainApp; // Referencia a Main
+    private Main mainApp; // Referencia a Main
     
     
     
@@ -66,6 +70,7 @@ private Main mainApp; // Referencia a Main
     public void setMainApp(Main mainApp) throws SQLException {
         this.mainApp = mainApp;
         cargarDatos();
+        ponerNombreCliente();
     }
   
 
@@ -88,25 +93,16 @@ private Main mainApp; // Referencia a Main
         btnNuevoServicio.setOnMouseClicked(event -> {
             // Obtén el nombre del cliente
         	Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
-            String clienteNombre = null;
-			try {
-				clienteNombre = Cliente.nombreCliente(cliente.getId());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-            
-            // Llama a la función para mostrar la vista y pasar el nombre del cliente
-            mainApp.mostrarVista("metodopago.fxml", cliente);
+            mainApp.mostrarVista("cobro.fxml", cliente);
         });
-
+        
+        
     }
 
     
     public void cargarDatos() throws SQLException {
         
         Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
-        
 
         // Obtener los datos desde el modelo (Método modificado en Cliente para obtener los datos)
         List<String[]> datos = Cliente.cargarDatos(cliente.getId());
@@ -127,6 +123,17 @@ private Main mainApp; // Referencia a Main
 
         // Cargar los datos en el TableView
         tableViewServicios.setItems(serviciosVendidos);
+    }
+    
+    public void ponerNombreCliente() {
+        Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
+        String apellidoCliente = "";
+        
+        if (!cliente.getApellido().isEmpty()) {
+            apellidoCliente = cliente.getApellido();
+        }
+        
+        nombreCliente.setText("Ficha de " + cliente.getNombre() + " " + apellidoCliente);
     }
     
     

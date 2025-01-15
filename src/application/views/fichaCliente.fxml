@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.FichaController">
+<BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.fichaClienteController">
     
     <!-- Header -->
      <top>
@@ -84,7 +84,7 @@
                      </image>
                
                   </ImageView>
-               <Text layoutX="608.0" layoutY="119.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="FICHA CLIENTE" wrappingWidth="173.56719970703125" />
+               <Text fx:id="nombreCliente" layoutX="442.0" layoutY="108.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" textAlignment="CENTER" wrappingWidth="482.56719970703125" />
                </children>
             </AnchorPane>
          </top>
@@ -110,12 +110,12 @@
                </font>
             </Button>
             <TextArea layoutX="41.0" layoutY="448.0" prefHeight="132.0" prefWidth="760.0" />
-            <TableView fx:id="tableViewServicios" layoutX="37.0" layoutY="27.0" prefHeight="360.0" prefWidth="1284.0">
+            <TableView fx:id="tableViewServicios" layoutX="37.0" layoutY="27.0" prefHeight="360.0" prefWidth="1286.0">
 			    <columns>
 			        <TableColumn fx:id="columnFecha" prefWidth="302.39997482299805" text="FECHA" />
 			        <TableColumn fx:id="columnProductos" minWidth="0.0" prefWidth="327.2000427246094" text="PRODUCTOS" />
-			        <TableColumn fx:id="columnServicios" minWidth="0.0" prefWidth="428.53338623046875" text="SERVICIOS" />
-			        <TableColumn fx:id="columnPrecio" prefWidth="227.7332763671875" text="PRECIO" />
+			        <TableColumn fx:id="columnServicios" minWidth="0.0" prefWidth="399.0" text="SERVICIOS" />
+			        <TableColumn fx:id="columnPrecio" prefWidth="254.0" text="PRECIO" />
 			    </columns>
 			</TableView>
 

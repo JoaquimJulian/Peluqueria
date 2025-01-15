@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import application.models.Cliente;  // Asegúrate de que Cliente esté correctamente importado
 
-public class CobroController {
+public class cobroController {
 
 	// CobroController.java
 	@FXML
