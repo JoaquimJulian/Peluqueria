@@ -20,6 +20,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -71,6 +72,8 @@ public class fichaClienteController {
     @FXML
     private TableColumn<Facturacion, Double> columnPrecio;
     
+    @FXML
+	private TextField barraBusqueda;
     @FXML
     private Button btnNuevoServicio;
     @FXML
@@ -146,9 +149,12 @@ public class fichaClienteController {
     public void cargarDatos() throws SQLException {
         
         Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
-
         // Obtener los datos desde el modelo (Método modificado en Cliente para obtener los datos)
         ObservableList<Facturacion> datos = Facturacion.getFacturacionCliente(cliente.getId());
+        
+        ObservableList<Facturacion> filtroBusqueda = Facturacion.getFacturacionCliente(cliente.getId());
+        tableViewServicios.setItems(filtroBusqueda);
+        
         // Cargar los datos en el TableView
         tableViewServicios.setItems(datos);
         
@@ -160,6 +166,21 @@ public class fichaClienteController {
                 }
             }
         });
+        
+        
+        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroBusqueda.clear(); // Limpia el filtro antes de añadir nuevos elementos
+            for (Facturacion dato : datos) {
+                if (dato.getNombre_producto().toLowerCase().contains(newValue.toLowerCase()) ||
+                    dato.getNombre_servicio().toLowerCase().contains(newValue.toLowerCase()) ||
+                    dato.getFecha().toString().toLowerCase().contains(newValue.toLowerCase()) ||
+                    String.valueOf(dato.getMonto_total()).contains(newValue)) {
+                    filtroBusqueda.add(dato); // Añadir los elementos filtrados
+                }
+            }
+            tableViewServicios.setItems(filtroBusqueda); // Actualiza el TableView con los resultados filtrados
+        });
+
         
         
     }
