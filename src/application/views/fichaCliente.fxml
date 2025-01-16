@@ -124,7 +124,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <TextArea layoutX="41.0" layoutY="448.0" prefHeight="132.0" prefWidth="760.0" />
+            <TextArea fx:id="observaciones" layoutX="41.0" layoutY="448.0" prefHeight="132.0" prefWidth="760.0" />
             <TableView fx:id="tableViewServicios" layoutX="42.0" layoutY="72.0" prefHeight="312.0" prefWidth="1286.0">
 			    <columns>
 			        <TableColumn fx:id="columnFecha" prefWidth="302.39997482299805" text="FECHA" />
@@ -138,6 +138,11 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
+            <Button fx:id="guardarObservaciones" layoutX="583.0" layoutY="396.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="183.0" style="-fx-background-color: black; -fx-background-radius: 10; -fx-padding: 10 20;" text="Guardar Observaciones" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
 
             </AnchorPane>
         </VBox>

@@ -259,4 +259,23 @@ public class Producto {
         	
         return productos;
     }
+	
+	public static String nombreProducto(int id) throws SQLException {
+		String sql = "SELECT nombre_producto WHERE id_producto = ?";
+        Connection connection = databaseConection.getConnection();
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql);){
+        	stmt.setInt(1, id);
+        	try(ResultSet rs = stmt.executeQuery()) {
+        		if (rs.next()) {
+            		return rs.getString("nombre_producto");
+        		}
+        	}
+       
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+        return null;
+	}
 }

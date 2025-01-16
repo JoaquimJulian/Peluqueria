@@ -244,4 +244,23 @@ public class Servicio {
         	
         return servicios;
     }
+	
+	public static String nombreServicio(int id) throws SQLException {
+		String sql = "SELECT nombre_servicio WHERE id_servicio = ?";
+        Connection connection = databaseConection.getConnection();
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql);){
+        	stmt.setInt(1, id);
+        	try(ResultSet rs = stmt.executeQuery()) {
+        		if (rs.next()) {
+            		return rs.getString("nombre_servicio");
+        		}
+        	}
+       
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+        return null;
+	}
 }

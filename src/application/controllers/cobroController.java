@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -47,7 +48,8 @@ public class cobroController {
 	private CheckBox metodoBizum;
 	@FXML 
 	private ChoiceBox nombrePeluquero;
-	
+	@FXML 
+	private Button CobrarTodo;
 	 
 	private Main mainApp;  // Referencia a la aplicación principal
 
@@ -55,6 +57,7 @@ public class cobroController {
     public void setMainApp(Main mainApp) throws SQLException {
         this.mainApp = mainApp;
         cargarCliente();
+        datosCliente();
     }
     
     @FXML
@@ -92,7 +95,6 @@ public class cobroController {
     	// Asignar la lista de nombres al ChoiceBox
     	nombrePeluquero.setItems(nombresTrabajadores);
     	
-
     	
     }
 
@@ -100,6 +102,11 @@ public class cobroController {
     public void cargarCliente() throws SQLException {
    	 	Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
    	 	ClienteNombreField.setText(cliente.getNombre());
+    }
+    
+    public Cliente datosCliente() {
+   	 	Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
+    	return cliente;
     }
 
   
