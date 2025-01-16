@@ -7,7 +7,7 @@ import java.util.List;
 import application.Main;
 import application.models.Cliente;
 import application.models.Facturacion;
-import application.models.Serviciovendido;
+
 import application.models.Trabajador;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
