@@ -51,7 +51,9 @@ public class cobroController {
 
 	// CobroController.java
 	@FXML
-	private TextField ClienteNombreField;  // Este es el TextField donde mostrarás el nombre del cliente
+	private TextField ClienteNombreField; 
+	@FXML
+	private TextField precioTotalText;
 	@FXML 
 	private CheckBox metodoEfectivo;
 	@FXML 
@@ -87,9 +89,9 @@ public class cobroController {
 	@FXML
 	private TableColumn<Producto, String> productosAnadidosColumna;
 	@FXML
-	private TableView<Servicio> servicioAnadidosTabla;
+	private TableView<Servicio> serviciosAnadidosTabla;
 	@FXML
-	private TableColumn<Servicio, String> servicioAnadidosColumna;
+	private TableColumn<Servicio, String> serviciosAnadidosColumna;
 	
 	
 	private Main mainApp;  // Referencia a la aplicación principal
@@ -148,6 +150,17 @@ public class cobroController {
 				}
 			});
         	
+        	serviciosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        	
+        	serviciosAnadidosTabla.setOnMouseClicked(event -> {
+        	    Servicio servicioSeleccionado = serviciosAnadidosTabla.getSelectionModel().getSelectedItem();
+        	    if (servicioSeleccionado != null) {
+        	        quitarServicioAnadido(servicioSeleccionado);
+        	        restarPrecioServicio(servicioSeleccionado.getPrecio());
+        	        Platform.runLater(() ->serviciosAnadidosTabla.getSelectionModel().clearSelection());
+        	    }
+        	});
+        	
     	}
     	
     }
@@ -163,6 +176,8 @@ public class cobroController {
     	return cliente;
     }
     
+    private ObservableList<Servicio> serviciosYaAnadidos = FXCollections.observableArrayList();
+    private boolean servicioHaSidoAnadido = false;
     
     public void mostrarServicios() throws SQLException {
     	textoSeleccionarServicios.setVisible(true);
@@ -175,9 +190,58 @@ public class cobroController {
         ObservableList<Servicio> servicios = Servicio.getServicios();
 
     	serviciosCobrar.setItems(servicios);
-    	serviciosCobrar.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
     	
+    	serviciosCobrar.setOnMouseClicked(event -> {
+    		Servicio servicioSeleccionado = serviciosCobrar.getSelectionModel().getSelectedItem();
+    		
+    		if (servicioSeleccionado != null) {                
+                servicioHaSidoAnadido = false;
+                
+            	 // Funcion añadir servicio a la tabla de servicios añadidos
+
+                for (Servicio servicio : serviciosYaAnadidos) {
+                	if (servicioSeleccionado == servicio && !serviciosYaAnadidos.isEmpty()) {
+                		servicioHaSidoAnadido = true;
+                	}
+                }
+                if (servicioHaSidoAnadido == false) {
+                	anadirServicio(servicioSeleccionado);
+                    sumarPrecioServicio(servicioSeleccionado.getPrecio());
+                }
+                Platform.runLater(() ->serviciosCobrar.getSelectionModel().clearSelection());
+            }
+    	});
+    	
+    }
+    
+    private ObservableList<Servicio> serviciosAnadidos = FXCollections.observableArrayList();
+
+    public void anadirServicio(Servicio servicio) {
+            serviciosAnadidos.add(servicio);
+            serviciosAnadidosTabla.setItems(serviciosAnadidos);
+            serviciosYaAnadidos.add(servicio);
+    }
+    
+    public void quitarServicioAnadido(Servicio servicio) {
+    	serviciosAnadidos.remove(servicio);
+    	serviciosYaAnadidos.remove(servicio);
+    	for (Servicio servicioo : serviciosAnadidos) {
+    		System.out.println(servicioo);
+    	}
+    }
+    
+    private double precioTotal;
+    
+    public void sumarPrecioServicio(double precioProducto) {
+    	System.out.println("entra en suma");
+    	precioTotal += precioProducto;
+    	precioTotalText.setText(String.format("%.2f", precioTotal));
+    }
+    
+    public void restarPrecioServicio(double precioProducto) {
+    	System.out.println("entra en resta");
+    	precioTotal -= precioProducto;
+    	precioTotalText.setText(String.format("%.2f", precioTotal));
     }
     
     

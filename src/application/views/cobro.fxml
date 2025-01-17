@@ -136,12 +136,12 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="PrecioTotal" layoutX="1082.0" layoutY="373.0" text="Precio Total:">
+            <Label fx:id="precioTotal" layoutX="1082.0" layoutY="373.0" text="Precio Total:">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="precioTotal" layoutX="1056.0" layoutY="421.0" promptText="Precio Total" style="-fx-background-color: #E6E6E6; -fx-border-color: black;">
+            <TextField fx:id="precioTotalText" layoutX="1056.0" layoutY="421.0" promptText="Precio Total" style="-fx-background-color: #E6E6E6; -fx-border-color: black;">
                <font>
                   <Font size="18.0" />
                </font>
