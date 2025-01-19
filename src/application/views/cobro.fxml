@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -108,32 +108,31 @@
 
     <!-- Contenido central -->
     <center>
-        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
-            <Text style="-fx-font-size: 24px; -fx-font-weight: bold;" text="COBRAR" />
+        <VBox alignment="CENTER" prefHeight="490.0" prefWidth="1400.0" spacing="20" BorderPane.alignment="CENTER">
 
-            <AnchorPane prefWidth="400" style="-fx-background-color: #D9CCC7; -fx-background-radius: 10; -fx-padding: 20;">
+            <AnchorPane prefHeight="641.0" prefWidth="1400.0" style="-fx-background-color: #00000; -fx-background-radius: 10; -fx-padding: 20;">
                 <VBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" spacing="15" />
                  <!-- Campo Nombre -->
-                 <Label layoutX="644.0" layoutY="141.0" text="Cliente:">
+                 <Label layoutX="244.0" layoutY="11.0" text="Cliente:">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-                 <TextField fx:id="ClienteNombreField" layoutX="575.0" layoutY="190.0" promptText="Ingrese el nombre" style="-fx-background-color: #E6E6E6; -fx-border-color: black;">
+                 <TextField fx:id="ClienteNombreField" layoutX="220.0" layoutY="49.0" prefHeight="41.0" prefWidth="138.0" promptText="Ingrese el nombre" style="-fx-background-color: #E6E6E6; -fx-border-color: black;">
                <font>
                   <Font size="18.0" />
                </font>
             </TextField>
 
                  <!-- Campo Email -->
-                 <Label layoutX="604.0" layoutY="353.0" text="Metodo de pago:">
+                 <Label layoutX="652.0" layoutY="7.0" text="Metodo de pago:">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="Peluquero" layoutX="574.0" layoutY="14.0" text="Peluquero Principal:">
+            <Label fx:id="Peluquero" layoutX="16.0" layoutY="11.0" prefHeight="35.0" prefWidth="173.0" text="Peluquero Principal:">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Label fx:id="precioTotal" layoutX="1082.0" layoutY="373.0" text="Precio Total:">
@@ -146,14 +145,14 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <Button fx:id="anadirServicio" layoutX="461.0" layoutY="268.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="AÑADIR SERVICIO">
+            <Button fx:id="anadirServicio" layoutX="392.0" layoutY="15.0" prefHeight="55.0" prefWidth="170.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="AÑADIR SERVICIO">
                <font>
-                  <Font size="24.0" />
+                  <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="anadirProducto" layoutX="720.0" layoutY="268.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="AÑADIR PRODUCTO">
+            <Button fx:id="anadirProducto" layoutX="392.0" layoutY="79.0" prefHeight="55.0" prefWidth="170.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="AÑADIR PRODUCTO">
                <font>
-                  <Font size="24.0" />
+                  <Font size="14.0" />
                </font>
             </Button>
    
@@ -163,49 +162,43 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <ChoiceBox fx:id="nombrePeluquero" layoutX="572.0" layoutY="63.0" prefHeight="39.0" prefWidth="231.0" />
-            <CheckBox fx:id="metodoTarjeta" layoutX="634.0" layoutY="424.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="TARJETA">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="metodoBizum" layoutX="757.0" layoutY="424.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="BIZUM">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </CheckBox>
-            <CheckBox fx:id="metodoEfectivo" contentDisplay="TOP" layoutX="508.0" layoutY="423.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="123.0" text="EFECTIVO">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </CheckBox>
-            <TableView fx:id="serviciosCobrar" layoutX="20.0" layoutY="112.0" prefHeight="423.0" prefWidth="381.0" visible="false">
+            <ChoiceBox fx:id="nombrePeluquero" layoutX="17.0" layoutY="50.0" prefHeight="39.0" prefWidth="171.0" />
+            <TableView fx:id="serviciosCobrar" layoutX="20.0" layoutY="214.0" prefHeight="345.0" prefWidth="553.0" visible="false">
               <columns>
-                <TableColumn fx:id="nombreServicioCobrar" prefWidth="171.0" text="Servicios" />
-                <TableColumn fx:id="observacionServicioCobrar" prefWidth="209.0" text="Observacion" />
+                <TableColumn fx:id="nombreServicioCobrar" prefWidth="300.0" text="Servicios" />
+                <TableColumn fx:id="observacionServicioCobrar" prefWidth="251.0" text="Observacion" />
               </columns>
             </TableView>
-            <TextField fx:id="buscadorServicio" layoutX="30.0" layoutY="68.0" prefHeight="25.0" prefWidth="361.0" promptText="Buscar..." visible="false" />
-            <Label fx:id="textoSeleccionarServicios" layoutX="92.0" layoutY="20.0" prefWidth="253.0" text="Seleccionar servicios:" visible="false">
+            <TextField fx:id="buscadorServicio" layoutX="85.0" layoutY="179.0" prefHeight="25.0" prefWidth="361.0" promptText="Buscar..." visible="false" />
+            <Label fx:id="textoSeleccionarServicios" layoutX="139.0" layoutY="134.0" prefWidth="253.0" text="Seleccionar servicios:" visible="false">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="Peluquero11" layoutX="1000.0" layoutY="20.0" prefHeight="35.0" prefWidth="360.0" text="Servicios y productos añadidos:">
+            <Label fx:id="Peluquero11" layoutX="618.0" layoutY="169.0" prefHeight="35.0" prefWidth="360.0" text="Servicios y productos añadidos:">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <TableView fx:id="serviciosAnadidosTabla" layoutX="1023.0" layoutY="74.0" prefHeight="264.0" prefWidth="145.0">
+            <TableView fx:id="serviciosAnadidosTabla" layoutX="612.0" layoutY="214.0" prefHeight="347.0" prefWidth="165.0">
               <columns>
-                <TableColumn fx:id="serviciosAnadidosColumna" prefWidth="144.0" text="Servicios añadidos" />
+                <TableColumn fx:id="serviciosAnadidosColumna" prefWidth="164.0" text="Servicios añadidos" />
               </columns>
             </TableView>
-            <TableView fx:id="productosAnadidosTabla" layoutX="1167.0" layoutY="74.0" prefHeight="264.0" prefWidth="145.0">
+            <TableView fx:id="productosAnadidosTabla" layoutX="776.0" layoutY="214.0" prefHeight="348.0" prefWidth="188.0">
                <columns>
-                  <TableColumn fx:id="priodcutosAnadidosColumna" prefWidth="144.0" text="Productos añadidos" />
+                  <TableColumn fx:id="productosAnadidosColumna" prefWidth="187.0" text="Productos añadidos" />
                </columns>
             </TableView>
+            <TextArea layoutX="1020.0" layoutY="56.0" prefHeight="261.0" prefWidth="238.0" />
+            <TextField fx:id="efectivo" layoutX="627.0" layoutY="42.0" prefHeight="32.0" prefWidth="122.0" promptText="EFECTIVO" style="-fx-background-color: #E6E6E6; -fx-border-color: black;" />
+            <TextField fx:id="tarjeta" layoutX="627.0" layoutY="86.0" prefHeight="33.0" prefWidth="122.0" promptText="TARJETA" style="-fx-background-color: #E6E6E6; -fx-border-color: black;" />
+            <TextField fx:id="bizum" layoutX="766.0" layoutY="43.0" prefHeight="75.0" prefWidth="124.0" promptText="BIZUM" style="-fx-background-color: #E6E6E6; -fx-border-color: black;" />
+            <Label layoutX="1027.0" layoutY="15.0" text="Observaciones del servicio">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
             </AnchorPane>
         </VBox>
     </center>

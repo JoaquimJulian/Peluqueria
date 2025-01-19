@@ -1,5 +1,6 @@
 package application.controllers;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -23,13 +27,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import application.models.Cliente;  // Asegúrate de que Cliente esté correctamente importado
 import application.models.Facturacion;
 import application.models.Producto;
 import application.models.Trabajador;
+import javafx.stage.Stage;
 
 public class cobroController {
+	
+	 private Stage primaryStage;
 	
 	// BOTONES HEADER
     @FXML
@@ -66,8 +75,21 @@ public class cobroController {
 	private Button CobrarTodo;
 	@FXML 
 	private Button anadirServicio;
-	@FXML 
+	@FXML
 	private Button anadirProducto;
+
+	 @FXML
+	 private TextField codigo_barras;
+	
+	//rellenar producto
+	
+
+	    @FXML
+	    private TextField nombreProducto;
+
+	    @FXML
+	    private TextField precio_venta;
+	    
 	
 	// Tabla para agregar servicios 
 	
@@ -85,28 +107,47 @@ public class cobroController {
 	// Tabla de productos y servicios añadidos
 	
 	@FXML
-	private TableView<Producto> productosAnadidosTabla;
-	@FXML
-	private TableColumn<Producto, String> productosAnadidosColumna;
+    private TableView<Producto> productosAnadidosTabla;
+    @FXML
+    private TableColumn<Producto, String> productosAnadidosColumna;
+
+    private ObservableList<Producto> productosAnadidos = FXCollections.observableArrayList();
+    
+    private List<Producto> productosAnadidosColumna2 = new ArrayList<>();
+    
+
+
 	@FXML
 	private TableView<Servicio> serviciosAnadidosTabla;
 	@FXML
 	private TableColumn<Servicio, String> serviciosAnadidosColumna;
-	
 	
 	private Main mainApp;  // Referencia a la aplicación principal
 
     // Este método se llamará desde Main para establecer la referencia
     public void setMainApp(Main mainApp) throws SQLException {
         this.mainApp = mainApp;
-        cargarCliente();
+        
         datosCliente();
         initialize();
     }
     
     @FXML
     public void initialize() {
+    	
+    	productosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	productosAnadidosTabla.setItems(productosAnadidos);
+    	System.out.println("Se actualizaron los productos en la tabla, total productos: " + productosAnadidos.size());  // Depurar tamaño de la lista
+
+        
+    	
     	if (mainApp != null) {	
+    		productosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    		productosAnadidosTabla.setItems(productosAnadidos);
+
+    		productosAnadidosTabla.setItems(productosAnadidos);
+    		System.out.println("Se actualizaron los productos en la tabla, total productos: " + productosAnadidos.size());  // Depurar tamaño de la lista
+
     		Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
         	nombreSesion.setText(trabajadorLogueado.getNombre());
         	
@@ -123,6 +164,7 @@ public class cobroController {
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+        	anadirProducto.setOnMouseClicked(event -> mainApp.mostrarVista("cobrarProducto.fxml"));
         	
         	ObservableList<Trabajador> trabajadores = Trabajador.getTrabajadoresActivos();
         	    	
@@ -163,7 +205,13 @@ public class cobroController {
         	
     	}
     	
+    	
+    	
+    	
+    	
     }
+    
+
 
     // Método para cargar datos del cliente
     public void cargarCliente() throws SQLException {
@@ -244,8 +292,70 @@ public class cobroController {
     	precioTotalText.setText(String.format("%.2f", precioTotal));
     }
     
+    private void mostrarPopup() {
+        System.out.println("Botón 'AÑADIR PRODUCTO' pulsado.");
+    }
     
-    
+    public void mostrarVistaCobrarProducto() {
+        try {
+            // Cargar el archivo FXML para la vista CobrarProducto
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../views/cobrarProducto.fxml"));
+
+            // Crear el AnchorPane con el contenido de la vista CobrarProducto
+            AnchorPane cobrarProductoView = loader.load();
+
+            // Obtener el controlador de la vista cargada
+            cobrarProductoController controlador = loader.getController();
+            
+            // Pasar la referencia del controlador 'cobroController' al 'cobrarProductoController'
+            controlador.setCobroController(this);
+
+            // Establecer la nueva vista en el stage principal
+            Scene scene = new Scene(cobrarProductoView);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // En caso de error, imprimir el mensaje en consola
+        }
+    }
+
    
-  
+
+    
+    public void anadirProducto(Producto producto) {
+    	System.out.println("Se actualizaron los productos en la tabla, total productos: " + productosAnadidosColumna2.size());
+    	productosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+    	productosAnadidosTabla.setItems(productosAnadidos);
+
+        if (producto != null) {
+            productosAnadidos.add(producto);  // Añadir el producto a la lista
+            productosAnadidosTabla.setItems(productosAnadidos);
+            System.out.println("Producto añadido: " + producto.getNombre());
+        } else {
+            System.out.println("Error: El producto es nulo.");
+        }
+    }
+
+    private void actualizarTabla() {
+        System.out.println("Se actualizaron los productos en la tabla, total productos: " + productosAnadidosColumna2.size());
+        // Aquí deberías actualizar la interfaz gráfica para reflejar los cambios en la lista de productos.
+    }
+
+
+
+
+    
+    
+    
+
+    
+    public void sumarPrecioProducto(double precioProducto) {
+        precioTotal += precioProducto;
+        precioTotalText.setText(String.format("%.2f", precioTotal));
+    }
+
+
+    
 }
