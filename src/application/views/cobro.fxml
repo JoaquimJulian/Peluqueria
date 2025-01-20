@@ -2,7 +2,9 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -110,7 +112,7 @@
     <center>
         <VBox alignment="CENTER" prefHeight="490.0" prefWidth="1400.0" spacing="20" BorderPane.alignment="CENTER">
 
-            <AnchorPane prefHeight="641.0" prefWidth="1400.0" style="-fx-background-color: #00000; -fx-background-radius: 10; -fx-padding: 20;">
+            <AnchorPane prefHeight="641.0" prefWidth="1400.0" style="-fx-background-radius: 10; -fx-padding: 20;">
                 <VBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" spacing="15" />
                  <!-- Campo Nombre -->
                  <Label layoutX="244.0" layoutY="11.0" text="Cliente:">
@@ -199,6 +201,51 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
+            <AnchorPane fx:id="popupAnadirProductos" layoutX="401.0" layoutY="45.0" prefHeight="493.0" prefWidth="592.0" style="-fx-background-color: D9CCC7;" visible="false">
+               <children>
+                  <Text layoutX="37.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Código de barras:" textAlignment="CENTER" wrappingWidth="217.81512451171875">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="codigoBarras" layoutX="269.0" layoutY="38.0" prefHeight="34.0" prefWidth="294.0" />
+                  <TextField fx:id="precioProductoIndividual" layoutX="269.0" layoutY="254.0" prefHeight="34.0" prefWidth="86.0" />
+                  <Text layoutX="38.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:" textAlignment="CENTER" wrappingWidth="217.81512451171875">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="39.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio individual:" textAlignment="CENTER" wrappingWidth="217.81512451171875">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="39.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Precio total:" textAlignment="CENTER" wrappingWidth="217.81512451171875">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="precioProductoTotal" layoutX="269.0" layoutY="314.0" prefHeight="34.0" prefWidth="86.0" />
+                  <Text layoutX="39.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cantidad:" textAlignment="CENTER" wrappingWidth="217.81512451171875">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Spinner fx:id="cantidadProducto" layoutX="268.0" layoutY="383.0" prefHeight="35.0" prefWidth="82.0" />
+                  <Text layoutX="38.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descripcion:" textAlignment="CENTER" wrappingWidth="217.81512451171875">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <TextArea fx:id="descripcionProducto" layoutX="269.0" layoutY="161.0" prefHeight="61.0" prefWidth="296.0" />
+                  <Button fx:id="anadirProductoPopUp" layoutX="397.0" layoutY="360.0" prefHeight="55.0" prefWidth="170.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 10 20;" text="Añadir">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <ComboBox fx:id="nombreProducto" editable="true" layoutX="269.0" layoutY="100.0" prefHeight="34.0" prefWidth="295.0" promptText="nombreProducto" />
+               </children>
+            </AnchorPane>
             </AnchorPane>
         </VBox>
     </center>

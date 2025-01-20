@@ -1,6 +1,5 @@
 package application.controllers;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,34 +11,30 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import application.models.Cliente;  // Asegúrate de que Cliente esté correctamente importado
-import application.models.DatosCompartidos;
 import application.models.Facturacion;
 import application.models.Producto;
 import application.models.Trabajador;
-import javafx.stage.Stage;
 
 public class cobroController {
-	
-	private Stage primaryStage;
 	
 	// BOTONES HEADER
     @FXML
@@ -76,19 +71,8 @@ public class cobroController {
 	private Button CobrarTodo;
 	@FXML 
 	private Button anadirServicio;
-	@FXML
+	@FXML 
 	private Button anadirProducto;
-
-	 @FXML
-	 private TextField codigo_barras;
-	
-	//rellenar producto
-    @FXML
-    private TextField nombreProducto;
-
-    @FXML
-    private TextField precio_venta;
-	    
 	
 	// Tabla para agregar servicios 
 	
@@ -103,43 +87,62 @@ public class cobroController {
 	@FXML
 	private TableColumn<Servicio, String> observacionServicioCobrar;
 	
+	// Popup para añadir productos
+	
+	@FXML
+	private AnchorPane popupAnadirProductos;
+	@FXML
+	private TextField codigoBarras;
+	@FXML
+	private ComboBox nombreProducto;
+	@FXML
+	private TextArea descripcionProducto;
+	@FXML
+	private TextField precioProductoIndividual;
+	@FXML
+	private TextField precioProductoTotal;
+	@FXML
+	private Spinner<Integer> cantidadProducto;
+	@FXML
+	private Button anadirProductoPopUp;
+	
+	private Producto producto;
+	
+	private Double precioTotalProductos = 0.0;
+	
+	private Integer cantidadProductosIguales = 0;
+	
+    private ObservableList<Producto> productosAnadidos = FXCollections.observableArrayList();
+
+	
 	// Tabla de productos y servicios añadidos
 	
 	@FXML
-    private TableView<Producto> productosAnadidosTabla;
-    @FXML
-    private TableColumn<Producto, String> productosAnadidosColumna;
-    
-    private ObservableList<Producto> productosAnadidos = FXCollections.observableArrayList();
-
-
-
+	private TableView<Producto> productosAnadidosTabla;
+	@FXML
+	private TableColumn<Producto, String> productosAnadidosColumna;
 	@FXML
 	private TableView<Servicio> serviciosAnadidosTabla;
 	@FXML
 	private TableColumn<Servicio, String> serviciosAnadidosColumna;
+	
+    private ObservableList<Servicio> serviciosAnadidos = FXCollections.observableArrayList();
+
+	
+    private double precioTotal;
 	
 	private Main mainApp;  // Referencia a la aplicación principal
 
     // Este método se llamará desde Main para establecer la referencia
     public void setMainApp(Main mainApp) throws SQLException {
         this.mainApp = mainApp;
-        Object datos = mainApp.getDatosCompartidos();
-
-        if(datos instanceof DatosCompartidos) {
-        	System.out.println("entra en el primer if");
-        	recibirDatos();
-        }else {
-        	cargarCliente();
-        	datosCliente();
-        }
-    
+        cargarCliente();
+        datosCliente();
         initialize();
     }
     
     @FXML
     public void initialize() {
-
     	if (mainApp != null) {	
     		Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
         	nombreSesion.setText(trabajadorLogueado.getNombre());
@@ -157,7 +160,6 @@ public class cobroController {
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-        	anadirProducto.setOnMouseClicked(event -> anadirProducto());
         	
         	ObservableList<Trabajador> trabajadores = Trabajador.getTrabajadoresActivos();
         	    	
@@ -195,20 +197,37 @@ public class cobroController {
         	        restarPrecioServicio(servicioSeleccionado.getPrecio());
         	        Platform.runLater(() ->serviciosAnadidosTabla.getSelectionModel().clearSelection());
         	    }
-        	});	
+        	});
         	
         	// LOGICA PRODUCTOS
-        	if (recibirDatos().getProducto() != null) {
-        		productosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        		productosAnadidos.add(recibirDatos().getProducto());
-        		productosAnadidosTabla.setItems(productosAnadidos);
-        		serviciosAnadidos.addAll(recibirDatos().getServicios());
-        		serviciosAnadidosTabla.setItems(serviciosAnadidos);
-        	}
+        	
+        	productosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        	
+        	anadirProducto.setOnMouseClicked(event -> popupAnadirProductos.setVisible(true));
+        	codigoBarras.textProperty().addListener((observable, oldValue, newValue) -> {
+                // Si el código de barras no está vacío
+                if (!newValue.isEmpty()) {
+                    try {
+                        // Llamar a la función para rellenar los datos del producto
+                        rellenarDatosProducto(newValue);
+                    } catch (NumberFormatException e) {
+                        System.out.println("El código de barras debe ser un número válido.");
+                    }
+                } 
+            });
+        	anadirProductoPopUp.setOnMouseClicked(event -> anadirProducto(producto));
+        		
+        	productosAnadidosTabla.setOnMouseClicked(event -> {
+        	    Producto productoSeleccionado = productosAnadidosTabla.getSelectionModel().getSelectedItem();
+        	    if (productoSeleccionado != null) {
+        	        quitarProductoAnadido(productoSeleccionado);
+        	        restarPrecioProducto(productoSeleccionado.getPrecioVenta());
+        	        Platform.runLater(() ->productosAnadidosTabla.getSelectionModel().clearSelection());
+        	    }
+        	});
     	}
+    	
     }
-    
-
 
     // Método para cargar datos del cliente
     public void cargarCliente() throws SQLException {
@@ -217,20 +236,12 @@ public class cobroController {
     }
     
     public Cliente datosCliente() {
-        // Obtener el objeto compartido desde Main
-        Object datosCompartidos = mainApp.getDatosCompartidos();
-        
-        System.out.println("Tipo recibido: " + datosCompartidos.getClass().getName());
-
-        // Verificamos que el objeto sea del tipo Cliente
-        if (datosCompartidos instanceof Cliente) {
-            return (Cliente) datosCompartidos; // Si es Cliente, lo devolvemos
-        } else {
-            // En caso de que no sea Cliente, mostramos un mensaje de error
-            System.out.println("El objeto no es un Cliente. Tipo recibido: " + datosCompartidos.getClass().getName());
-            return null; // O lanza una excepción, dependiendo de lo que necesites hacer
-        }
+   	 	Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
+    	return cliente;
     }
+    
+    
+    // LOGICA SERVICIOS
     
     private ObservableList<Servicio> serviciosYaAnadidos = FXCollections.observableArrayList();
     private boolean servicioHaSidoAnadido = false;
@@ -270,86 +281,88 @@ public class cobroController {
     	
     }
     
-    private ObservableList<Servicio> serviciosAnadidos = FXCollections.observableArrayList();
-
     public void anadirServicio(Servicio servicio) {
-            serviciosAnadidos.add(servicio);
-            serviciosAnadidosTabla.setItems(serviciosAnadidos);
-            serviciosYaAnadidos.add(servicio);
+        serviciosAnadidos.add(servicio);
+        serviciosAnadidosTabla.setItems(serviciosAnadidos);
+        serviciosYaAnadidos.add(servicio);
     }
     
     public void quitarServicioAnadido(Servicio servicio) {
     	serviciosAnadidos.remove(servicio);
     	serviciosYaAnadidos.remove(servicio);
-    	for (Servicio servicioo : serviciosAnadidos) {
-    		System.out.println(servicioo);
-    	}
     }
     
-    private double precioTotal;
     
-    public void sumarPrecioServicio(double precioProducto) {
-    	precioTotal += precioProducto;
+    public void sumarPrecioServicio(double precioServicio) {
+    	precioTotal += precioServicio;
     	precioTotalText.setText(String.format("%.2f", precioTotal));
     }
     
-    public void restarPrecioServicio(double precioProducto) {
-    	precioTotal -= precioProducto;
+    public void restarPrecioServicio(double precioServicio) {
+    	precioTotal -= precioServicio;
     	precioTotalText.setText(String.format("%.2f", precioTotal));
     }
     
-    public Producto datosProducto() {
-        Object datosCompartidos = mainApp.getDatosCompartidos();
-        
-        if (datosCompartidos instanceof Producto) {
-            return (Producto) datosCompartidos;
-        } else {
-            return null; // O lanza una excepción, según sea necesario
-        }
-    }
+    // LOGICA PRODUCTOS
     
-    
-    public void anadirProducto() {
-    	if (!serviciosAnadidos.isEmpty()) {
-    		mainApp.mostrarVista("cobrarProducto.fxml", serviciosAnadidos);
-    	}else {
-    		mainApp.mostrarVista("cobrarProducto.fxml");
-    	}
-    }
-    
-    public DatosCompartidos recibirDatos() {
-        // Obtener los datos compartidos desde Main
-        DatosCompartidos datos = (DatosCompartidos) mainApp.getDatosCompartidos();
-        
-        // Verificar si los datos no son nulos
-        if (datos != null) {
-            Producto producto = datos.getProducto();
-            ObservableList<Servicio> servicios = datos.getServicios();
-
-            for (Servicio servicio : servicios) {
-                System.out.println(servicio.getNombre());
+    public Producto rellenarDatosProducto(String codigo_barras) {
+        try {
+            producto = Producto.buscarPorCodigoBarras(codigo_barras);  // Asignar el producto encontrado a la variable miembro
+            
+            if (producto != null) {
+                nombreProducto.setValue(producto.getNombre());
+                descripcionProducto.setText(producto.getDescripcion());
+                precioProductoIndividual.setText(String.valueOf(producto.getPrecioVenta()));
+                precioTotalProductos = producto.getPrecioVenta();
+                precioProductoTotal.setText(String.valueOf(precioTotalProductos));
+                SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory =
+                        new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 50, 1);
+                cantidadProducto.setValueFactory(valueFactory);
+                
+                cantidadProducto.valueProperty().addListener((observable, oldValue, newValue) -> {
+                	cantidadProductosIguales = newValue;
+                    int cantidad = newValue;  
+                    double total = producto.getPrecioVenta() * cantidad; 
+                    precioTotalProductos = total;
+                    precioProductoTotal.setText(String.valueOf(precioTotalProductos));  
+                });
+                
+                return producto;
+            } else {
+                System.out.println("Producto no encontrado.");  // Si no se encuentra el producto
+                return null;
             }
-            return datos;
-        } else {
-            System.out.println("No hay datos disponibles.");
+        } catch (SQLException e) {
+            System.err.println("Error al consultar el producto: " + e.getMessage());  // Depurar error SQL
             return null;
         }
     }
     
-    
-   /*
-    
-
-    private void actualizarTabla() {
-        System.out.println("Se actualizaron los productos en la tabla, total productos: " + productosAnadidosColumna2.size());
-        // Aquí deberías actualizar la interfaz gráfica para reflejar los cambios en la lista de productos.
+    public void anadirProducto(Producto producto) {
+    	for (int i = 0; i<cantidadProductosIguales; i++) {
+    		productosAnadidos.add(producto);
+    	}
+        productosAnadidosTabla.setItems(productosAnadidos);
+        cantidadProductosIguales = 0;
+        
+        sumarPrecioProducto(precioTotalProductos);
+        precioTotalProductos = 0.0;
+        
+        popupAnadirProductos.setVisible(false);
     }
     
     public void sumarPrecioProducto(double precioProducto) {
-        precioTotal += precioProducto;
-        precioTotalText.setText(String.format("%.2f", precioTotal));
-    } */
-
-
+    	precioTotal += precioProducto;
+    	precioTotalText.setText(String.format("%.2f", precioTotal));
+    }
     
+    public void restarPrecioProducto(double precioProducto) {
+    	precioTotal -= precioProducto;
+    	precioTotalText.setText(String.format("%.2f", precioTotal));
+    }
+    
+    public void quitarProductoAnadido(Producto producto) {
+    	productosAnadidos.remove(producto);
+    }
+  
 }
