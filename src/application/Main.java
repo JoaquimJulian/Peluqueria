@@ -53,18 +53,6 @@ public class Main extends Application {
                 method.invoke(controller, this);
             }
 
-            // Si la vista es "cobro.fxml", también necesitamos establecer el cobroController en "cobrarProductoController"
-            if (vista.equals("cobro.fxml")) {
-                // Obtener los controladores de las vistas
-                cobroController cobroCtrl = loader.getController();  // Obtener el controlador de la vista "cobro.fxml"
-                FXMLLoader loaderCobrarProducto = new FXMLLoader(getClass().getResource("/application/views/cobrarProducto.fxml"));
-                loaderCobrarProducto.load();
-                cobrarProductoController cobrarProductoCtrl = loaderCobrarProducto.getController();  // Obtener el controlador de la vista "cobrarProducto.fxml"
-                
-                // Establecer la referencia de cobroController en cobrarProductoController
-                cobrarProductoCtrl.setCobroController(cobroCtrl);  
-            }
-
             primaryStage.show();  // Mostrar la ventana
 
         } catch (Exception e) {

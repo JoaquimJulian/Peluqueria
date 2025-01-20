@@ -102,10 +102,15 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
                   </ImageView>
+            <Text fx:id="nombreSesion" layoutX="605.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="156.53668212890625">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
                </children>
             </AnchorPane>
          </top>
-    <center>
+   <left>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
                 <Text layoutX="553.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cobrar producto" textAlignment="CENTER" wrappingWidth="309.1973876953125">
@@ -135,7 +140,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font></Text>
                         <TextField fx:id="cantidad_producto" layoutX="186.0" layoutY="258.0" prefHeight="31.0" prefWidth="81.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
-                      <Button fx:id="AnadirProducto" layoutX="99.0" layoutY="306.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="176.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Añadir Producto" textFill="WHITE" onAction="#anadirProducto">
+                      <Button fx:id="anadirProducto" layoutX="99.0" layoutY="306.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="176.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Añadir Producto" textFill="WHITE">
 				   
 					    <font>
 					        <Font name="System Bold" size="18.0" />
@@ -152,5 +157,5 @@
                   <TextField fx:id="codigo_barras" layoutX="164.0" layoutY="389.0" prefHeight="31.0" prefWidth="318.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
             </children>
         </AnchorPane>
-    </center>
+   </left>
 </BorderPane>

@@ -206,7 +206,7 @@ public class Trabajador {
     }
 
     // Método para obtener la lista de todos los trabajadores de la base de datos
-    public static ObservableList<Trabajador> getTrabajadores() {
+    public ObservableList<Trabajador> getTrabajadores() {
         ObservableList<Trabajador> trabajadores = FXCollections.observableArrayList();
         String sql = "SELECT * FROM trabajadores";
 

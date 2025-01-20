@@ -284,7 +284,6 @@ public class Producto {
 	
 	
 	public static Producto buscarPorCodigoBarras(String codigo_barras) throws SQLException {
-	    System.out.println("Código de barras: " + codigo_barras);
 	    
 	    Connection conexion = null;
 	    PreparedStatement stmt = null;
@@ -294,7 +293,6 @@ public class Producto {
 	        conexion = databaseConection.getConnection(); // Asegúrate de usar tu conexión correctamente
 	        String query = "SELECT * FROM productos WHERE codigo_barras = ?";
 	        
-	        System.out.println("Consulta SQL: " + query);
 	        stmt = conexion.prepareStatement(query);
 	        stmt.setString(1, codigo_barras.trim()); // Usamos setString para tipo varchar
 	        rs = stmt.executeQuery();

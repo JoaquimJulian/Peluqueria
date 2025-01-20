@@ -54,7 +54,7 @@ public class AgendaController {
     @FXML
     private Button expandirReserva;
     @FXML
-    private Button vaciarReserva; 
+    private Button vaciarReserva; // Nuevo botón agregado
     @FXML
     private Label nombreFecha;
   

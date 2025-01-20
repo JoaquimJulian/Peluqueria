@@ -16,7 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import application.models.DatosCompartidos;
 import application.models.Producto;
+import application.models.Servicio;
 import application.models.Trabajador;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;  // Importante para MouseEvent
@@ -53,7 +55,7 @@ public class cobrarProductoController {
 	 @FXML
 	 private TextField cantidad_producto;
 	 @FXML
-	private Button anadirProducto;
+	 private Button anadirProducto;
 	 
 	 @FXML
 	 private TableView<Producto> productosAnadidosTabla;
@@ -61,67 +63,71 @@ public class cobrarProductoController {
 	 private TableColumn<Producto, String> productosAnadidosColumna;
 
 	 private ObservableList<Producto> productosAnadidos = FXCollections.observableArrayList();  // Lista de productos añadidos
-	 private Producto producto;
-
+	
+	 private ObservableList<Servicio> serviciosAnadidos = FXCollections.observableArrayList();
 	
 	
 	private Main mainApp;  // Referencia a la aplicación principal
-	private cobroController cobroController;
+	// private cobroController cobroController;
 
     // Este método se llamará desde Main para establecer la referencia
     public void setMainApp(Main mainApp) throws SQLException {
         this.mainApp = mainApp;
-      
         initialize();
     }
     
     @FXML
     public void initialize() {
-    	
-    
-    	System.out.println("Inicializando controlador de cobrarProducto...");
-        
-        // Detectar cuando cambia el texto en el campo de código de barras
-        codigo_barras.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Si el código de barras no está vacío
-            if (!newValue.isEmpty()) {
-                try {
-                    // Llamar a la función para rellenar los datos del producto
-                    rellenarDatosProducto(newValue);
-                } catch (NumberFormatException e) {
-                    System.out.println("El código de barras debe ser un número válido.");
-                }
-            } else {
-                // Limpiar los campos si el código de barras está vacío
-                nombreProducto.clear();
-                descripcionProducto.clear();
-                precio_venta.clear();
-                cantidad_producto.clear();
-            }
-        });
-
         if (mainApp != null) {
-            Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+        	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
             nombreSesion.setText(trabajadorLogueado.getNombre());
             cerrar.setOnMouseClicked(event -> { Platform.exit(); });
             usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
             calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
             ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
             salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+            
+            // Detectar cuando cambia el texto en el campo de código de barras
+            codigo_barras.textProperty().addListener((observable, oldValue, newValue) -> {
+                // Si el código de barras no está vacío
+                if (!newValue.isEmpty()) {
+                    try {
+                        // Llamar a la función para rellenar los datos del producto
+                        rellenarDatosProducto(newValue);
+                    } catch (NumberFormatException e) {
+                        System.out.println("El código de barras debe ser un número válido.");
+                    }
+                } else {
+                    // Limpiar los campos si el código de barras está vacío
+                    nombreProducto.clear();
+                    descripcionProducto.clear();
+                    precio_venta.clear();
+                    cantidad_producto.clear();
+                }
+            });
+            
+            anadirProducto.setOnMouseClicked(event -> {
+				try {
+					anadirProducto();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+            
+            if (mainApp.getDatosCompartidos() != null) {
+                serviciosAnadidos.addAll((ObservableList<Servicio>) mainApp.getDatosCompartidos());
+            }
         }
     }
-
 
 
  // Método que rellena los datos del producto
     public void rellenarDatosProducto(String codigo_barras) {
         try {
-            System.out.println("Buscando producto con código de barras: " + codigo_barras);  // Depurar código de barras
-            producto = Producto.buscarPorCodigoBarras(codigo_barras);  // Asignar el producto encontrado a la variable miembro
+            Producto producto = Producto.buscarPorCodigoBarras(codigo_barras);  // Asignar el producto encontrado a la variable miembro
             
             if (producto != null) {
-                System.out.println("Producto encontrado: " + producto.getNombre());
-                System.out.println(producto);
                 nombreProducto.setText(producto.getNombre());
                 descripcionProducto.setText(producto.getDescripcion());
                 precio_venta.setText(String.valueOf(producto.getPrecioVenta()));
@@ -138,50 +144,19 @@ public class cobrarProductoController {
         }
     }
 
-
-    
-
-    
-    // Método para añadir el producto a la lista
-    public void anadirProductoALista() {
-        if (cobroController != null && producto != null) {
-            cobroController.anadirProducto(producto);  // Pasar el producto a cobroController
-        } else {
-            System.out.println("Error: cobroController o producto es nulo.");
-        }
-    }
-
     @FXML
-    public void anadirProducto() {
-    	System.out.println("Producto." + producto);
-        // Si el producto ya ha sido recuperado y existe, lo añades al cobroController
-        if (producto != null) {
-            // Asegurarse de que el controlador de cobro está configurado y añadir el producto
-            if (cobroController != null) {
-                cobroController.anadirProducto(producto);  // Pasar el producto ya recuperado
-            }
+    public void anadirProducto() throws SQLException {
+    	Producto producto = Producto.buscarPorCodigoBarras(codigo_barras.getText());
+    	// Suponiendo que tienes la lista de servicios añadidos
+        ObservableList<Servicio> serviciosActuales = FXCollections.observableArrayList(serviciosAnadidos);
 
-            // Limpiar los campos después de añadir el producto
-            nombreProducto.clear();
-            descripcionProducto.clear();
-            precio_venta.clear();
-            cantidad_producto.clear();
+        // Crea el contenedor con el producto y los servicios
+        DatosCompartidos datos = new DatosCompartidos(producto, serviciosActuales);
 
-            // Cambiar a la vista de cobro (cobro.fxml)
-            if (mainApp != null) {
-                mainApp.mostrarVista("cobro.fxml");  // Asegúrate de que "mostrarVista" cargue la vista correcta
-            }
-        } else {
-            System.out.println("No se ha encontrado un producto válido para añadir.");
-        }
+        // Envía el contenedor al siguiente controlador
+        mainApp.mostrarVista("cobro.fxml", datos);
     }
 
-
-
-    public void setCobroController(cobroController cobroController) {
-        this.cobroController = cobroController;
-        System.out.println("cobroController recibido en cobrarProductoController.");
-    }
 
 
 
