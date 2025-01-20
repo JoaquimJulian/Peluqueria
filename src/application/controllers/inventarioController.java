@@ -72,6 +72,7 @@ public class inventarioController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));

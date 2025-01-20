@@ -19,15 +19,19 @@ public class Cliente {
     private int telefono;
     private String email;
     private boolean lpd;
+    private String observaciones;
 
-    // Constructor
-    public Cliente(int id, String nombre, String apellido, int telefono, String email, boolean lpd) {
+  
+
+	// Constructor
+    public Cliente(int id, String nombre, String apellido, int telefono, String email, boolean lpd, String observaciones) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.telefono = telefono;
         this.email = email;
         this.lpd = lpd;
+        this.observaciones = observaciones;
     }
 
     // Getters y Setters
@@ -79,6 +83,14 @@ public class Cliente {
         this.lpd = lpd;
     }
     
+    public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+	
     public static void crearCliente(String nombre, String apellido, Integer telefono, String email, Boolean lpd) {
 		String sql = "INSERT INTO clientes (nombre, apellidos, telefono, email, lpd) VALUES (?, ?, ?, ?, ?)";
 		
@@ -108,7 +120,7 @@ public class Cliente {
         
         Connection connection = databaseConection.getConnection();
 
-        String sql = "SELECT f.fecha, s.nombre_servicio AS nombre_servicio, p.nombre_producto AS nombre_producto, f.monto_total " +
+        String sql = "SELECT f.fecha, s.nombre_servicio AS nombre_servicio, p.nombre_producto AS nombre_producto, f.monto_total, f.observacion_facturacion " +
                      "FROM facturacion f " +
                      "LEFT JOIN servicios s ON f.id_servicio = s.id_servicio " +
                      "LEFT JOIN productos p ON f.id_producto = p.id_producto " +
@@ -124,9 +136,10 @@ public class Cliente {
                 String servicio = rs.getString("nombre_servicio");
                 String producto = rs.getString("nombre_producto");
                 String montoTotal = rs.getString("monto_total");
+                String observacionFacturacion = rs.getString("observacion_facturacion");
 
                 // Agregar los datos como un array de Strings
-                resultados.add(new String[]{fecha, servicio, producto, montoTotal});
+                resultados.add(new String[]{fecha, servicio, producto, montoTotal, observacionFacturacion});
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -217,7 +230,8 @@ public class Cliente {
                     rs.getString("apellidos"),
                     rs.getInt("telefono"),
                     rs.getString("email"),
-                    rs.getBoolean("lpd")
+                    rs.getBoolean("lpd"),
+                    rs.getString("observaciones")
                 ));
             }
         	
@@ -227,5 +241,26 @@ public class Cliente {
         	
         return clientes;
     }
+	
+	public static boolean guardarObservaciones(String observaciones, int id) throws SQLException {
+		String sql = "UPDATE clientes SET observaciones = ? WHERE id_cliente = ?";
+		boolean exitoso = false;
+		try (Connection connection = databaseConection.getConnection();
+	             PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+	            // Establecemos los parámetros del PreparedStatement
+	            stmt.setString(1, observaciones);
+	            stmt.setInt(2, id);
+	        
+	            // Ejecutamos la inserción
+	            stmt.executeUpdate();
+	            exitoso = true;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.println("Error al guardar la observacion: " + e.getMessage());
+	        }
+        
+		return exitoso;
+	}
     
 }

@@ -174,6 +174,7 @@ public class trabajadoresController {
             }
         });
     }
+    
 
     private void desactivarTrabajador(Trabajador trabajador) {
         trabajador.desactivarTrabajador(trabajador.getId());

@@ -128,6 +128,8 @@ public class clientesController {
     private void cargarCliente() throws SQLException {
         ObservableList<Cliente> clientes = Cliente.getClientes();
         tablaClientes.setItems(clientes);
+        ObservableList<Cliente> filtroBusqueda = FXCollections.observableArrayList(clientes);
+        tablaClientes.setItems(filtroBusqueda);
         
         tablaClientes.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) { // Verifica si son 2 clics
@@ -138,6 +140,18 @@ public class clientesController {
             }
         });
 
+        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtroBusqueda.clear();
+            for (Cliente cliente : clientes) {
+            	if (cliente.getNombre().toLowerCase().contains(newValue.toLowerCase()) ||
+            		    cliente.getApellido().toLowerCase().contains(newValue.toLowerCase()) ||
+            		    cliente.getEmail().toLowerCase().contains(newValue.toLowerCase()) || // Corrección aquí
+            		    String.valueOf(cliente.getTelefono()).contains(newValue)) {
+            		    filtroBusqueda.add(cliente);
+            		}
+
+            }
+        });
 
         
     }
