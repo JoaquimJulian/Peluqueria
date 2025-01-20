@@ -1,12 +1,27 @@
 package application.controllers;
 
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import application.Main;
+import application.models.Agenda;
+import application.models.Trabajador;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
@@ -15,27 +30,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-import application.Main;
-import application.models.Agenda;
-import application.models.Trabajador;
-import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-
 public class diaAdminController {
-	
-	// BOTONES HEADER
+
+    // HEADER ELEMENTS
     @FXML
     private ImageView calendario;
-    @FXML
-    private ImageView ajustes;
     @FXML
     private ImageView cerrar;
     @FXML
@@ -45,9 +44,8 @@ public class diaAdminController {
     @FXML
     private ImageView salir;
     @FXML
-    private ImageView ficha;
-    
-    
+    private Label nombreSesion;
+
     @FXML
     private BorderPane diaAdmin;
     @FXML
@@ -57,336 +55,260 @@ public class diaAdminController {
     @FXML
     private Button expandirReserva;
     @FXML
-    private Label nombreFecha;
+    private Button vaciarReserva;
     @FXML
-    private Text nombreSesion;
-   
-    
-    
-    String descripcion = "";
-  
-	private Main mainApp; // Referencia a Main
-    
-	// Este método se llamará desde Main para establecer la referencia
+    private Button verEstadisticas;
+    @FXML
+    private Label nombreFecha;
+
+    private Main mainApp;
+    private Trabajador trabajadorLogueado;
+    private String descripcion = "";
+
     public void setMainApp(Main mainApp) {
         this.mainApp = mainApp;
     }
-  
+
     @FXML
     public void initialize() throws SQLException {
-    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
-    	nombreSesion.setText(trabajadorLogueado.getNombre());
-    	
-    	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
-    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
-    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
-    	if (!trabajadorLogueado.isEsAdministrador()) {
-    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
-    		ajustes.setImage(imagenCliente);
-    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-    	}else {
-    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-    	}
-    	
-    	
-    	crearTabla(LocalDate.now());
-    	calendarioAgenda.setValue(LocalDate.now());
-		calendarioAgenda.getValue();
-    	calendarioAgenda.valueProperty().addListener((observable, oldValue, newValue) -> {
-    	    if (newValue != null) {
-    	        try {
-					crearTabla(newValue);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} // Método para actualizar los datos
-    	    }
-    	});
-    	
-    	if (expandirReserva != null) {
+        trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+        if (trabajadorLogueado != null) {
+            nombreSesion.setText(trabajadorLogueado.getNombre());
+        } else {
+            System.err.println("No se encontró un trabajador logueado.");
+        }
 
-            expandirReserva.setFocusTraversable(false); // Evita que el botón tome el foco
+        cerrar.setOnMouseClicked(event -> Platform.exit());
+        logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+        cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
 
+        calendarioAgenda.setValue(LocalDate.now());
+        actualizarTabla(LocalDate.now());
+
+        calendarioAgenda.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                actualizarTabla(newValue);
+            }
+        });
+
+        if (verEstadisticas != null) {
+            verEstadisticas.setOnAction(event -> mostrarVistaEstadisticas());
+        }
+
+        if (expandirReserva != null) {
             expandirReserva.setOnAction(event -> onExpandirReserva());
+        }
 
+        if (vaciarReserva != null) {
+            vaciarReserva.setOnAction(event -> onVaciarReserva());
         }
     }
-    
-    
+
+    private void actualizarTabla(LocalDate fechaSeleccionada) {
+        try {
+            hboxAgenda.getChildren().clear();
+            crearTabla(fechaSeleccionada);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 public void crearTabla(LocalDate fechaSeleccionada) throws SQLException {
-    	
-    	// Poner fecha en escrito al lado del date picker
-    	DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new Locale("es", "ES"));
-    	String fechaFormateada = fechaSeleccionada.format(formatoFecha);
-    	nombreFecha.setText(fechaFormateada);
-    	
-    	hboxAgenda.getChildren().removeIf(node -> node instanceof VBox); //eliminar todos los vbox del hbox cuando cambiamos de fecha
-    	
-    	Trabajador trabajador = new Trabajador();
-    	
-    	String[] horas= {
+        
+        // Poner fecha en escrito al lado del date picker
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("EEEE, d 'de' MMMM", new Locale("es", "ES"));
+        String fechaFormateada = fechaSeleccionada.format(formatoFecha);
+        nombreFecha.setText(fechaFormateada);
+        
+        hboxAgenda.getChildren().removeIf(node -> node instanceof VBox); //eliminar todos los vbox del hbox cuando cambiamos de fecha
+        
+        Trabajador trabajador = new Trabajador();
+        
+        String[] horas= {
                 "08:00", "08:30", "09:00", "09:30", "10:00", "10:30",
                 "11:00", "11:30", "12:00", "12:30", "13:00", "13:30",
                 "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
                 "17:00", "17:30", "18:00", "18:30", "19:00", "19:30",
                 "20:00"
             };
-    	
-    	int tamanoScrollPane = 1250;
-    	int numTrabajadores = trabajador.getTrabajadores().size();
-    	int tamanoColumna = tamanoScrollPane/numTrabajadores;
-    	
-    	ObservableList<Trabajador> trabajadores = trabajador.getTrabajadores();
-    	
-    	// CREAR COLUMNA DE HORAS
-    	
-    	VBox vbox2 = new VBox();
-    	
-    	for (int i = -1; i<horas.length; i++) {
-			Label label2 = new Label();
-			label2.setPrefHeight(100);
-			if (i == -1) {
-				label2.setText(null);
-			}else {
-				
-				label2.setText(horas[i]); ///aaaaaaaaaaaaaaaaaaaaaaaaaa
-			}
-			vbox2.getChildren().add(label2);
-		}
-    	hboxAgenda.getChildren().add(vbox2);
-    	
-    	// CREAR COLUMNA PARA CADA TRABAJADOR CON LOS TEXTFIELD CON ID
-    	
-    	for (Trabajador t : trabajadores) {
-    		VBox vbox = new VBox();
-    		Label label = new Label();
-    		label.getStyleClass().add("label");
-    		label.setPrefHeight(300);
-    		vbox.setAlignment(Pos.CENTER);
-    		label.setText(t.getNombre());
-    		int id_trabaj = (t.getId());
-    		vbox.getChildren().add(label);
+        
+        int tamanoScrollPane = 1250;
+        int numTrabajadores = trabajador.getTrabajadores().size();
+        int tamanoColumna = tamanoScrollPane/numTrabajadores;
+        
+        ObservableList<Trabajador> trabajadores = trabajador.getTrabajadores();
+        
+        // CREAR COLUMNA DE HORAS
+        
+        VBox vbox2 = new VBox();
+        
+        for (int i = -1; i<horas.length; i++) {
+            Label label2 = new Label();
+            label2.setPrefHeight(100);
+            if (i == -1) {
+                label2.setText(null);
+            }else {
+                label2.setText(horas[i]); 
+            }
+            vbox2.getChildren().add(label2);
+        }
+        hboxAgenda.getChildren().add(vbox2);
+        
+        // CREAR COLUMNA PARA CADA TRABAJADOR CON LOS TEXTFIELD CON ID
+        
+        for (Trabajador t : trabajadores) {
+            VBox vbox = new VBox();
+            Label label = new Label();
+            label.getStyleClass().add("label");
+            label.setPrefHeight(300);
+            vbox.setAlignment(Pos.CENTER);
+            label.setText(t.getNombre());
+            int id_trabaj = (t.getId());
+            vbox.getChildren().add(label);
   
-    		
-    		
-    		
-    		for (int i = 0; i<horas.length; i++) {
-    			
-    			TextField textField = new TextField();
-    			textField.setPrefHeight(300);
-    			textField.setPrefWidth(tamanoColumna);
-    			textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getId()); //le doy id a cada textField
-    			String[] partes = textField.getId().split("__");
+            for (int i = 0; i<horas.length; i++) {
+                
+                TextField textField = new TextField();
+                textField.setPrefHeight(300);
+                textField.setPrefWidth(tamanoColumna);
+                textField.setId(fechaSeleccionada.toString() + "__" + horas[i] + "__" + t.getId()); //le doy id a cada textField
+                String[] partes = textField.getId().split("__");
                 LocalDate fechaCampo = LocalDate.parse(partes[0]); // primera posicion la fecha
                 LocalTime horaCampo = LocalTime.parse(partes[1]); // segunda posicion la hora
                 String reserva = Agenda.rellenartabla(fechaCampo,horaCampo, id_trabaj);
                 if(reserva != null) {
-                	textField.getStyleClass().add("textRelleno");	
-                	textField.setText(reserva);
+                    textField.getStyleClass().add("textRelleno");    
+                    textField.setText(reserva);
                 }else {
-                	textField.getStyleClass().add("textNoRelleno");
+                    textField.getStyleClass().add("textNoRelleno");
                 }
                  
-    			textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-    				
-    				// cuando entras
-    				if (!oldValue) {
-    					descripcion = textField.getText(); // descripcion == null si el textField esta vacio
-    				}
-    				// cuando sales
-    				else if (!newValue) {
-    					if (descripcion != "" && textField.getText() != "") {
-    						// Actualizar reserva
-    						try {
-								Agenda.actualizarReserva(
-								        textField.getText(), 
-								        textField.getId()  
-								);
-								textField.getStyleClass().add("textRelleno");
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-    					}
-    					else if (descripcion == "" && textField.getText() != "") {
+                textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                    // cuando entras
+                    if (!oldValue) {
+                        descripcion = textField.getText(); // descripcion == null si el textField esta vacio
+                    }
+                    // cuando sales
+                    else if (!newValue) {
+                        if (descripcion != "" && textField.getText() != "") {
+                            // Actualizar reserva
+                            try {
+                                Agenda.actualizarReserva(
+                                        textField.getText(), 
+                                        textField.getId()  
+                                );
+                                textField.getStyleClass().add("textRelleno");
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else if (descripcion == "" && textField.getText() != "") {
                             // Insertar en la base de datos
-                        	try {
-                        		Agenda.crearReserva(
-                        				Date.valueOf(fechaCampo),
+                            try {
+                                Agenda.crearReserva(
+                                        Date.valueOf(fechaCampo),
                                         Time.valueOf(horaCampo),
                                         textField.getText(), 
                                         textField.getId(),
                                         id_trabaj
-                        		);
-                        		textField.getStyleClass().add("textRelleno");
-                                 
+                                );
+                                textField.getStyleClass().add("textRelleno");
                             } catch (Exception e) {
-                            	e.printStackTrace();
+                                e.printStackTrace();
                             }
                         }
-    					else if (textField.getText() == "") {
-    						textField.getStyleClass().remove("textRelleno");
-    						textField.getStyleClass().add("textNoRelleno");
-                        	// Eliminar reserva
-                        	try {
-								Agenda.eliminarReserva(
-										textField.getId()
-								);
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-                        	
+                        else if (textField.getText() == "") {
+                            textField.getStyleClass().remove("textRelleno");
+                            textField.getStyleClass().add("textNoRelleno");
+                            // Eliminar reserva
+                            try {
+                                Agenda.eliminarReserva(
+                                        textField.getId()
+                                );
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
                         }
-                     
-    				}
-    			});
-    			vbox.getChildren().add(textField);
-    			
-    		}
-    		
-    		hboxAgenda.getChildren().add(vbox);
-    	}
-    }
-
-private void onExpandirReserva() {
-	
-    javafx.scene.Node focusedNode = diaAdmin.getScene().getFocusOwner();
-
-
-
-    if (focusedNode instanceof TextField) {
-
-        TextField currentTextField = (TextField) focusedNode;
-
-        String contenido = currentTextField.getText();
-
-     
-
-
-
-        String[] partesId = currentTextField.getId().split("__");
-
-
-
-        if (partesId.length >= 3) {
-
-            try {
-
-                // Calcula la hora siguiente y genera el ID del siguiente TextField
-
-                LocalTime horaActual = LocalTime.parse(partesId[1]);
-
-                LocalTime horaSiguiente = horaActual.plusMinutes(30);
-
-                String nuevoId = partesId[0] + "__" + horaSiguiente + "__" + partesId[2];
-
-               
-
-
-
-                // Busca manualmente el siguiente TextField en hboxAgenda
-
-                TextField siguienteTextField = buscarTextFieldEnHBox(hboxAgenda, nuevoId);
-
-
-
-                if (siguienteTextField != null) {
-
-                    // Copia el contenido al siguiente TextField
-
-                    siguienteTextField.setText(contenido);
-
-                    siguienteTextField.getStyleClass().add("textRelleno");
-
-                    siguienteTextField.requestFocus(); // Mueve el focus al siguiente TextField
-
-                    
-
-                    System.out.println(nuevoId);
-
-                    // Inserta en la base de datos
-
-                    Agenda.crearReserva(
-
-                            Date.valueOf(partesId[0]),
-
-                            Time.valueOf(horaSiguiente),
-
-                            contenido,
-
-                            nuevoId,
-
-                            Integer.parseInt(partesId[2]) // ID del trabajador numérico
-
-                    );
-
-                    System.out.println(partesId[2]);
-
-                } else {
-
-                    System.err.println("No se encontró el TextField con ID: " + nuevoId);
-
-                }
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-
-            }
-
-        } else {
-
-            System.err.println("El ID del TextField actual no tiene el formato esperado.");
-
-        }
-
-    } else {
-
-        System.err.println("El nodo enfocado no es un TextField.");
-
-    }
-
-}
-
-
-
-
-
-private TextField buscarTextFieldEnHBox(HBox hbox, String idBuscado) {
-
-    for (javafx.scene.Node node : hbox.getChildren()) {
-
-        if (node instanceof VBox) {
-
-            VBox vbox = (VBox) node;
-
-
-
-            for (javafx.scene.Node childNode : vbox.getChildren()) {
-
-                if (childNode instanceof TextField) {
-
-                    TextField textField = (TextField) childNode;
-
-                    if (idBuscado.equals(textField.getId())) {
-
-                        return textField;
-
                     }
-
-                }
-
+                });
+                vbox.getChildren().add(textField);
+                
             }
-
+            
+            hboxAgenda.getChildren().add(vbox);
         }
-
     }
 
-    return null; // Si no encuentra el TextField
+    private void onExpandirReserva() {
+        javafx.scene.Node focusedNode = diaAdmin.getScene().getFocusOwner();
+        if (focusedNode instanceof TextField) {
+            TextField currentTextField = (TextField) focusedNode;
+            String contenido = currentTextField.getText();
 
-}
-    
+            String[] partesId = currentTextField.getId().split("__");
+            if (partesId.length >= 3) {
+                try {
+                    LocalTime horaActual = LocalTime.parse(partesId[1]);
+                    LocalTime horaSiguiente = horaActual.plusMinutes(30);
+                    String nuevoId = partesId[0] + "__" + horaSiguiente + "__" + partesId[2];
+                    TextField siguienteTextField = buscarTextFieldEnHBox(hboxAgenda, nuevoId);
+
+                    if (siguienteTextField != null && siguienteTextField.getText().isEmpty()) {
+                        siguienteTextField.setText(contenido);
+                        Agenda.crearReserva(Date.valueOf(partesId[0]), Time.valueOf(horaSiguiente), contenido, nuevoId,
+                                Integer.parseInt(partesId[2]));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void onVaciarReserva() {
+        javafx.scene.Node focusedNode = diaAdmin.getScene().getFocusOwner();
+        if (focusedNode instanceof TextField) {
+            TextField currentTextField = (TextField) focusedNode;
+            currentTextField.clear();
+        }
+    }
+
+    private TextField buscarTextFieldEnHBox(HBox hbox, String idBuscado) {
+        for (javafx.scene.Node node : hbox.getChildren()) {
+            if (node instanceof VBox) {
+                VBox vbox = (VBox) node;
+                for (javafx.scene.Node childNode : vbox.getChildren()) {
+                    if (childNode instanceof TextField) {
+                        TextField textField = (TextField) childNode;
+                        if (textField.getId().equals(idBuscado)) {
+                            return textField;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private void mostrarVistaEstadisticas() {
+        if (trabajadorLogueado != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/application/views/estadisticas.fxml"));
+                BorderPane estadisticasPane = loader.load();
+
+                Stage estadisticasStage = new Stage();
+                estadisticasStage.setTitle("Estadísticas de " + trabajadorLogueado.getNombre());
+                Scene scene = new Scene(estadisticasPane);
+                estadisticasStage.setScene(scene);
+
+                EstadisticasController controller = loader.getController();
+                controller.setTrabajador(trabajadorLogueado);
+
+                estadisticasStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
