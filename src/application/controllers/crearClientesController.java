@@ -61,6 +61,7 @@ public class crearClientesController {
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
         	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+        	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	if (!trabajadorLogueado.isEsAdministrador()) {
 				Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());

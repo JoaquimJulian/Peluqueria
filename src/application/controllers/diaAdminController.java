@@ -80,6 +80,7 @@ public class diaAdminController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	if (!trabajadorLogueado.isEsAdministrador()) {

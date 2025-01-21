@@ -18,12 +18,14 @@ public class Facturacion {
 	private int id_producto;
 	private String nombre_producto;
 	private double monto_total;
-	private String metodo_pago;
+	private Double bizum;
+	private Double tarjeta;
+	private Double efectivo;
 	private Date fecha;
 	private String observacion_facturacion;
 	
 	public Facturacion(int id_factura, int id_cliente, int id_trabajador, int id_servicio, String nombre_servicio, int id_producto, String nombre_producto, 
-            double monto_total, String metodo_pago, Date fecha, String observacion_facturacion) {
+            double monto_total, Double bizum, Double tarjeta, Double efectivo, Date fecha, String observacion_facturacion) {
 		this.id_factura = id_factura;
 		this.id_cliente = id_cliente;
 		this.id_trabajador = id_trabajador;
@@ -32,7 +34,9 @@ public class Facturacion {
 		this.id_producto = id_producto;
 		this.nombre_producto = nombre_producto;
 		this.monto_total = monto_total;
-		this.metodo_pago = metodo_pago;
+		this.bizum = bizum;
+		this.tarjeta = tarjeta;
+		this.efectivo = efectivo;
 		this.fecha = fecha;
 		this.observacion_facturacion = observacion_facturacion;
 	}
@@ -89,11 +93,23 @@ public class Facturacion {
 	public void setMonto_total(double monto_total) {
 		this.monto_total = monto_total;
 	}
-	public String getMetodo_pago() {
-		return metodo_pago;
+	public double getefectivo() {
+		return efectivo;
 	}
-	public void setMetodo_pago(String metodo_pago) {
-		this.metodo_pago = metodo_pago;
+	public void setefectivo(double efectivo) {
+		this.efectivo = efectivo;
+	}
+	public double getbizum() {
+		return bizum;
+	}
+	public void setbizum(double bizum) {
+		this.bizum = bizum;
+	}
+	public double gettarjeta() {
+		return tarjeta;
+	}
+	public void settarjeta(double tarjeta) {
+		this.tarjeta = tarjeta;
 	}
 	public Date getFecha() {
 		return fecha;
@@ -128,7 +144,9 @@ public class Facturacion {
                     rs.getInt("id_producto"),
                     rs.getString("nombre_producto"),
                     rs.getDouble("monto_total"),
-                    rs.getString("metodo_pago"),
+                    rs.getDouble("bizum"),
+                    rs.getDouble("tarjeta"),
+                    rs.getDouble("efectivo"),
                     rs.getDate("fecha"),
                     rs.getString("observacion_facturacion")
                 ));
@@ -160,7 +178,9 @@ public class Facturacion {
                         rs.getInt("id_producto"),
                         rs.getString("nombre_producto"),
                         rs.getDouble("monto_total"),
-                        rs.getString("metodo_pago"),
+                        rs.getDouble("bizum"),
+                        rs.getDouble("tarjeta"),
+                        rs.getDouble("efectivo"),
                         rs.getDate("fecha"),
                         rs.getString("observacion_facturacion")
                     ));
@@ -198,11 +218,12 @@ public class Facturacion {
 	public boolean insertarFactura(Integer clienteId, Integer trabajadorId,
             Integer serviciosIds, Integer productoId,
             String nombreServicio, String nombreProducto,
-            double montoTotal, String metodoPago,
+            double montoTotal, double montoEfectivo,
+            double montoTarjeta,double montoBizum,
             java.sql.Date fecha, String observacionFacturacion) throws SQLException {
 
 		// Suponiendo que tu sentencia SQL sea algo como esto
-		String query = "INSERT INTO facturacion (id_cliente, id_trabajador, id_servicio, id_producto, nombre_servicio, nombre_producto, monto_total, metodo_pago, fecha, observacion_facturacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO facturacion (id_cliente, id_trabajador, id_servicio, id_producto, nombre_servicio, nombre_producto, monto_total, bizum, tarjeta, efectivo, fecha, observacion_facturacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 		
 		try (Connection connection = databaseConection.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -246,18 +267,20 @@ public class Facturacion {
 		
 		stmt.setDouble(7, montoTotal);
 		
-		stmt.setString(8, metodoPago);
+		stmt.setDouble(8, montoEfectivo);
+		stmt.setDouble(9, montoTarjeta);
+		stmt.setDouble(10, montoBizum);
 		
 		if (fecha != null) {
-		stmt.setDate(9, fecha);
+		stmt.setDate(11, fecha);
 		} else {
-		stmt.setNull(9, java.sql.Types.DATE);
+		stmt.setNull(11, java.sql.Types.DATE);
 		}
 		
 		if (observacionFacturacion != null) {
-		stmt.setString(10, observacionFacturacion);
+		stmt.setString(12, observacionFacturacion);
 		} else {
-		stmt.setNull(10, java.sql.Types.VARCHAR);
+		stmt.setNull(12, java.sql.Types.VARCHAR);
 		}
 		
 		// Ejecutar la consulta
@@ -269,6 +292,27 @@ public class Facturacion {
 		throw new SQLException("Error al insertar la factura", e);
 		}
 		}
+	
+	public static boolean restarStock(Integer id, Integer stock) {
+	    // Consulta SQL corregida
+	    String sql = "UPDATE productos SET cantidad_en_stock = ? WHERE id_producto = ?";
+		boolean exitoso = false;
+
+	    try (Connection connection = databaseConection.getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+	        // Establecemos los parámetros del PreparedStatement
+	        stmt.setInt(1, stock); // El primer "?" en la consulta
+	        stmt.setInt(2, id);   // El segundo "?" en la consulta
+	    
+	        // Ejecutamos la actualización
+	        stmt.executeUpdate();
+	        exitoso = true;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return exitoso;
+	}
 	
 	
 }

@@ -114,6 +114,7 @@ public class fichaClienteController {
         	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+        	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	
         	

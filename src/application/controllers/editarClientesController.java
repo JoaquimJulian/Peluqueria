@@ -62,6 +62,7 @@ public class editarClientesController {
 			cerrar.setOnMouseClicked(event -> { Platform.exit(); });
 			salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
 			ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+        	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
 			usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
 			calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 			salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));

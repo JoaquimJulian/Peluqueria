@@ -54,6 +54,7 @@ public class crearProductosController {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));

@@ -59,6 +59,7 @@ public class editarProductosController {
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 

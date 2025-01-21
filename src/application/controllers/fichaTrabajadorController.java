@@ -66,6 +66,7 @@ public class fichaTrabajadorController {
         cerrar.setOnMouseClicked(event -> Platform.exit());
         salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
         calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
         if (!trabajadorLogueado.isEsAdministrador()) {
     		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());

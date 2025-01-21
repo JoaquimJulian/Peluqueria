@@ -96,6 +96,7 @@ public class productosController {
 		cerrar.setOnMouseClicked(event -> Platform.exit());
 	    salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 	    ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
 		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 		usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
