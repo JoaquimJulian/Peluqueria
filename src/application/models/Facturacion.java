@@ -35,7 +35,11 @@ public class Facturacion {
 		this.metodo_pago = metodo_pago;
 		this.fecha = fecha;
 		this.observacion_facturacion = observacion_facturacion;
-}
+	}
+	
+	public Facturacion(Object datosCompartidos) {
+		
+	}
 	
 	public int getId_factura() {
 		return id_factura;
@@ -191,7 +195,80 @@ public class Facturacion {
 		return exitoso;
 	}
 	
-	
+	public boolean insertarFactura(Integer clienteId, Integer trabajadorId,
+            Integer serviciosIds, Integer productoId,
+            String nombreServicio, String nombreProducto,
+            double montoTotal, String metodoPago,
+            java.sql.Date fecha, String observacionFacturacion) throws SQLException {
+
+		// Suponiendo que tu sentencia SQL sea algo como esto
+		String query = "INSERT INTO facturacion (id_cliente, id_trabajador, id_servicio, id_producto, nombre_servicio, nombre_producto, monto_total, metodo_pago, fecha, observacion_facturacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		try (Connection connection = databaseConection.getConnection();
+		PreparedStatement stmt = connection.prepareStatement(query)) {
+		
+		// Manejo de valores nulos para los campos opcionales
+		if (clienteId != null) {
+		stmt.setInt(1, clienteId);
+		} else {
+		stmt.setNull(1, java.sql.Types.INTEGER);
+		}
+		
+		if (trabajadorId != null) {
+		stmt.setInt(2, trabajadorId);
+		} else {
+		stmt.setNull(2, java.sql.Types.INTEGER);
+		}
+		
+		if (serviciosIds != null) {
+		stmt.setInt(3, serviciosIds);
+		} else {
+		stmt.setNull(3, java.sql.Types.INTEGER);
+		}
+		
+		if (productoId != null) {
+		stmt.setInt(4, productoId);
+		} else {
+		stmt.setNull(4, java.sql.Types.INTEGER);
+		}
+		
+		if (nombreServicio != null) {
+		stmt.setString(5, nombreServicio);
+		} else {
+		stmt.setNull(5, java.sql.Types.VARCHAR);
+		}
+		
+		if (nombreProducto != null) {
+		stmt.setString(6, nombreProducto);
+		} else {
+		stmt.setNull(6, java.sql.Types.VARCHAR);
+		}
+		
+		stmt.setDouble(7, montoTotal);
+		
+		stmt.setString(8, metodoPago);
+		
+		if (fecha != null) {
+		stmt.setDate(9, fecha);
+		} else {
+		stmt.setNull(9, java.sql.Types.DATE);
+		}
+		
+		if (observacionFacturacion != null) {
+		stmt.setString(10, observacionFacturacion);
+		} else {
+		stmt.setNull(10, java.sql.Types.VARCHAR);
+		}
+		
+		// Ejecutar la consulta
+		int filasAfectadas = stmt.executeUpdate();
+		
+		return filasAfectadas > 0;
+		} catch (SQLException e) {
+		e.printStackTrace();
+		throw new SQLException("Error al insertar la factura", e);
+		}
+		}
 	
 	
 }

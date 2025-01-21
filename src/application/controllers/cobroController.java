@@ -1,5 +1,6 @@
 package application.controllers;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,6 +74,8 @@ public class cobroController {
 	private Button anadirServicio;
 	@FXML 
 	private Button anadirProducto;
+	@FXML
+	private TextArea observaciones;
 	
 	// Tabla para agregar servicios 
 	
@@ -225,6 +228,23 @@ public class cobroController {
         	        Platform.runLater(() ->productosAnadidosTabla.getSelectionModel().clearSelection());
         	    }
         	});
+        	
+        	CobrarTodo.setOnMouseClicked(event -> {
+        		   
+
+        		try {
+        		cobrarTodo();
+        		mainApp.mostrarVista("clientes.fxml");
+        		} catch (SQLException e) {
+        		System.out.println("CATCH 1");  
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        		} catch (IOException e) {
+        		System.out.println("CATCH 2");  
+        		// TODO Auto-generated catch block
+        		e.printStackTrace();
+        		}
+        	});
     	}
     	
     }
@@ -339,14 +359,14 @@ public class cobroController {
     }
     
     public void anadirProducto(Producto producto) {
-    	for (int i = 0; i<cantidadProductosIguales; i++) {
+    	for (int i = 0; i<cantidadProducto.getValue(); i++) {
     		productosAnadidos.add(producto);
     	}
         productosAnadidosTabla.setItems(productosAnadidos);
         cantidadProductosIguales = 0;
         
         sumarPrecioProducto(precioTotalProductos);
-        precioTotalProductos = 0.0;
+        
         
         popupAnadirProductos.setVisible(false);
     }
@@ -363,6 +383,98 @@ public class cobroController {
     
     public void quitarProductoAnadido(Producto producto) {
     	productosAnadidos.remove(producto);
+    }
+    
+    @FXML
+    private void cobrarTodo() throws SQLException, IOException {
+        try {
+            // Obtener los datos del cliente y del trabajador
+            Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
+            Trabajador trabajador = Trabajador.getTrabajadorLogueado();
+           
+
+
+            // Obtener los datos del formulario
+            String metodoPago = "efectivo";
+            // Reemplazar la coma por punto antes de convertir el precio total
+            String precioTotalStr = precioTotalText.getText().replace(",", ".");
+            double montoTotal = Double.parseDouble(precioTotalStr); // Ahora debería funcionar correctamente
+           
+           
+            // Crear la fecha actual
+            java.sql.Date fecha = new java.sql.Date(System.currentTimeMillis());
+
+            String observacion = observaciones.getText();;
+           
+            int idServicio = 0;
+            String nombreServicio = "";
+
+         // Insertar los servicios
+            for (Servicio servicio : serviciosAnadidos) {
+                int idServicio1 = servicio.getId();
+                String nombreServicio1 = servicio.getNombre();
+
+                System.out.println("Servicio añadido: " + nombreServicio1);
+
+                // Inserción de cada servicio (uno por uno)
+                Facturacion facturacionModel = new Facturacion(mainApp.getDatosCompartidos());
+                boolean resultado = facturacionModel.insertarFactura(
+                    cliente.getId(),
+                    trabajador.getId(),
+                    idServicio1, // Aquí se usa el id de cada servicio
+                    0, // idProducto se pasa como 0, ya que el servicio no tiene producto asociado en este caso
+                    nombreServicio1,
+                    "", // nombreProducto vacío ya que no es necesario para el servicio
+                    montoTotal, // Monto total
+                    metodoPago,
+                    fecha,
+                    observacion
+                );
+               
+                if (resultado) {
+                    System.out.println("Factura para servicio " + nombreServicio1 + " creada con éxito");
+                } else {
+                    System.out.println("Hubo un error al crear la factura para el servicio " + nombreServicio1);
+                }
+               
+            }
+           
+            int idProducto = 0;
+            String nombreProducto = "";
+
+         // Insertar los productos (si es necesario)
+            for (Producto producto : productosAnadidos) {
+                int idProducto1 = producto.getId();
+                String nombreProducto1 = producto.getNombre();
+
+                System.out.println("Producto añadido: " + nombreProducto1);
+
+                // Inserción de cada producto
+                Facturacion facturacionModel = new Facturacion(mainApp.getDatosCompartidos());
+                boolean resultado = facturacionModel.insertarFactura(
+                    cliente.getId(),
+                    trabajador.getId(),
+                    0, // idServicio se pasa como 0 ya que estamos trabajando con productos
+                    idProducto1, // idProducto de cada producto
+                    "", // nombreServicio vacío ya que no es necesario para el producto
+                    nombreProducto1,
+                    montoTotal, // Monto total
+                    metodoPago,
+                    fecha,
+                    observacion
+                );
+
+                if (resultado) {
+                    System.out.println("Factura para producto " + nombreProducto1 + " creada con éxito");
+                } else {
+                    System.out.println("Hubo un error al crear la factura para el producto " + nombreProducto1);
+                }
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error al procesar los datos numéricos: " + e.getMessage());
+        }
+       
+       
     }
   
 }

@@ -192,7 +192,7 @@
                   <TableColumn fx:id="productosAnadidosColumna" prefWidth="187.0" text="Productos añadidos" />
                </columns>
             </TableView>
-            <TextArea layoutX="1020.0" layoutY="56.0" prefHeight="261.0" prefWidth="238.0" />
+            <TextArea fx:id="observaciones" layoutX="1020.0" layoutY="56.0" prefHeight="261.0" prefWidth="238.0" />
             <TextField fx:id="efectivo" layoutX="627.0" layoutY="42.0" prefHeight="32.0" prefWidth="122.0" promptText="EFECTIVO" style="-fx-background-color: #E6E6E6; -fx-border-color: black;" />
             <TextField fx:id="tarjeta" layoutX="627.0" layoutY="86.0" prefHeight="33.0" prefWidth="122.0" promptText="TARJETA" style="-fx-background-color: #E6E6E6; -fx-border-color: black;" />
             <TextField fx:id="bizum" layoutX="766.0" layoutY="43.0" prefHeight="75.0" prefWidth="124.0" promptText="BIZUM" style="-fx-background-color: #E6E6E6; -fx-border-color: black;" />
