@@ -35,11 +35,7 @@ public class AgendaController {
     
     // BOTONES HEADER
     @FXML
-    private ImageView calendario;
-    @FXML
     private ImageView cerrar;
-    @FXML
-    private ImageView cobrar;
     @FXML
     private ImageView logIn;
     @FXML
@@ -72,8 +68,7 @@ public class AgendaController {
     public void initialize() throws SQLException {
         cerrar.setOnMouseClicked(event -> { Platform.exit(); });
         logIn.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-        cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("metodopago.fxml"));
-    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+        salir.setOnMouseClicked(event -> mainApp.mostrarVista("logInPrincipal.fxml"));
         
         crearTabla(LocalDate.now());
         calendarioAgenda.setValue(LocalDate.now());
