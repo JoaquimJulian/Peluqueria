@@ -140,6 +140,7 @@ public class productosController {
 
     private void cargarProductos() throws SQLException {
         ObservableList<Producto> productos = Producto.getProductosActivos();
+        productos.removeIf(producto -> producto.getId() == 0);
         ObservableList<Producto> filtroBusqueda = FXCollections.observableArrayList(productos);
         tablaProductos.setItems(filtroBusqueda);
         

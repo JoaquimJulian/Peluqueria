@@ -116,6 +116,7 @@ public class serviciosController {
     
     private void cargarServicios() throws SQLException {
         ObservableList<Servicio> servicios = Servicio.getServiciosActivos();
+        servicios.removeIf(servicio -> servicio.getId() == 0);
         ObservableList<Servicio> filtroBusqueda = FXCollections.observableArrayList(servicios);
         tablaServicios.setItems(filtroBusqueda);
         

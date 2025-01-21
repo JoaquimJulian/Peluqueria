@@ -303,9 +303,9 @@ public class cobroController {
     	
     	nombreServicioCobrar.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         observacionServicioCobrar.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
-    	
         
-        ObservableList<Servicio> servicios = Servicio.getServicios();
+        ObservableList<Servicio> servicios = Servicio.getServiciosActivos();
+        servicios.removeIf(servicio -> servicio.getId() == 0);
         ObservableList<Servicio> filtroBusqueda = FXCollections.observableArrayList(servicios);
 
     	serviciosCobrar.setItems(filtroBusqueda);
@@ -371,7 +371,7 @@ public class cobroController {
     public Producto rellenarDatosProducto(String codigo_barras) {
         try {
             producto = Producto.buscarPorCodigoBarras(codigo_barras); // Asignar el producto encontrado a la variable miembro
-            if (producto != null) {
+            if (producto != null && producto.getActivo()) {
 				nombreProducto.setValue(producto.getNombre());
 				descripcionProducto.setText(producto.getDescripcion());
 				precioProductoIndividual.setText(String.valueOf(producto.getPrecioVenta()));
@@ -400,39 +400,57 @@ public class cobroController {
     }
     
     public void anadirProducto(Producto producto) {
-    	if (producto.getCantidad_en_stock() < 1) {
-    		Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Error de cobro");
-            alert.setHeaderText(null);
-            alert.setContentText("No hay stock del producto: " + producto.getNombre());
-            alert.showAndWait();
-            
-            codigoBarras.setText(null);
-            nombreProducto.setValue(null);
-			descripcionProducto.setText(null);
-			precioProductoIndividual.setText(null);
-			precioProductoTotal.setText(null);
-    	} else {
-    		if (cantidadProducto.getValue() > 0) {
-    			for (int i = 0; i<cantidadProducto.getValue(); i++) {
-	    			productosAnadidos.add(producto);
-				}
-			    productosAnadidosTabla.setItems(productosAnadidos);
-			    cantidadProductosIguales = 0;
-			    
-			    sumarPrecioProducto(precioTotalProductos);
-			    
-			    popupAnadirProductos.setVisible(false);
-    		} else {
-    			Alert alert = new Alert(Alert.AlertType.WARNING);
+    	if (codigoBarras.getText() != null && codigoBarras.getText() != "" && producto != null) {
+    		if (producto.getCantidad_en_stock() < 1) {
+        		Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Error de cobro");
                 alert.setHeaderText(null);
-                alert.setContentText("La cantidad de unidades no puede ser 0");
+                alert.setContentText("No hay stock del producto: " + producto.getNombre());
                 alert.showAndWait();
-    		}
-    		
+                
+                codigoBarras.setText(null);
+                nombreProducto.setValue(null);
+    			descripcionProducto.setText(null);
+    			precioProductoIndividual.setText(null);
+    			precioProductoTotal.setText(null);
+        	} else if (!producto.getActivo()) {
+        		Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error de cobro");
+                alert.setHeaderText(null);
+                alert.setContentText("Este producto esta inactivo");
+                alert.showAndWait();
+                
+                codigoBarras.setText(null);
+                nombreProducto.setValue(null);
+    			descripcionProducto.setText(null);
+    			precioProductoIndividual.setText(null);
+    			precioProductoTotal.setText(null);
+        	} else {
+        		if (cantidadProducto.getValue() > 0) {
+        			for (int i = 0; i<cantidadProducto.getValue(); i++) {
+    	    			productosAnadidos.add(producto);
+    				}
+    			    productosAnadidosTabla.setItems(productosAnadidos);
+    			    cantidadProductosIguales = 0;
+    			    
+    			    sumarPrecioProducto(precioTotalProductos);
+    			    
+    			    popupAnadirProductos.setVisible(false);
+    			    
+    			    codigoBarras.setText(null);
+    	            nombreProducto.setValue(null);
+    				descripcionProducto.setText(null);
+    				precioProductoIndividual.setText(null);
+    				precioProductoTotal.setText(null);
+        		} else {
+        			Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Error de cobro");
+                    alert.setHeaderText(null);
+                    alert.setContentText("La cantidad de unidades no puede ser 0");
+                    alert.showAndWait();
+        		}	
+        	}
     	}
-    	
     }
     
     public void sumarPrecioProducto(double precioProducto) {

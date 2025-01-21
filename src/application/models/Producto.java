@@ -17,8 +17,9 @@ public class Producto {
     private double precioCosto;
     private int cantidad_en_stock;
     private String codigo_barras;
+    private boolean activo;
 
-    public Producto(int id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, String codigo_barras) {
+    public Producto(int id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, String codigo_barras, boolean activo) {
     	this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -26,6 +27,7 @@ public class Producto {
         this.precioCosto = precioCosto;
         this.cantidad_en_stock = cantidad_en_stock;
         this.codigo_barras = codigo_barras;
+        this.activo = activo;
     }
 
     
@@ -77,6 +79,7 @@ public class Producto {
     public void setCantidad_en_stock(int cantidad_en_stock) {
         this.cantidad_en_stock = cantidad_en_stock;
     }
+    
     public String getCodigo_barras() {
         return codigo_barras;
     }
@@ -84,6 +87,15 @@ public class Producto {
     public void setCodigo_barras(String codigo_barras) {
         this.codigo_barras = codigo_barras;
     }
+    
+    public boolean getActivo() {
+    	return activo;
+    }
+    
+    public void setActivo(boolean activo) {
+    	this.activo = activo;
+    }
+
     
     public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras) {
 		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock, codigo_barras) VALUES (?, ?, ?, ?, ?, ?)";
@@ -192,7 +204,8 @@ public class Producto {
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
                      rs.getInt("cantidad_en_stock"),
-                     rs.getString("codigo_barras")
+                     rs.getString("codigo_barras"),
+                     rs.getBoolean("activo")
                  ));
              }
         
@@ -221,7 +234,8 @@ public class Producto {
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
                      rs.getInt("cantidad_en_stock"),
-                     rs.getString("codigo_barras")
+                     rs.getString("codigo_barras"),
+                     rs.getBoolean("activo")
                  ));
              }
         
@@ -250,7 +264,8 @@ public class Producto {
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
                      rs.getInt("cantidad_en_stock"),
-                     rs.getString("codigo_barras")
+                     rs.getString("codigo_barras"),
+                     rs.getBoolean("activo")
                  ));
              }
         
@@ -306,7 +321,8 @@ public class Producto {
 	                rs.getDouble("precio_venta"),
 	                rs.getDouble("precio_costo"),
 	                rs.getInt("cantidad_en_stock"),
-	                rs.getString("codigo_barras")
+	                rs.getString("codigo_barras"),
+	                rs.getBoolean("activo")
 	            );
 	        }
 	    } finally {
