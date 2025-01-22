@@ -57,6 +57,8 @@ public class diaAdminController {
     @FXML
     private Button expandirReserva;
     @FXML
+    private Button vaciarReserva;
+    @FXML
     private Label nombreFecha;
     @FXML
     private Text nombreSesion;
@@ -112,6 +114,50 @@ public class diaAdminController {
 
             expandirReserva.setOnAction(event -> onExpandirReserva());
 
+        }
+    	
+    	if (vaciarReserva != null) {
+            vaciarReserva.setFocusTraversable(false); // Evita que el botón tome el foco
+            vaciarReserva.setOnAction(event -> {
+                // Obtén el nodo actualmente enfocado
+                javafx.scene.Node focusedNode = vaciarReserva.getScene().getFocusOwner();
+
+                // Verifica si el nodo es un TextField
+                if (focusedNode instanceof TextField) {
+                    TextField currentTextField = (TextField) focusedNode;
+
+                    // Borra el contenido del TextField enfocado
+                    currentTextField.clear();
+
+                    // Busca el TextField inmediatamente superior
+                    String[] partesId = currentTextField.getId().split("__");
+
+                    if (partesId.length >= 3) {
+                        try {
+                            // Calcula la hora anterior para encontrar el TextField superior
+                            LocalTime horaActual = LocalTime.parse(partesId[1]);
+                            LocalTime horaAnterior = horaActual.minusMinutes(30);
+                            String idSuperior = partesId[0] + "__" + horaAnterior + "__" + partesId[2];
+
+                            // Busca el TextField superior
+                            TextField superiorTextField = buscarTextFieldEnHBox(hboxAgenda, idSuperior);
+
+                            // Si se encuentra, transfiere el foco al TextField superior
+                            if (superiorTextField != null) {
+                                superiorTextField.requestFocus();
+                            } else {
+                                System.err.println("No se encontró el TextField superior con ID: " + idSuperior);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.err.println("El ID del TextField no tiene el formato esperado.");
+                    }
+                } else {
+                    System.err.println("El nodo enfocado no es un TextField.");
+                }
+            });
         }
     }
     
