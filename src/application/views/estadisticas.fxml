@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane prefHeight="768" prefWidth="1366" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.estadisticasController">
+
+    <!-- Header -->
+    <top>
+        <HBox spacing="20" style="-fx-padding: 15px; -fx-background-color: #f4f4f4; -fx-alignment: center-right;">
+            <ImageView fx:id="salir" fitHeight="30.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                <image>
+                    <Image url="@../images/cerrarPagina.png" />
+                </image>
+            </ImageView>
+        </HBox>
+    </top>
+
+    <!-- Contenido principal -->
+    <center>
+        <VBox spacing="30" style="-fx-padding: 20px; -fx-alignment: top-center;">
+         <Text fx:id="nombreSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+            <font>
+               <Font name="System Bold" size="24.0" />
+            </font>
+         </Text>
+            <Label fx:id="registrosFacturacion" style="-fx-font-size: 20px;" text="Registros en Facturación: 0" />
+
+            <!-- Tabla de registros -->
+            <TableView fx:id="tablaRegistros" prefHeight="600" prefWidth="1300">
+                <columns>
+                    <TableColumn fx:id="colFecha" prefWidth="283.0" text="Fecha" />
+                    <TableColumn fx:id="colCliente" prefWidth="302.0" text="Cliente" />
+                    <TableColumn fx:id="colNombreProducto" prefWidth="316.0" text="Producto" />
+                    <TableColumn fx:id="colNombreServicio" prefWidth="279.0" text="Servicio" />
+                    <TableColumn fx:id="colMontoTotal" prefWidth="145.0" text="Monto Total" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    
+</BorderPane>

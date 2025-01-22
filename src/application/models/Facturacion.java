@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 public class Facturacion {
 	private int id_factura;
 	private int id_cliente;
+	private String nombre;
 	private int id_trabajador;
 	private int id_servicio;
 	private String nombre_servicio;
@@ -32,6 +33,26 @@ public class Facturacion {
 		this.id_servicio = id_servicio;
 		this.nombre_servicio = nombre_servicio;
 		this.id_producto = id_producto;
+		this.nombre_producto = nombre_producto;
+		this.monto_total = monto_total;
+		this.bizum = bizum;
+		this.tarjeta = tarjeta;
+		this.efectivo = efectivo;
+		this.fecha = fecha;
+		this.observacion_facturacion = observacion_facturacion;
+	}
+	
+	public Facturacion(int idFactura, int idCliente, String nombre,
+            int idServicio, String nombre_servicio,
+            int idProducto, String nombre_producto,
+            double monto_total, double bizum, double tarjeta, double efectivo,
+            Date fecha, String observacion_facturacion) {
+		this.id_factura = idFactura;
+		this.id_cliente = idCliente;
+		this.nombre = nombre;
+		this.id_servicio = idServicio;
+		this.nombre_servicio = nombre_servicio;
+		this.id_producto = idProducto;
 		this.nombre_producto = nombre_producto;
 		this.monto_total = monto_total;
 		this.bizum = bizum;
@@ -86,6 +107,12 @@ public class Facturacion {
 	}
 	public void setNombre_producto(String nombre_producto) {
 		this.nombre_producto = nombre_producto;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 	public double getMonto_total() {
 		return monto_total;
@@ -159,11 +186,86 @@ public class Facturacion {
         return facturacion;
     }
 	
+	public static ObservableList<Facturacion> getFacturacionConNombres() throws SQLException {
+	    ObservableList<Facturacion> facturacion = FXCollections.observableArrayList();
+	    Connection connection = databaseConection.getConnection();
+	    String sql = "SELECT f.id_factura, f.id_cliente, c.nombre, " +
+	                 "f.id_servicio, s.nombre_servicio, " +
+	                 "f.id_producto, p.nombre_producto, " +
+	                 "f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.observacion_facturacion " +
+	                 "FROM facturacion f " +
+	                 "JOIN clientes c ON f.id_cliente = c.id_cliente " +
+	                 "JOIN servicios s ON f.id_servicio = s.id_servicio " +
+	                 "JOIN productos p ON f.id_producto = p.id_producto";
+	    PreparedStatement stmt = connection.prepareStatement(sql);
+
+	    try {
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            facturacion.add(new Facturacion(
+	                rs.getInt("id_factura"),           // ID Factura
+	                rs.getInt("id_cliente"),           // ID Cliente
+	                rs.getString("nombre"),    // Nombre Cliente
+	                rs.getInt("id_servicio"),          // ID Servicio
+	                rs.getString("nombre_servicio"),   // Nombre Servicio
+	                rs.getInt("id_producto"),          // ID Producto
+	                rs.getString("nombre_producto"),   // Nombre Producto
+	                rs.getDouble("monto_total"),       // Monto Total
+	                rs.getDouble("bizum"),             // Bizum
+	                rs.getDouble("tarjeta"),           // Tarjeta
+	                rs.getDouble("efectivo"),          // Efectivo
+	                rs.getDate("fecha"),               // Fecha
+	                rs.getString("observacion_facturacion") // Observación
+	            ));
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return facturacion;
+	}
+	
 	
 	public static ObservableList<Facturacion> getFacturacionCliente(int id) throws SQLException {
         ObservableList<Facturacion> facturacion = FXCollections.observableArrayList();
         Connection connection = databaseConection.getConnection();
         String sql = "SELECT * FROM facturacion WHERE id_cliente = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql);){
+        	stmt.setInt(1, id);
+        	try(ResultSet rs = stmt.executeQuery()) {
+        		while (rs.next()) {
+                    facturacion.add(new Facturacion(
+                        rs.getInt("id_factura"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_trabajador"),
+                        rs.getInt("id_servicio"),
+                        rs.getString("nombre_servicio"),
+                        rs.getInt("id_producto"),
+                        rs.getString("nombre_producto"),
+                        rs.getDouble("monto_total"),
+                        rs.getDouble("bizum"),
+                        rs.getDouble("tarjeta"),
+                        rs.getDouble("efectivo"),
+                        rs.getDate("fecha"),
+                        rs.getString("observacion_facturacion")
+                    ));
+                }
+        	}
+       
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        	
+        return facturacion;
+    }
+	
+	public static ObservableList<Facturacion> getFacturacionTrabajador(int id) throws SQLException {
+        ObservableList<Facturacion> facturacion = FXCollections.observableArrayList();
+        Connection connection = databaseConection.getConnection();
+        String sql = "SELECT * FROM facturacion WHERE id_trabajador = ?";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql);){
         	stmt.setInt(1, id);

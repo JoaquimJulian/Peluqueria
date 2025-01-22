@@ -1,14 +1,17 @@
 package application.controllers;
 
-import application.models.RegistroFactura;
+import application.Main;
+import application.models.Facturacion;
 import application.models.Trabajador;
 import application.models.databaseConection;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.sql.Connection;
@@ -21,115 +24,59 @@ public class estadisticasController {
 
     @FXML
     private ImageView salir;
+    @FXML
+	private Text nombreSesion;
 
     @FXML
     private Label nombreTrabajador, registrosFacturacion;
 
     @FXML
-    private TableView<RegistroFactura> tablaRegistros;
+    private TableView<Facturacion> tablaRegistros;
 
     @FXML
-    private TableColumn<RegistroFactura, String> colCliente;
+    private TableColumn<Facturacion, String> colCliente;
 
     @FXML
-    private TableColumn<RegistroFactura, String> colNombreServicio;
+    private TableColumn<Facturacion, String> colNombreServicio;
 
     @FXML
-    private TableColumn<RegistroFactura, String> colNombreProducto;
+    private TableColumn<Facturacion, String> colNombreProducto;
 
     @FXML
-    private TableColumn<RegistroFactura, Double> colMontoTotal;
+    private TableColumn<Facturacion, Double> colMontoTotal;
 
     @FXML
-    private TableColumn<RegistroFactura, String> colMetodoPago;
+    private TableColumn<Facturacion, LocalDate> colFecha;
 
-    @FXML
-    private TableColumn<RegistroFactura, LocalDate> colFecha;
 
-    @FXML
-    private TableColumn<RegistroFactura, String> colObservacion;
-
-    private ObservableList<RegistroFactura> listaRegistros;
-
-    private int idUsuarioSesion; // ID del usuario en sesión
+    private ObservableList<Facturacion> listaRegistros;
 
     private Trabajador trabajador; // Nuevo atributo para almacenar el Trabajador recibido
 
+    
+    private Main mainApp; // Referencia a Main
+    
+    // Este método se llamará desde Main para establecer la referencia
+    public void setMainApp(Main mainApp) {
+        this.mainApp = mainApp;
+    }
+    
     @FXML
-    public void initialize() {
-        configurarTabla();
-        salir.setOnMouseClicked(event -> cerrarVentana()); // Cierra la ventana de estadísticas
-    }
+    public void initialize() throws SQLException {
+    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+    	nombreSesion.setText("Estadisticas de: " + trabajadorLogueado.getNombre());
+    	
+    	salir.setOnMouseClicked(event -> { Platform.exit(); });
 
-    /**
-     * Método para recibir un objeto Trabajador y configurar la vista con sus datos.
-     *
-     * @param trabajador Objeto Trabajador que contiene la información del usuario en sesión.
-     */
-    public void recibirTrabajador(Trabajador trabajador) {
-        this.trabajador = trabajador;
-        this.idUsuarioSesion = trabajador.getId(); // Obtiene el ID del trabajador
-        nombreTrabajador.setText("Trabajador: " + trabajador.getNombre()); // Muestra el nombre del trabajador
-        cargarDatos(); // Carga los datos de facturación asociados al trabajador
-    }
-
-    private void configurarTabla() {
-        colCliente.setCellValueFactory(new PropertyValueFactory<>("cliente"));
-        colNombreServicio.setCellValueFactory(new PropertyValueFactory<>("nombreServicio"));
-        colNombreProducto.setCellValueFactory(new PropertyValueFactory<>("nombreProducto"));
-        colMontoTotal.setCellValueFactory(new PropertyValueFactory<>("montoTotal"));
-        colMetodoPago.setCellValueFactory(new PropertyValueFactory<>("metodoPago"));
+    	
+    	colCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colNombreServicio.setCellValueFactory(new PropertyValueFactory<>("nombre_servicio"));
+        colNombreProducto.setCellValueFactory(new PropertyValueFactory<>("nombre_producto"));
+        colMontoTotal.setCellValueFactory(new PropertyValueFactory<>("monto_total"));
         colFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-        colObservacion.setCellValueFactory(new PropertyValueFactory<>("observacion"));
+    	
+        listaRegistros = Facturacion.getFacturacionConNombres();
+        tablaRegistros.setItems(listaRegistros);
     }
 
-    private void cargarDatos() {
-        listaRegistros = FXCollections.observableArrayList();
-
-        try (Connection conexion = databaseConection.getConnection()) {
-            // Ajustamos la consulta para obtener el nombre del cliente
-            String query = "SELECT c.nombre AS cliente, f.nombre_servicio, f.nombre_producto, f.monto_total, f.metodo_pago, f.fecha, f.observacion_facturacion AS observacion " +
-                           "FROM facturacion f " +
-                           "JOIN clientes c ON f.id_cliente = c.id_cliente " +
-                           "WHERE f.id_trabajador = ?";
-            PreparedStatement statement = conexion.prepareStatement(query);
-            statement.setInt(1, idUsuarioSesion);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                listaRegistros.add(new RegistroFactura(
-                        resultSet.getString("cliente"), // Ahora es el nombre del cliente
-                        resultSet.getString("nombre_servicio"),
-                        resultSet.getString("nombre_producto"),
-                        resultSet.getDouble("monto_total"),
-                        resultSet.getString("metodo_pago"),
-                        resultSet.getDate("fecha").toLocalDate(),
-                        resultSet.getString("observacion")
-                ));
-            }
-
-            tablaRegistros.setItems(listaRegistros);
-            registrosFacturacion.setText("Registros en Facturación: " + listaRegistros.size());
-        } catch (SQLException e) {
-            mostrarAlerta("Error al cargar los datos: " + e.getMessage());
-        }
-    }
-
-    public void setIdUsuarioSesion(int idUsuarioSesion) {
-        this.idUsuarioSesion = idUsuarioSesion; // Asignamos el ID del trabajador
-        cargarDatos(); // Cargamos los datos una vez que se recibe el ID
-    }
-
-    private void cerrarVentana() {
-        Stage stage = (Stage) salir.getScene().getWindow();
-        stage.close();
-    }
-
-    private void mostrarAlerta(String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Advertencia");
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
 }
