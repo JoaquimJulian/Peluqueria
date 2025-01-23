@@ -1,0 +1,15 @@
+.chart-bar .barra-color-0 {
+    -fx-bar-fill: #FF5733; /* Color rojo-naranja */
+}
+
+.chart-bar .barra-color-1 {
+    -fx-bar-fill: #33FF57; /* Color verde */
+}
+
+.chart-bar .barra-color-2 {
+    -fx-bar-fill: #3357FF; /* Color azul */
+}
+
+.chart-bar .barra-color-3 {
+    -fx-bar-fill: #FF33A8; /* Color rosa */
+}

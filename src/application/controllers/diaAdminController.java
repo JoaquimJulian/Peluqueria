@@ -157,7 +157,7 @@ public class diaAdminController {
             });
         }
         
-        verEstadisticas.setOnMouseClicked(event -> mainApp.mostrarVista("estadisticas.fxml"));
+        verEstadisticas.setOnMouseClicked(event -> mainApp.mostrarVista("estadisticasGenerales.fxml"));
 
     }
     

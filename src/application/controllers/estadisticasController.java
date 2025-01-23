@@ -63,9 +63,6 @@ public class estadisticasController {
     
     @FXML
     public void initialize() throws SQLException {
-    	Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
-    	nombreSesion.setText("Estadisticas de: " + trabajadorLogueado.getNombre());
-    	
     	salir.setOnMouseClicked(event -> { Platform.exit(); });
 
     	

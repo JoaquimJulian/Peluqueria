@@ -27,7 +27,7 @@
     <!-- Contenido principal -->
     <center>
         <VBox spacing="30" style="-fx-padding: 20px; -fx-alignment: top-center;">
-         <Text fx:id="nombreSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+         <Text fx:id="nombreSesion" strokeType="OUTSIDE" strokeWidth="0.0" text="Estadisticas generales">
             <font>
                <Font name="System Bold" size="24.0" />
             </font>

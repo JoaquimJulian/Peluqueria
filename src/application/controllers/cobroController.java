@@ -507,7 +507,11 @@ public class cobroController {
 
             // Continuar con el flujo de inserción (si la suma es correcta)
             Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
-            Trabajador trabajador = Trabajador.getTrabajadorLogueado();
+            System.out.println(nombrePeluquero.getValue());
+            String peluqueroSeleccionado = (String) nombrePeluquero.getValue(); // Esto devuelve "1 Carmen"
+            String idPeluqueroString = peluqueroSeleccionado.split(" ")[0]; 
+            int idPeluquero = Integer.parseInt(idPeluqueroString);
+            System.out.println(idPeluquero);
             java.sql.Date fecha = new java.sql.Date(System.currentTimeMillis());
             String observacion = observaciones.getText();
 
@@ -516,7 +520,7 @@ public class cobroController {
                 Facturacion facturacionModel = new Facturacion(mainApp.getDatosCompartidos());
                 facturacionModel.insertarFactura(
                     cliente.getId(),
-                    trabajador.getId(),
+                    idPeluquero,
                     servicio.getId(),
                     0,
                     servicio.getNombre(),
@@ -535,7 +539,7 @@ public class cobroController {
                 Facturacion facturacionModel = new Facturacion(mainApp.getDatosCompartidos());
                 facturacionModel.insertarFactura(
                     cliente.getId(),
-                    trabajador.getId(),
+                    idPeluquero,
                     0,
                     producto.getId(),
                     "",
@@ -549,8 +553,9 @@ public class cobroController {
                 );
             }
 
-            // Si todo ha ido bien, redirigir a la vista de clientes
-            mainApp.mostrarVista("clientes.fxml");
+     
+            
+            mainApp.mostrarVista("clientes.fxml", true);
         } catch (NumberFormatException e) {
             System.out.println("Error al procesar los datos numéricos: " + e.getMessage());
         }

@@ -109,6 +109,20 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
+            <AnchorPane fx:id="popupCobro" layoutX="561.0" layoutY="14.0" prefHeight="88.0" prefWidth="244.0" style="-fx-background-color: #f7f8fa; -fx-background-radius: 10px;" visible="false">
+               <children>
+                  <Text layoutX="14.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cobro realizado con exito">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="29.0" fitWidth="36.0" layoutX="107.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/si.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
                </children>
             </AnchorPane>
          </top>

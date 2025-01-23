@@ -5,6 +5,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -40,6 +44,11 @@ public class Facturacion {
 		this.efectivo = efectivo;
 		this.fecha = fecha;
 		this.observacion_facturacion = observacion_facturacion;
+	}
+	
+	public class FacturacionTrabajador {
+		private String nombre_trabajador;
+		private double total_facturado;
 	}
 	
 	public Facturacion(int idFactura, int idCliente, String nombre,
@@ -317,6 +326,8 @@ public class Facturacion {
 		return exitoso;
 	}
 	
+	// METODOS COBRO
+	
 	public boolean insertarFactura(Integer clienteId, Integer trabajadorId,
             Integer serviciosIds, Integer productoId,
             String nombreServicio, String nombreProducto,
@@ -416,5 +427,86 @@ public class Facturacion {
 	    return exitoso;
 	}
 	
+	// METODOS ESTADISTICAS
+	
+	public static List<Map<String, Object>> facturacionPorTrabajador() {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    String sql = 
+	        "SELECT t.nombre, SUM(f.monto_total) as total_facturado " +
+	        "FROM facturacion f " +
+	        "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
+	        "GROUP BY t.id_trabajador, t.nombre";
+
+	    try (Connection conn = databaseConection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            Map<String, Object> row = new HashMap<>();
+	            row.put("nombre", rs.getString("nombre"));
+	            row.put("total_facturado", rs.getDouble("total_facturado"));
+	            resultados.add(row);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return resultados;
+	}
+	
+	public static List<Map<String, Object>> productosPorTrabajador() {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    String sql = 
+	        "SELECT t.nombre, COUNT(*) as numero_productos " +
+	        "FROM facturacion f " +
+	        "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
+	        "WHERE f.id_producto != 0 " +
+	        "GROUP BY t.id_trabajador, t.nombre";
+
+	    try (Connection conn = databaseConection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            Map<String, Object> row = new HashMap<>();
+	            row.put("nombre", rs.getString("nombre"));
+	            row.put("numero_productos", rs.getInt("numero_productos"));
+	            resultados.add(row);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return resultados;
+	}
+	
+	public static List<Map<String, Object>> serviciosPorTrabajador() {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    String sql = 
+	        "SELECT t.nombre, COUNT(*) as numero_servicios " +
+	        "FROM facturacion f " +
+	        "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
+	        "WHERE f.id_servicio != 0 " +
+	        "GROUP BY t.id_trabajador, t.nombre";
+
+	    try (Connection conn = databaseConection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        ResultSet rs = stmt.executeQuery();
+
+	        while (rs.next()) {
+	            Map<String, Object> row = new HashMap<>();
+	            row.put("nombre", rs.getString("nombre"));
+	            row.put("numero_servicios", rs.getInt("numero_servicios"));
+	            resultados.add(row);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return resultados;
+	}
 	
 }
