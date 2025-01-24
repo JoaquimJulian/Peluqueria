@@ -109,7 +109,7 @@
     <center>
         <VBox alignment="CENTER" prefHeight="686.0" prefWidth="1366.0" spacing="20" BorderPane.alignment="CENTER">
 
-            <AnchorPane prefHeight="639.0" prefWidth="1368.0" style="-fx-background-color: #D9CCC7; -fx-background-radius: 10; -fx-padding: 20;">
+            <AnchorPane prefHeight="639.0" prefWidth="1368.0" style="-fx-background-radius: 10; -fx-padding: 20;">
                 <VBox alignment="CENTER_LEFT" layoutX="20.0" layoutY="20.0" spacing="15" />
 
                  <!-- Campo Email -->
