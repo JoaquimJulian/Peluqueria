@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -160,7 +161,7 @@ public class cobroController {
     }
     
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
     	if (mainApp != null) {
     		
     		// NOMBRE DEL CLIENTE EN EL TEXT FIELD
@@ -517,6 +518,7 @@ public class cobroController {
             int idPeluquero = Integer.parseInt(idPeluqueroString);
             System.out.println(idPeluquero);
             java.sql.Date fecha = new java.sql.Date(System.currentTimeMillis());
+            Time hora = new Time(System.currentTimeMillis());
             String observacion = observaciones.getText();
 
             // Insertar factura para los servicios
@@ -534,6 +536,7 @@ public class cobroController {
                     montoTarjeta,
                     montoBizum,
                     fecha,
+                    hora,
                     observacion
                 );
             }
@@ -553,6 +556,7 @@ public class cobroController {
                     montoTarjeta,
                     montoBizum,
                     fecha,
+                    hora,
                     observacion
                 );
             }

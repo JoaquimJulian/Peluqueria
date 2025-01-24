@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -134,8 +134,17 @@ public class estadisticasGeneralesController {
             java.sql.Date fin = java.sql.Date.valueOf(fechaFin.getValue());
 
             if (inicio.after(fin)) {
-                System.out.println("La fecha de inicio no puede ser posterior a la fecha de fin.");
-                return;
+            	Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error en las fechas");
+                alert.setHeaderText(null);
+                alert.setContentText("La fecha de inicio no puede ser posterior a la fecha de fin.");
+                alert.showAndWait();
+            } else if (comboTrabajadores.getValue() == null) {
+            	Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Campo vacio");
+                alert.setHeaderText(null);
+                alert.setContentText("Selecciona un trabajador para filtrar");
+                alert.showAndWait();
             }
 
             // Llenar gráficos con datos generales (todos los usuarios)
@@ -161,21 +170,28 @@ public class estadisticasGeneralesController {
             java.sql.Date inicio = java.sql.Date.valueOf(fechaInicio.getValue());
             java.sql.Date fin = java.sql.Date.valueOf(fechaFin.getValue());
             
-            String peluqueroSeleccionado = (String) comboTrabajadores.getValue(); // Esto devuelve "1 Carmen"
-            String idPeluqueroString = peluqueroSeleccionado.split(" ")[0]; 
-            int idPeluquero = Integer.parseInt(idPeluqueroString);
-            
             if (inicio.after(fin)) {
-                System.out.println("La fecha de inicio no puede ser posterior a la fecha de fin.");
-                return;
+            	Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Error en las fechas");
+                alert.setHeaderText(null);
+                alert.setContentText("La fecha de inicio no puede ser posterior a la fecha de fin.");
+                alert.showAndWait();
+            } else if (comboTrabajadores.getValue() == null) {
+            	Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Campo vacio");
+                alert.setHeaderText(null);
+                alert.setContentText("Selecciona un trabajador para filtrar");
+                alert.showAndWait();
+            }else {
+            	String peluqueroSeleccionado = (String) comboTrabajadores.getValue(); 
+                String idPeluqueroString = peluqueroSeleccionado.split(" ")[0]; 
+                int idPeluquero = Integer.parseInt(idPeluqueroString);
+                
+                llenarGraficoFacturacionTrabajador(idPeluquero, inicio, fin);
+                llenarGraficoProductosTrabajador(idPeluquero, inicio, fin);
+                llenarGraficoServiciosTrabajador(idPeluquero, inicio, fin);
             }
-
-            // Llenar gráficos con los datos del trabajador seleccionado
-            llenarGraficoFacturacionTrabajador(idPeluquero, inicio, fin);
-            llenarGraficoProductosTrabajador(idPeluquero, inicio, fin);
-            llenarGraficoServiciosTrabajador(idPeluquero, inicio, fin);
-            
-            
+           
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -195,24 +211,22 @@ public class estadisticasGeneralesController {
         return coloresTrabajadores.get(nombre);
     }
     
-    public void llenarGraficoFacturacionTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
+    public void llenarGraficoFacturacionTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) throws SQLException {
         // Limpia los datos actuales del gráfico
         graficoFacturacionTrabajador.getData().clear();
 
-        // Obtén la facturación con el filtro correspondiente
-        List<Map<String, Object>> facturacionTrabajador = Facturacion.facturacionPorTrabajador(idTrabajador, inicio, fin);
-
-        if (facturacionTrabajador.isEmpty()) {
-            // Si no hay datos, imprime mensaje y no hace nada más
-            System.out.println("No hay facturación para este usuario en el rango especificado.");
-            return;
-        }
-
+        List<Map<String, Object>> facturacionPorTrabajador = Facturacion.sumaTotalFacturacion(inicio, fin, idTrabajador);
+    	for (Map<String, Object> row : facturacionPorTrabajador) {
+    	    String nombre = (String) row.get("nombre");
+    	    double facturacion = (Double) row.get("facturacion_total");
+    	    System.out.println("Trabajador: " + nombre + ", Facturación Total: " + facturacion);
+    	}
+        
         // Crea una nueva serie para los datos
         XYChart.Series<String, Number> serie = new XYChart.Series<>();
-        for (Map<String, Object> fila : facturacionTrabajador) {
+        for (Map<String, Object> fila : facturacionPorTrabajador) {
             String nombre = (String) fila.get("nombre");
-            Double totalFacturado = (Double) fila.get("total_facturado");
+            Double totalFacturado = (Double) fila.get("facturacion_total");
 
             serie.getData().add(new XYChart.Data<>(nombre, totalFacturado));
         }

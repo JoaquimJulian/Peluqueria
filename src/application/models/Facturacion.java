@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +28,12 @@ public class Facturacion {
 	private Double bizum;
 	private Double tarjeta;
 	private Double efectivo;
+	private Time horaCobro;
 	private Date fecha;
 	private String observacion_facturacion;
 	
 	public Facturacion(int id_factura, int id_cliente, int id_trabajador, int id_servicio, String nombre_servicio, int id_producto, String nombre_producto, 
-            double monto_total, Double bizum, Double tarjeta, Double efectivo, Date fecha, String observacion_facturacion) {
+            double monto_total, Double bizum, Double tarjeta, Double efectivo, Date fecha, Time horaCobro, String observacion_facturacion) {
 		this.id_factura = id_factura;
 		this.id_cliente = id_cliente;
 		this.id_trabajador = id_trabajador;
@@ -42,6 +45,7 @@ public class Facturacion {
 		this.bizum = bizum;
 		this.tarjeta = tarjeta;
 		this.efectivo = efectivo;
+		this.horaCobro = horaCobro;
 		this.fecha = fecha;
 		this.observacion_facturacion = observacion_facturacion;
 	}
@@ -55,7 +59,7 @@ public class Facturacion {
             int idServicio, String nombre_servicio,
             int idProducto, String nombre_producto,
             double monto_total, double bizum, double tarjeta, double efectivo,
-            Date fecha, String observacion_facturacion) {
+            Date fecha, Time hora, String observacion_facturacion) {
 		this.id_factura = idFactura;
 		this.id_cliente = idCliente;
 		this.nombre = nombre;
@@ -153,6 +157,12 @@ public class Facturacion {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	public Time getHoraCobro() {
+		return horaCobro;
+	}
+	public void setHoraCobro(Time horaCobro) {
+		this.horaCobro = horaCobro;
+	}
 	public String getObservacion_facturacion() {
 		return observacion_facturacion;
 	}
@@ -184,6 +194,7 @@ public class Facturacion {
                     rs.getDouble("tarjeta"),
                     rs.getDouble("efectivo"),
                     rs.getDate("fecha"),
+                    rs.getTime("horaCobro"),
                     rs.getString("observacion_facturacion")
                 ));
             }
@@ -201,7 +212,7 @@ public class Facturacion {
 	    String sql = "SELECT f.id_factura, f.id_cliente, c.nombre, " +
 	                 "f.id_servicio, s.nombre_servicio, " +
 	                 "f.id_producto, p.nombre_producto, " +
-	                 "f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.observacion_facturacion " +
+	                 "f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro, f.observacion_facturacion " +
 	                 "FROM facturacion f " +
 	                 "JOIN clientes c ON f.id_cliente = c.id_cliente " +
 	                 "JOIN servicios s ON f.id_servicio = s.id_servicio " +
@@ -224,7 +235,8 @@ public class Facturacion {
 	                rs.getDouble("bizum"),             // Bizum
 	                rs.getDouble("tarjeta"),           // Tarjeta
 	                rs.getDouble("efectivo"),          // Efectivo
-	                rs.getDate("fecha"),               // Fecha
+	                rs.getDate("fecha"),
+	                rs.getTime("horaCobro"),// Fecha
 	                rs.getString("observacion_facturacion") // Observación
 	            ));
 	        }
@@ -259,6 +271,7 @@ public class Facturacion {
                         rs.getDouble("tarjeta"),
                         rs.getDouble("efectivo"),
                         rs.getDate("fecha"),
+                        rs.getTime("horaCobro"),
                         rs.getString("observacion_facturacion")
                     ));
                 }
@@ -293,6 +306,7 @@ public class Facturacion {
                         rs.getDouble("tarjeta"),
                         rs.getDouble("efectivo"),
                         rs.getDate("fecha"),
+                        rs.getTime("horaCobro"),
                         rs.getString("observacion_facturacion")
                     ));
                 }
@@ -333,10 +347,10 @@ public class Facturacion {
             String nombreServicio, String nombreProducto,
             double montoTotal, double montoEfectivo,
             double montoTarjeta,double montoBizum,
-            java.sql.Date fecha, String observacionFacturacion) throws SQLException {
+            java.sql.Date fecha, Time horaCobro, String observacionFacturacion) throws SQLException {
 
 		// Suponiendo que tu sentencia SQL sea algo como esto
-		String query = "INSERT INTO facturacion (id_cliente, id_trabajador, id_servicio, id_producto, nombre_servicio, nombre_producto, monto_total, bizum, tarjeta, efectivo, fecha, observacion_facturacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+		String query = "INSERT INTO facturacion (id_cliente, id_trabajador, id_servicio, id_producto, nombre_servicio, nombre_producto, monto_total, bizum, tarjeta, efectivo, fecha, horaCobro, observacion_facturacion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)";
 		
 		try (Connection connection = databaseConection.getConnection();
 		PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -389,11 +403,12 @@ public class Facturacion {
 		} else {
 		stmt.setNull(11, java.sql.Types.DATE);
 		}
+		stmt.setTime(12, horaCobro);
 		
 		if (observacionFacturacion != null) {
-		stmt.setString(12, observacionFacturacion);
+		stmt.setString(13, observacionFacturacion);
 		} else {
-		stmt.setNull(12, java.sql.Types.VARCHAR);
+		stmt.setNull(13, java.sql.Types.VARCHAR);
 		}
 		
 		// Ejecutar la consulta
@@ -428,6 +443,105 @@ public class Facturacion {
 	}
 	
 	// METODOS ESTADISTICAS
+	public static List<Map<String, Object>> sumaTotalFacturacion(java.sql.Date inicio, java.sql.Date fin, Integer idTrabajador) throws SQLException {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    Map<String, Double> sumasPorTrabajador = new HashMap<>();
+
+	    // Consulta para sumar los monto_total de los registros no repetidos dentro del rango de fechas y por trabajador
+	    String sqlNoRepetidos = "SELECT t.nombre, SUM(f.monto_total) AS total_no_repetidos "
+	                            + "FROM facturacion f "
+	                            + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                            + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlNoRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlNoRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlNoRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                     + "HAVING COUNT(*) = 1"; // Solo registros no repetidos
+
+	    // Consulta para sumar los monto_total de los registros repetidos dentro del rango de fechas y por trabajador
+	    String sqlRepetidos = "SELECT t.nombre, SUM(f.monto_total) / COUNT(*) AS total_repetidos "
+	                          + "FROM facturacion f "
+	                          + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                          + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                   + "HAVING COUNT(*) > 1"; // Solo registros repetidos
+
+	    try (Connection conn = databaseConection.getConnection()) {
+	        // Procesar los registros no repetidos
+	        try (PreparedStatement stmtNoRepetidos = conn.prepareStatement(sqlNoRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtNoRepetidos.setDate(paramIndex++, inicio);
+	                stmtNoRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtNoRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsNoRepetidos = stmtNoRepetidos.executeQuery();
+	            while (rsNoRepetidos.next()) {
+	                String nombre = rsNoRepetidos.getString("nombre");
+	                double totalNoRepetidos = rsNoRepetidos.getDouble("total_no_repetidos");
+	                
+	                
+
+	                // Acumular la suma total_no_repetidos
+	                sumasPorTrabajador.merge(nombre, totalNoRepetidos, Double::sum);
+	            }
+	        }
+
+	        // Procesar los registros repetidos
+	        try (PreparedStatement stmtRepetidos = conn.prepareStatement(sqlRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtRepetidos.setDate(paramIndex++, inicio);
+	                stmtRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsRepetidos = stmtRepetidos.executeQuery();
+	            while (rsRepetidos.next()) {
+	                String nombre = rsRepetidos.getString("nombre");
+	                double totalRepetidos = rsRepetidos.getDouble("total_repetidos");
+
+	                // Acumular la suma total_repetidos
+	                sumasPorTrabajador.merge(nombre, totalRepetidos, Double::sum);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // Crear la lista de resultados con las sumas totales por trabajador
+	    for (Map.Entry<String, Double> entry : sumasPorTrabajador.entrySet()) {
+	        Map<String, Object> row = new HashMap<>();
+	        row.put("nombre", entry.getKey());
+	        row.put("facturacion_total", entry.getValue()); // Esta es la suma total
+	        resultados.add(row);
+	    }
+
+	    return resultados;
+	}
+	
+	
+	
 	
 	public static List<Map<String, Object>> facturacionPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	    List<Map<String, Object>> resultados = new ArrayList<>();
