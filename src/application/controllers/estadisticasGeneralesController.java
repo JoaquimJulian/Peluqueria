@@ -186,7 +186,6 @@ public class estadisticasGeneralesController {
 
 
 
-
     private String obtenerColorTrabajador(String nombre) {
         // Asignar un color único si el trabajador no tiene uno asignado
         if (!coloresTrabajadores.containsKey(nombre)) {

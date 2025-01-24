@@ -234,9 +234,13 @@ public class cobroController {
         	
         	// LOGICA PRODUCTOS
         	
-        	anadirProducto.setOnMouseClicked(event -> popupAnadirProductos.setVisible(true));
+        	anadirProducto.setOnMouseClicked(event -> {
+        	    popupAnadirProductos.setVisible(true);
+        	    codigoBarras.requestFocus();
+        	});
         	
         	productosAnadidosColumna.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        	
         	
         	codigoBarras.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null && !newValue.isEmpty()) {

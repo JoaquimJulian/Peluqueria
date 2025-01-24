@@ -17,7 +17,7 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1346.0" prefWidth="1366.0" style="-fx-border-color: black;">
          <children>
-            <Text layoutX="521.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estadisticas generales:" textAlignment="CENTER" underline="true">
+            <Text layoutX="44.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estadisticas generales:" textAlignment="CENTER" underline="true">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
@@ -66,11 +66,21 @@
                   <Image url="@../images/salir.png" />
                </image>
             </ImageView>
-            <DatePicker fx:id="fechaInicio" layoutX="28.0" layoutY="14.0" prefHeight="37.0" prefWidth="140.0" />
-            <DatePicker fx:id="fechaFin" layoutX="178.0" layoutY="14.0" prefHeight="37.0" prefWidth="140.0" />
-            <Button fx:id="btnFiltrar" layoutX="350.0" layoutY="14.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10;" text="Filtrar" />
+            <DatePicker fx:id="fechaFin" layoutX="675.0" layoutY="60.0" prefHeight="37.0" prefWidth="140.0" />
+            <DatePicker fx:id="fechaInicio" layoutX="497.0" layoutY="60.0" prefHeight="37.0" prefWidth="140.0" />
+            <Button fx:id="btnFiltrar" layoutX="905.0" layoutY="46.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10;" text="Filtrar" />
             <ChoiceBox fx:id="comboTrabajadores" layoutX="35.0" layoutY="81.0" prefHeight="26.0" prefWidth="202.0" visible="false" />
-            <Button fx:id="btnDatosGenerales" layoutX="1005.0" layoutY="14.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10;" text="Datos Generales" />
+            <Button fx:id="btnDatosGenerales" layoutX="1084.0" layoutY="45.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" style="-fx-background-color: black; -fx-text-fill: white; -fx-background-radius: 10;" text="Datos Generales" />
+            <Text layoutX="487.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha inicio tramo:" wrappingWidth="165.32696533203125">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="677.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fecha fin tramo:" wrappingWidth="140.79364013671875">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
          </children>
     </AnchorPane>
   </content>

@@ -1,9 +1,13 @@
 package application.controllers;
 
+import java.sql.SQLException;
+
 import application.Main;
 import application.models.Producto;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -42,6 +46,8 @@ public class crearProductosController {
     @FXML
     private Button crearProducto;
     
+    private boolean existeCodigo = false;
+    
     private Main mainApp; // Referencia a Main
     
  	// Este método se llamará desde Main para establecer la referencia
@@ -50,7 +56,7 @@ public class crearProductosController {
     }
 
     
-    public void initialize() {
+    public void initialize() throws SQLException {
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
@@ -61,12 +67,18 @@ public class crearProductosController {
 		
 
 	   	crearProducto.setOnMouseClicked(event -> {
-	       	crearProducto();
-	       	mainApp.mostrarVista("productos.fxml");
+	       	try {
+				crearProducto();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    });
+	   	
+	   	
 	   	}
 
-    private void crearProducto() {
+    private void crearProducto() throws SQLException {
         String nombre = nombreProducto.getText();
         String descripcion = descripcionProducto.getText();
         double precio_ventaValue = Double.parseDouble(precio_venta.getText());
@@ -75,19 +87,38 @@ public class crearProductosController {
         String codigoBarrasTexto = codigo_barras.getText();
         codigoBarrasTexto = codigoBarrasTexto.replaceAll("^\\^", "");
         Long codigoBarras = Long.parseLong(codigoBarrasTexto);
-
-        // Llama al método en ProductosModel para crear el producto
-        Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock, codigoBarras);
         
-        // Opcional: limpiar los campos o mostrar un mensaje de éxito
-        limpiarCampos();
+        
+        ObservableList<String> codigos = Producto.codigos();
+        for (String producto : codigos) {
+        	if(codigoBarrasTexto.equals(producto)) {
+        		existeCodigo = true;
+        	}
+        }
+        
+        if (!existeCodigo) {
+            Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock, codigoBarras);
+            mainApp.mostrarVista("productos.fxml");
+            nombreProducto.clear();
+            descripcionProducto.clear();
+            precio_venta .clear();
+            precio_costo.clear();
+            stockProducto.clear();
+        } else {
+        	Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error al crear el producto");
+            alert.setHeaderText(null);
+            alert.setContentText("Ya existe un producto con este codigo de barras");
+            alert.showAndWait();
+            
+            nombreProducto.clear();
+            descripcionProducto.clear();
+            precio_venta .clear();
+            precio_costo.clear();
+            stockProducto.clear();
+        }
+        
+      
     }
 
-    private void limpiarCampos() {
-        nombreProducto.clear();
-        descripcionProducto.clear();
-        precio_venta .clear();
-        precio_costo.clear();
-        stockProducto.clear();
-    }
 }

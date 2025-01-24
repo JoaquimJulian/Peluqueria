@@ -334,6 +334,28 @@ public class Producto {
 	    return null; // Si no se encuentra el producto
 	}
 
+	public static ObservableList<String> codigos() throws SQLException {
+	    ObservableList<String> codigos = FXCollections.observableArrayList();
+
+	    Connection connection = databaseConection.getConnection();
+
+	    String sql = "SELECT codigo_barras FROM productos";
+
+	    PreparedStatement stmt = connection.prepareStatement(sql);
+
+	    try (ResultSet rs = stmt.executeQuery()) {
+	        while (rs.next()) {
+	            codigos.add(rs.getString("codigo_barras"));
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace(); // Manejo de excepciones
+	    } finally {
+	        stmt.close();
+	        connection.close();
+	    }
+
+	    return codigos;
+	}
 
 
 	

@@ -147,7 +147,7 @@ public class productosController {
         barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
             filtroBusqueda.clear();
             for (Producto producto : productos) {
-                if (producto.getNombre().toLowerCase().contains(newValue.toLowerCase()) || producto.getDescripcion().toLowerCase().contains(newValue.toLowerCase())) {
+                if (producto.getNombre().toLowerCase().contains(newValue.toLowerCase()) || producto.getDescripcion().toLowerCase().contains(newValue.toLowerCase()) || producto.getCodigo_barras().contains(newValue.toLowerCase())) {
                     filtroBusqueda.add(producto);
                 }
             }
