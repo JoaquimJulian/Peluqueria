@@ -1,6 +1,5 @@
 package application.controllers;
 
-import javafx.scene.control.TextField;
 import application.Main;
 import application.models.Servicio;
 import javafx.application.Platform;
@@ -29,10 +28,10 @@ public class crearServiciosController {
 	// INPUTS DE LOS DATOS DEL NUEVO SERVICIO
 	@FXML
     private TextField nombreServicio;
+	@FXML
+    private TextField precioServicio;
     @FXML
-    private ComboBox<Double> precioServicio;
-    @FXML
-    private ComboBox<Integer> duracionServicio;
+    private ComboBox<String> duracionServicio;
     @FXML
     private TextArea descripcionServicio;
     @FXML
@@ -58,21 +57,32 @@ public class crearServiciosController {
 	    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
     	   	crearServicio.setOnMouseClicked(event -> {
-		       	crearServicio();
-		       	mainApp.mostrarVista("servicios.fxml");
+    	   		try {
+	    		    // Intentamos convertir el texto a double
+	    		    Double precio = Double.parseDouble(precioServicio.getText());
+	    		    crearServicio();
+			       	mainApp.mostrarVista("servicios.fxml");
+	    		} catch (NumberFormatException e) {
+	    			Alert alert = new Alert(Alert.AlertType.WARNING);
+	                alert.setTitle("Error al crear el servicio");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Formato del campo 'precio' incorrecto");
+	                alert.showAndWait();
+	                precioServicio.setText(null);
+	    		}
+		       	
 		    });
     	   	
 	        
     	   	// Valores posibles por defecto de los combobox
-	    	precioServicio.getItems().setAll(5.0, 10.0, 15.0, 20.0);
-	    	duracionServicio.getItems().setAll(0,1,2,3,4,5,6,7);
+	    	duracionServicio.getItems().setAll("10min", "20min", "30min", "40min", "50min", "1h", "1:30h", "2h", "2:30", "3h", "3:30h", "4h");
 	    }
 	    
 	    private void crearServicio() {
-	    	if (nombreServicio.getText() != null && precioServicio.getValue() != null && duracionServicio.getValue() != null && descripcionServicio.getText() != null) {
+	    	if (nombreServicio.getText() != null && precioServicio.getText() != null && duracionServicio.getValue() != null && descripcionServicio.getText() != null) {
 	    		String nombre = nombreServicio.getText();
-		        Double precio = precioServicio.getValue(); 
-		        Integer duracion = duracionServicio.getValue(); 
+		        Double precio = Double.parseDouble(precioServicio.getText()); 
+		        String duracion = duracionServicio.getValue(); 
 		        String descripcion = descripcionServicio.getText();
 		        boolean requiereReservaChecked = requiereReserva.isSelected();
 		        

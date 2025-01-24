@@ -4,6 +4,7 @@ package application.controllers;
 
 import java.sql.SQLException;
 import application.Main;
+import application.models.Servicio;
 import application.models.Trabajador;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -116,7 +117,18 @@ public class trabajadoresController {
         columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
         columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
         columnaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        columnaAdmin.setCellValueFactory(new PropertyValueFactory<>("esAdministrador")); // Esta es la columna admin
+        columnaAdmin.setCellValueFactory(new PropertyValueFactory<>("esAdministrador"));
+        columnaAdmin.setCellFactory(columna -> new TableCell<Trabajador, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item ? "Sí" : "No");  // Muestra "Sí" si lpd es true, "No" si lpd es false
+                }
+            }
+        });
         columnaComision.setCellValueFactory(new PropertyValueFactory<>("comision"));
 
         cargarTrabajadores();

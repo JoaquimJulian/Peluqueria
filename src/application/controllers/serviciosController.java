@@ -110,6 +110,17 @@ public class serviciosController {
         columnaPrecio.setCellValueFactory(new PropertyValueFactory<>("precio"));
         columnaDuracion.setCellValueFactory(new PropertyValueFactory<>("duracionEstimada"));
         columnaReserva.setCellValueFactory(new PropertyValueFactory<>("requiereReserva"));
+        columnaReserva.setCellFactory(columna -> new TableCell<Servicio, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    setText(item ? "Sí" : "No");  // Muestra "Sí" si lpd es true, "No" si lpd es false
+                }
+            }
+        });
     
     	cargarServicios();
     }

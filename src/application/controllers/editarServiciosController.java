@@ -2,6 +2,7 @@ package application.controllers;
 
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 import application.Main;
@@ -15,27 +16,27 @@ import javafx.scene.control.TextArea;
 public class editarServiciosController {
 	
 	// BOTONES HEADER
-		@FXML
-		private ImageView salir;
-		@FXML
-		private ImageView calendario;
-		@FXML
-		private ImageView ajustes;
-		@FXML
-		private ImageView cobrar;
-		@FXML
-		private ImageView usuarios;
-		@FXML
-		private ImageView cerrar;
-		@FXML
-	    private ImageView ficha;
+	@FXML
+	private ImageView salir;
+	@FXML
+	private ImageView calendario;
+	@FXML
+	private ImageView ajustes;
+	@FXML
+	private ImageView cobrar;
+	@FXML
+	private ImageView usuarios;
+	@FXML
+	private ImageView cerrar;
+	@FXML
+    private ImageView ficha;
 	
 	@FXML
     private TextField nombreServicio;
     @FXML
-    private ComboBox<Double> precioServicio;
+    private TextField precioServicio;
     @FXML
-    private ComboBox<Integer> duracionServicio;
+    private ComboBox<String> duracionServicio;
     @FXML
     private TextArea descripcionServicio;
     @FXML
@@ -62,8 +63,19 @@ public class editarServiciosController {
 
 
     	   	editarServicio.setOnAction(event ->  {
-    	   		editarServicio();
-	         	mainApp.mostrarVista("servicios.fxml");
+    	   		try {
+	    		    // Intentamos convertir el texto a double
+	    		    Double precio = Double.parseDouble(precioServicio.getText());
+	    		    editarServicio();
+			       	mainApp.mostrarVista("servicios.fxml");
+	    		} catch (NumberFormatException e) {
+	    			Alert alert = new Alert(Alert.AlertType.WARNING);
+	                alert.setTitle("Error al crear el servicio");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Formato del campo 'precio' incorrecto");
+	                alert.showAndWait();
+	                precioServicio.setText(null);
+	    		}
     	   	});
        }
        
@@ -73,13 +85,12 @@ public class editarServiciosController {
     	Servicio servicio = (Servicio) mainApp.getDatosCompartidos(); /*recojo el valor de la variable datosCompartidos, la cual contiene el contenido
      	que me ha enviado el otro controlador, en este caso los datos de la fila a editar. Realizo un casting para convertir los datos compartidos en un objeto de tipo 'Servicio'*/
     	
-    	// Valores posibles por defecto de los combobox
-    	precioServicio.getItems().setAll(5.0, 10.0, 15.0, 20.0);
-    	duracionServicio.getItems().setAll(0,1,2,3,4,5,6,7);
+    	
+    	duracionServicio.getItems().setAll("10min", "20min", "30min", "40min", "50min", "1h", "1:30h", "2h", "2:30", "3h", "3:30h", "4h");
     	
         nombreServicio.setText(servicio.getNombre());
         descripcionServicio.setText(servicio.getDescripcion());
-        precioServicio.getSelectionModel().select(servicio.getPrecio());
+        precioServicio.setText(String.valueOf(servicio.getPrecio()));
         duracionServicio.getSelectionModel().select(servicio.getDuracionEstimada());
         requiereReserva.setSelected(servicio.isRequiereReserva());
        	}
@@ -89,8 +100,8 @@ public class editarServiciosController {
 	    	Convierto los datos a un objeto de tipo Servicio*/
 	    	
 			String nombre = nombreServicio.getText();
-			Double precio = precioServicio.getValue();
-			Integer duracion = duracionServicio.getValue();
+	        Double precio = Double.parseDouble(precioServicio.getText()); 
+	        String duracion = duracionServicio.getValue(); 
 			String descripcion = descripcionServicio.getText();
 			boolean requiereReservaChecked = requiereReserva.isSelected();
 			

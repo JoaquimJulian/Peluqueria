@@ -127,6 +127,19 @@ public class clientesController {
 	        columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 	        columnaEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 	        columnaLpd.setCellValueFactory(new PropertyValueFactory<>("lpd"));
+	        columnaLpd.setCellFactory(columna -> new TableCell<Cliente, Boolean>() {
+	            @Override
+	            protected void updateItem(Boolean item, boolean empty) {
+	                super.updateItem(item, empty);
+	                if (item == null || empty) {
+	                    setText(null);
+	                } else {
+	                    setText(item ? "Sí" : "No");  // Muestra "Sí" si lpd es true, "No" si lpd es false
+	                }
+	            }
+	        });
+	        
+	        
 	    
 	    	cargarClientes();
 	    	cargarCliente();

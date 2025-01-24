@@ -91,8 +91,8 @@ public class Cliente {
 		this.observaciones = observaciones;
 	}
 	
-    public static void crearCliente(String nombre, String apellido, Integer telefono, String email, Boolean lpd) {
-		String sql = "INSERT INTO clientes (nombre, apellidos, telefono, email, lpd) VALUES (?, ?, ?, ?, ?)";
+    public static void crearCliente(String nombre, String apellido, Integer telefono, String email, Boolean lpd, String observaciones) {
+		String sql = "INSERT INTO clientes (nombre, apellidos, telefono, email, lpd, observaciones) VALUES (?, ?, ?, ?, ?, '')";
 		
 		try (Connection connection = databaseConection.getConnection();
 	             PreparedStatement stmt = connection.prepareStatement(sql)) {

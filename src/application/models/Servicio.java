@@ -12,11 +12,11 @@ public class Servicio {
     private String nombre;
     private String descripcion;
     private double precio;
-    private int duracionEstimada;
+    private String duracionEstimada;
     private boolean requiereReserva;
 
     // Constructor
-    public Servicio(int id, String nombre, String descripcion, double precio, int duracionEstimada, boolean requiereReserva) {
+    public Servicio(int id, String nombre, String descripcion, double precio, String duracionEstimada, boolean requiereReserva) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -58,11 +58,11 @@ public class Servicio {
         this.precio = precio;
     }
 
-    public int getDuracionEstimada() {
+    public String getDuracionEstimada() {
         return duracionEstimada;
     }
 
-    public void setDuracionEstimada(int duracionEstimada) {
+    public void setDuracionEstimada(String duracionEstimada) {
         this.duracionEstimada = duracionEstimada;
     }
 
@@ -74,7 +74,7 @@ public class Servicio {
         this.requiereReserva = requiereReserva;
     }
     
-    public static void crearServicio(String nombre, Double precio, Integer duracion, String descripcion, Boolean requiereReserva) {
+    public static void crearServicio(String nombre, Double precio, String duracion, String descripcion, Boolean requiereReserva) {
 		String sql = "INSERT INTO servicios (nombre_servicio, precio, duracion_estimada, descripcion, requiere_reserva) VALUES (?, ?, ?, ?, ?)";
 		
 		try (Connection connection = databaseConection.getConnection();
@@ -83,7 +83,7 @@ public class Servicio {
 	            // Establecemos los parámetros del PreparedStatement
 	            stmt.setString(1, nombre);
 	            stmt.setDouble(2, precio);
-	            stmt.setInt(3, duracion);
+	            stmt.setString(3, duracion);
 	            stmt.setString(4, descripcion);
 	            stmt.setBoolean(5, requiereReserva);
 
@@ -96,7 +96,7 @@ public class Servicio {
 	        }
 	}
 	
-	public static void editarServicio(Integer id, String nombre, Double precio, Integer duracion, String descripcion, Boolean requiereReserva) {
+	public static void editarServicio(Integer id, String nombre, Double precio, String duracion, String descripcion, Boolean requiereReserva) {
 		String sql = "UPDATE servicios SET nombre_servicio = ?, precio = ?, duracion_estimada = ?, descripcion = ?, requiere_reserva = ? WHERE id_servicio = ?";
 		
 		try (Connection connection = databaseConection.getConnection();
@@ -104,7 +104,7 @@ public class Servicio {
 				
 				stmt.setString(1, nombre);
 				stmt.setDouble(2, precio);
-				stmt.setInt(3, duracion);
+				stmt.setString(3, duracion);
 				stmt.setString(4, descripcion);
 				stmt.setBoolean(5, requiereReserva);
 				stmt.setInt(6, id);
@@ -177,7 +177,7 @@ public class Servicio {
                     rs.getString("nombre_servicio"),
                     rs.getString("descripcion"),
                     rs.getDouble("precio"),
-                    rs.getInt("duracion_estimada"),
+                    rs.getString("duracion_estimada"),
                     rs.getBoolean("requiere_reserva")
                 ));
             }
@@ -205,7 +205,7 @@ public class Servicio {
                     rs.getString("nombre_servicio"),
                     rs.getString("descripcion"),
                     rs.getDouble("precio"),
-                    rs.getInt("duracion_estimada"),
+                    rs.getString("duracion_estimada"),
                     rs.getBoolean("requiere_reserva")
                 ));
             }
@@ -233,7 +233,7 @@ public class Servicio {
                     rs.getString("nombre_servicio"),
                     rs.getString("descripcion"),
                     rs.getDouble("precio"),
-                    rs.getInt("duracion_estimada"),
+                    rs.getString("duracion_estimada"),
                     rs.getBoolean("requiere_reserva")
                 ));
             }

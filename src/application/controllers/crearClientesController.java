@@ -87,7 +87,7 @@ public class crearClientesController {
 		        String email = emailCliente.getText();
 		        boolean lpdd = lpd.isSelected();
 		        
-		        Cliente.crearCliente(nombre, apellidos, telefono, email, lpdd);
+		        Cliente.crearCliente(nombre, apellidos, telefono, email, lpdd, "");
 	    	}else { //si los campos estan vacios te sale un aviso de que los tienes que rellenar todos
 	    		Alert alert = new Alert(Alert.AlertType.INFORMATION); 
 	            alert.setTitle("Error"); 
