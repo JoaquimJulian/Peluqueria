@@ -429,19 +429,39 @@ public class Facturacion {
 	
 	// METODOS ESTADISTICAS
 	
-	public static List<Map<String, Object>> facturacionPorTrabajador() {
+	public static List<Map<String, Object>> facturacionPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	    List<Map<String, Object>> resultados = new ArrayList<>();
-	    String sql = 
-	        "SELECT t.nombre, SUM(f.monto_total) as total_facturado " +
-	        "FROM facturacion f " +
-	        "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
-	        "GROUP BY t.id_trabajador, t.nombre";
+	    String sql = "SELECT t.nombre, SUM(f.monto_total) as total_facturado " +
+	                 "FROM facturacion f " +
+	                 "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador ";
+
+	    // Agregar filtro por rango de fechas
+	    if (inicio != null && fin != null) {
+	        sql += "WHERE f.fecha BETWEEN ? AND ? ";
+	        if (idTrabajador != null) {
+	            sql += "AND f.id_trabajador = ? ";
+	        }
+	    } else if (idTrabajador != null) {
+	        sql += "WHERE f.id_trabajador = ? ";
+	    }
+
+	    sql += "GROUP BY t.id_trabajador, t.nombre";
 
 	    try (Connection conn = databaseConection.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-	        ResultSet rs = stmt.executeQuery();
+	        int paramIndex = 1;
 
+	        if (inicio != null && fin != null) {
+	            stmt.setDate(paramIndex++, inicio);
+	            stmt.setDate(paramIndex++, fin);
+	        }
+
+	        if (idTrabajador != null) {
+	            stmt.setInt(paramIndex++, idTrabajador);
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
 	            Map<String, Object> row = new HashMap<>();
 	            row.put("nombre", rs.getString("nombre"));
@@ -454,21 +474,43 @@ public class Facturacion {
 
 	    return resultados;
 	}
+
+
+
+
 	
-	public static List<Map<String, Object>> productosPorTrabajador() {
+	public static List<Map<String, Object>> productosPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	    List<Map<String, Object>> resultados = new ArrayList<>();
-	    String sql = 
-	        "SELECT t.nombre, COUNT(*) as numero_productos " +
-	        "FROM facturacion f " +
-	        "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
-	        "WHERE f.id_producto != 0 " +
-	        "GROUP BY t.id_trabajador, t.nombre";
+	    String sql = "SELECT t.nombre, COUNT(*) as numero_productos " +
+	                 "FROM facturacion f " +
+	                 "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
+	                 "WHERE f.id_producto != 0 ";
+
+	    if (inicio != null && fin != null) {
+	        sql += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sql += "AND f.id_trabajador = ? "; // Filtrar solo por el trabajador logueado si no es admin
+	    }
+
+	    sql += "GROUP BY t.id_trabajador, t.nombre";
 
 	    try (Connection conn = databaseConection.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-	        ResultSet rs = stmt.executeQuery();
+	        int paramIndex = 1;
 
+	        if (inicio != null && fin != null) {
+	            stmt.setDate(paramIndex++, inicio);
+	            stmt.setDate(paramIndex++, fin);
+	        }
+
+	        if (idTrabajador != null) {
+	            stmt.setInt(paramIndex++, idTrabajador);
+	        }
+
+	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
 	            Map<String, Object> row = new HashMap<>();
 	            row.put("nombre", rs.getString("nombre"));
@@ -481,21 +523,49 @@ public class Facturacion {
 
 	    return resultados;
 	}
+
+
+
+
+
 	
-	public static List<Map<String, Object>> serviciosPorTrabajador() {
+	public static List<Map<String, Object>> serviciosPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	    List<Map<String, Object>> resultados = new ArrayList<>();
-	    String sql = 
-	        "SELECT t.nombre, COUNT(*) as numero_servicios " +
-	        "FROM facturacion f " +
-	        "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
-	        "WHERE f.id_servicio != 0 " +
-	        "GROUP BY t.id_trabajador, t.nombre";
+	    String sql = "SELECT t.nombre, COUNT(*) as numero_servicios " +
+	                 "FROM facturacion f " +
+	                 "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador " +
+	                 "WHERE f.id_servicio != 0 ";
+
+	    // Filtro por rango de fechas
+	    if (inicio != null && fin != null) {
+	        sql += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    // Filtro por trabajador si no es administrador
+	    if (idTrabajador != null) {
+	        sql += "AND f.id_trabajador = ? ";
+	    }
+
+	    sql += "GROUP BY t.id_trabajador, t.nombre";
 
 	    try (Connection conn = databaseConection.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-	        ResultSet rs = stmt.executeQuery();
+	        int paramIndex = 1;
 
+	        // Establece las fechas si están definidas
+	        if (inicio != null && fin != null) {
+	            stmt.setDate(paramIndex++, inicio);
+	            stmt.setDate(paramIndex++, fin);
+	        }
+
+	        // Establece el ID del trabajador si no es administrador
+	        if (idTrabajador != null) {
+	            stmt.setInt(paramIndex++, idTrabajador);
+	        }
+
+	        // Ejecuta la consulta
+	        ResultSet rs = stmt.executeQuery();
 	        while (rs.next()) {
 	            Map<String, Object> row = new HashMap<>();
 	            row.put("nombre", rs.getString("nombre"));
@@ -508,5 +578,10 @@ public class Facturacion {
 
 	    return resultados;
 	}
+
+
+
+
+
 	
 }

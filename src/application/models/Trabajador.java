@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -109,6 +112,7 @@ public class Trabajador {
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
+	
     
  // Método para establecer al trabajador logueado
     public static void setTrabajadorLogueado(Trabajador trabajador) {
@@ -140,6 +144,27 @@ public class Trabajador {
             System.out.println("Error al crear el trabajador: " + e.getMessage());
         }
     }
+    public static Map<String, Integer> obtenerTrabajadores() {
+        Map<String, Integer> trabajadores = new HashMap<>();
+        String sql = "SELECT id_trabajador, nombre FROM trabajadores";
+
+        try (Connection conn = databaseConection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String nombre = rs.getString("nombre");
+                int id = rs.getInt("id_trabajador");
+                trabajadores.put(nombre, id); // Asocia el nombre con el ID
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return trabajadores;
+    }
+
 
     // Método para actualizar un trabajador en la base de datos
     public boolean actualizarTrabajador(Trabajador trabajador) {
