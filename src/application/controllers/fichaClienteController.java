@@ -2,7 +2,9 @@ package application.controllers;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import application.Main;
 import application.models.Cliente;
@@ -11,6 +13,9 @@ import application.models.Facturacion;
 import application.models.Trabajador;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,11 +29,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -58,22 +65,44 @@ public class fichaClienteController {
 	private Text nombreSesion;
 
 	@FXML
-    private TableView<Facturacion> tableViewServicios;
+    private TableView<Facturacion> tableViewFechas;
 
     @FXML
     private TableColumn<Facturacion, Date> columnFecha;
 
     @FXML
-    private TableColumn<Facturacion, Integer> columnProductos;
-
+    private TextField productoMasVendido;
     @FXML
-    private TableColumn<Facturacion, Integer> columnServicios;
-
+    private TextField servicioMasVendido;
     @FXML
-    private TableColumn<Facturacion, Double> columnPrecio;
+    private TextField productosTotalesVendidos;
+    @FXML
+    private TextField serviciosTotalesVendidos;
+    
+    
+    // POPUP
     
     @FXML
-	private TextField barraBusqueda;
+    private AnchorPane popupDetalles;
+    @FXML
+    private ImageView cerrarPopup;
+    
+    @FXML
+    private TableView<Facturacion> tableServicios;
+    @FXML
+    private TableColumn<Facturacion, String> columnServicios;
+    @FXML
+    private TableView<Map<String, Object>> tableProductos;
+    @FXML
+    private TableColumn<Map<String, Object>, String> columnProductos;
+    @FXML
+    private TableColumn<Map<String, Object>, Integer> columnUnidades;
+    @FXML
+    private TextArea comentario;
+    @FXML
+    private Button btnGuardarComentarioSesion;
+    
+    
     @FXML
     private Button btnNuevoServicio;
     @FXML
@@ -120,9 +149,6 @@ public class fichaClienteController {
         	
             // Configurar las columnas
             columnFecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
-            columnProductos.setCellValueFactory(new PropertyValueFactory<>("nombre_producto"));
-            columnServicios.setCellValueFactory(new PropertyValueFactory<>("nombre_servicio"));
-            columnPrecio.setCellValueFactory(new PropertyValueFactory<>("monto_total"));
             
             
             btnNuevoServicio.setOnMouseClicked(event -> {
@@ -154,36 +180,27 @@ public class fichaClienteController {
         ObservableList<Facturacion> datos = Facturacion.getFacturacionCliente(cliente.getId());
         
         ObservableList<Facturacion> filtroBusqueda = Facturacion.getFacturacionCliente(cliente.getId());
-        tableViewServicios.setItems(filtroBusqueda);
+        tableViewFechas.setItems(filtroBusqueda);
         
-        // Cargar los datos en el TableView
-        tableViewServicios.setItems(datos);
         
-        tableViewServicios.setOnMouseClicked(event -> {
+        tableViewFechas.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) { // Verifica si son 2 clics
-                Facturacion facturacionSeleccionada = tableViewServicios.getSelectionModel().getSelectedItem();
+                Facturacion facturacionSeleccionada = tableViewFechas.getSelectionModel().getSelectedItem();
                 if (facturacionSeleccionada != null) { // Asegúrate de que hay una fila seleccionada
-                    mostrarObservacionFacturacion(facturacionSeleccionada);
+                	popupDetalles.setVisible(true);
+                    try {
+						mostrarDetallesFacturacion(facturacionSeleccionada);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
                 }
             }
         });
         
-        
-        barraBusqueda.textProperty().addListener((observable, oldValue, newValue) -> {
-            filtroBusqueda.clear(); // Limpia el filtro antes de añadir nuevos elementos
-            for (Facturacion dato : datos) {
-                if (dato.getNombre_producto().toLowerCase().contains(newValue.toLowerCase()) ||
-                    dato.getNombre_servicio().toLowerCase().contains(newValue.toLowerCase()) ||
-                    dato.getFecha().toString().toLowerCase().contains(newValue.toLowerCase()) ||
-                    String.valueOf(dato.getMonto_total()).contains(newValue)) {
-                    filtroBusqueda.add(dato); // Añadir los elementos filtrados
-                }
-            }
-            tableViewServicios.setItems(filtroBusqueda); // Actualiza el TableView con los resultados filtrados
-        });
-
-        
-        
+        productosTotalesVendidos.setText(Facturacion.getProductosVendidosCliente(datosCliente().getId()).toString());
+        serviciosTotalesVendidos.setText(Facturacion.getServiciosVendidosCliente(datosCliente().getId()).toString());
+        productoMasVendido.setText(Facturacion.getProductoMasRepetido(datosCliente().getId()));
+        servicioMasVendido.setText(Facturacion.getServicioMasRepetido(datosCliente().getId()));
     }
     
     public void ponerNombreCliente() {
@@ -224,56 +241,40 @@ public class fichaClienteController {
     	}
     }
 
-    public void mostrarObservacionFacturacion(Facturacion facturacion) {
-    	// Crear una nueva ventana para el popup
-        Stage popup = new Stage();
-        Stage owner = (Stage) nombreCliente.getScene().getWindow();
+    public void mostrarDetallesFacturacion(Facturacion facturacion) throws SQLException {
+    	cerrarPopup.setOnMouseClicked(event -> popupDetalles.setVisible(false));
+    	ObservableList<Facturacion> serviciosFacturacion = Facturacion.getServiciosSesion(datosCliente().getId(), facturacion.getFecha());
+    	columnServicios.setCellValueFactory(new PropertyValueFactory<>("nombre_servicio"));
+    	tableServicios.setItems(serviciosFacturacion);
 
-        // Establecer que el popup es modal (bloquea la ventana principal)
-        popup.initModality(Modality.APPLICATION_MODAL);
-        popup.initOwner(owner); // Propietario de la ventana popup (para que se quede encima de la ventana principal)
+    	columnProductos.setCellValueFactory(cellData -> 
+        	new SimpleStringProperty((String) cellData.getValue().get("nombre_producto"))
+    	);
 
-        TextArea observacion = new TextArea();
-        observacion.setText(facturacion.getObservacion_facturacion());
-        Button guardarCambios = new Button();
-        guardarCambios.setText("Guardar cambios");
-        guardarCambios.setStyle("-fx-text-fill: white; -fx-background-color: black;");
-        guardarCambios.setPrefWidth(160);  
-        guardarCambios.setPrefHeight(85);
+	    // Configurar la columna de unidades
+	    columnUnidades.setCellValueFactory(cellData -> 
+	        new SimpleObjectProperty<>((Integer) cellData.getValue().get("unidades"))
+	    );
+	    
+	    List<Map<String, Object>> productosSesion = Facturacion.getProductosSesion(datosCliente().getId(), facturacion.getFecha());
+        ObservableList<Map<String, Object>> productosFacturacion = FXCollections.observableArrayList(productosSesion);
 
-        guardarCambios.setOnMouseClicked(event -> {
-			try {
-				guardarObservacionFacturacion(observacion.getText(), facturacion.getId_factura());
+        // Establecer los datos en la tabla
+        tableProductos.setItems(productosFacturacion);
+        
+        comentario.setText(Facturacion.getObservacionFacturacion(facturacion.getFecha(), datosCliente().getId()));
+        btnGuardarComentarioSesion.setOnMouseClicked(event -> {
+        	try {
+				guardarObservacionFacturacion(comentario.getText(), facturacion.getFecha(), datosCliente().getId());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		});
-
-        // Layout para el popup
-        VBox popupLayout = new VBox(10);
-        popupLayout.getChildren().addAll(observacion);
-
-        HBox buttonLayout = new HBox();
-        buttonLayout.setAlignment(Pos.CENTER); // Centrar el botón en el HBox
-        buttonLayout.setSpacing(5); // Añadir un espacio entre el TextArea y el botón
-        buttonLayout.setPadding(new Insets(0, 0, 10, 0));
-        buttonLayout.getChildren().add(guardarCambios);
-        
-        popupLayout.getChildren().add(buttonLayout);
-
-
-        // Configurar la escena del popup
-        Scene popupScene = new Scene(popupLayout, 600, 200);
-        popup.setTitle("Observaciones de la facturacion");
-        popup.setScene(popupScene);
-
-        // Mostrar el popup
-        popup.show();
+        });
     }
 
-    public void guardarObservacionFacturacion(String observacion, int id_factura) throws SQLException {
-    	if(Facturacion.guardarObservaciones(observacion, id_factura)) {
+    public void guardarObservacionFacturacion(String observacion, Date fecha, int id_cliente) throws SQLException {
+    	if(Facturacion.guardarObservaciones(observacion, fecha, id_cliente)) {
     		Alert alerta = new Alert(AlertType.INFORMATION);
 		    
 		    alerta.setTitle("Observacion");

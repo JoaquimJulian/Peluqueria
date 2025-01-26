@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -249,10 +250,179 @@ public class Facturacion {
 	}
 	
 	
+	// METODOS FICHA CLIENTE
+	
+	public static ObservableList<Facturacion> getServiciosSesion(Integer id, java.sql.Date fecha) throws SQLException {
+	    ObservableList<Facturacion> serviciosSesion = FXCollections.observableArrayList();
+	    Connection connection = databaseConection.getConnection();
+
+	    String sql = "SELECT * FROM facturacion WHERE id_cliente = ? AND fecha = ? AND id_servicio != 0";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        stmt.setInt(1, id);
+	        stmt.setDate(2, fecha); 
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	        	while (rs.next()) {
+                    serviciosSesion.add(new Facturacion(
+                        rs.getInt("id_factura"),
+                        rs.getInt("id_cliente"),
+                        rs.getInt("id_trabajador"),
+                        rs.getInt("id_servicio"),
+                        rs.getString("nombre_servicio"),
+                        rs.getInt("id_producto"),
+                        rs.getString("nombre_producto"),
+                        rs.getDouble("monto_total"),
+                        rs.getDouble("bizum"),
+                        rs.getDouble("tarjeta"),
+                        rs.getDouble("efectivo"),
+                        rs.getDate("fecha"),
+                        rs.getTime("horaCobro"),
+                        rs.getString("observacion_facturacion")
+                    ));
+                }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return serviciosSesion;
+	}
+	
+	public static List<Map<String, Object>> getProductosSesion(Integer id, java.sql.Date fecha) throws SQLException {
+	    List<Map<String, Object>> productosSesion = new ArrayList<>();
+	    Connection connection = databaseConection.getConnection();
+
+	    // Consulta SQL para obtener los productos y la cantidad de unidades
+	    String sql = "SELECT nombre_producto, COUNT(*) as unidades FROM facturacion WHERE id_cliente = ? AND fecha = ? AND id_producto != 0 GROUP BY nombre_producto";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        stmt.setInt(1, id);
+	        stmt.setDate(2, fecha); 
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            // Iterar por los resultados y agregar cada fila como un mapa
+	            while (rs.next()) {
+	                Map<String, Object> fila = new HashMap<>();
+	                fila.put("nombre_producto", rs.getString("nombre_producto")); // Nombre del producto
+	                fila.put("unidades", rs.getInt("unidades")); // Cantidad de unidades
+	                productosSesion.add(fila); // Agregar el mapa a la lista
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return productosSesion;
+	}
+
+	public static Integer getProductosVendidosCliente(int idCliente) throws SQLException {
+	    int totalProductos = 0;
+	    Connection connection = databaseConection.getConnection();
+
+	    String sql = "SELECT COUNT(*) AS total_productos " +
+	                 "FROM facturacion " +
+	                 "WHERE id_cliente = ? AND id_producto != 0";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        stmt.setInt(1, idCliente);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                totalProductos = rs.getInt("total_productos");
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return totalProductos;
+	}
+	
+	public static Integer getServiciosVendidosCliente(int idCliente) throws SQLException {
+	    int totalServicios = 0;
+	    Connection connection = databaseConection.getConnection();
+
+	    String sql = "SELECT COUNT(*) AS total_servicios " +
+	                 "FROM facturacion " +
+	                 "WHERE id_cliente = ? AND id_servicio != 0";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        stmt.setInt(1, idCliente);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                totalServicios = rs.getInt("total_servicios");
+	            }
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+
+	    return totalServicios;
+	}
+	
+	public static String getProductoMasRepetido(int idCliente) throws SQLException {
+	    String productoMasRepetido = null;
+	    Connection connection = databaseConection.getConnection();
+
+	    String sql = "SELECT nombre_producto, COUNT(*) AS cantidad " +
+	                 "FROM facturacion " +
+	                 "WHERE id_cliente = ? " +
+	                 "AND id_producto != 0 " +
+	                 "GROUP BY nombre_producto " +
+	                 "ORDER BY cantidad DESC " +
+	                 "LIMIT 1";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        stmt.setInt(1, idCliente);
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                productoMasRepetido = rs.getString("nombre_producto");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    }
+
+	    return productoMasRepetido;
+	}
+	
+	public static String getServicioMasRepetido(int idCliente) throws SQLException {
+	    String servicioMasVendido = null;
+	    Connection connection = databaseConection.getConnection();
+
+	    // Consulta SQL para obtener el servicio que más se repite para el cliente
+	    String sql = "SELECT nombre_servicio, COUNT(*) AS cantidad " +
+	                 "FROM facturacion " +
+	                 "WHERE id_cliente = ? " +
+	                 "AND id_servicio != 0 " +  // Excluir servicios con id_servicio = 0
+	                 "GROUP BY nombre_servicio " +
+	                 "ORDER BY cantidad DESC " +
+	                 "LIMIT 1";
+
+	    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        stmt.setInt(1, idCliente);  // Establecer el parámetro de id_cliente
+
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                servicioMasVendido = rs.getString("nombre_servicio");  // Obtener el nombre del servicio
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();  // Manejo de excepciones
+	        throw e;
+	    }
+
+	    return servicioMasVendido;  // Retornar el nombre del servicio más vendido
+	}
+	
 	public static ObservableList<Facturacion> getFacturacionCliente(int id) throws SQLException {
         ObservableList<Facturacion> facturacion = FXCollections.observableArrayList();
         Connection connection = databaseConection.getConnection();
-        String sql = "SELECT * FROM facturacion WHERE id_cliente = ?";
+        String sql = "SELECT * FROM facturacion WHERE id_cliente = ? GROUP BY fecha";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql);){
         	stmt.setInt(1, id);
@@ -318,16 +488,42 @@ public class Facturacion {
         	
         return facturacion;
     }
+
+	public static String getObservacionFacturacion(java.sql.Date fecha, int id_cliente) throws SQLException {
+	    String sql = "SELECT observacion_facturacion FROM facturacion WHERE fecha = ? AND id_cliente = ?";
+	    String observacion = null;  // Valor por defecto en caso de no encontrar resultados
+
+	    try (Connection connection = databaseConection.getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+	        // Establecemos los parámetros en la consulta
+	        stmt.setDate(1, fecha);
+	        stmt.setInt(2, id_cliente);
+	        
+	        try (ResultSet rs = stmt.executeQuery()) {
+	            if (rs.next()) {
+	                // Recuperamos el valor de la columna 'observacion_facturacion'
+	                observacion = rs.getString("observacion_facturacion");
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        System.out.println("Error al obtener la observación: " + e.getMessage());
+	    }
+
+	    return observacion;  // Devolvemos el valor de la observación o null si no se encuentra
+	}
 	
-	public static boolean guardarObservaciones(String observaciones, int id) throws SQLException {
-		String sql = "UPDATE facturacion SET observacion_facturacion = ? WHERE id_factura = ?";
+	public static boolean guardarObservaciones(String observaciones, java.sql.Date fecha, int id_cliente) throws SQLException {
+		String sql = "UPDATE facturacion SET observacion_facturacion = ? WHERE fecha = ? AND id_cliente = ?";
 		boolean exitoso = false;
 		try (Connection connection = databaseConection.getConnection();
 	             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
 	            // Establecemos los parámetros del PreparedStatement
 	            stmt.setString(1, observaciones);
-	            stmt.setInt(2, id);
+	            stmt.setDate(2, fecha);
+	            stmt.setInt(3, id_cliente);
 	        
 	            // Ejecutamos la inserción
 	            stmt.executeUpdate();
@@ -539,59 +735,6 @@ public class Facturacion {
 
 	    return resultados;
 	}
-	
-	
-	
-	
-	public static List<Map<String, Object>> facturacionPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
-	    List<Map<String, Object>> resultados = new ArrayList<>();
-	    String sql = "SELECT t.nombre, SUM(f.monto_total) as total_facturado " +
-	                 "FROM facturacion f " +
-	                 "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador ";
-
-	    // Agregar filtro por rango de fechas
-	    if (inicio != null && fin != null) {
-	        sql += "WHERE f.fecha BETWEEN ? AND ? ";
-	        if (idTrabajador != null) {
-	            sql += "AND f.id_trabajador = ? ";
-	        }
-	    } else if (idTrabajador != null) {
-	        sql += "WHERE f.id_trabajador = ? ";
-	    }
-
-	    sql += "GROUP BY t.id_trabajador, t.nombre";
-
-	    try (Connection conn = databaseConection.getConnection();
-	         PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-	        int paramIndex = 1;
-
-	        if (inicio != null && fin != null) {
-	            stmt.setDate(paramIndex++, inicio);
-	            stmt.setDate(paramIndex++, fin);
-	        }
-
-	        if (idTrabajador != null) {
-	            stmt.setInt(paramIndex++, idTrabajador);
-	        }
-
-	        ResultSet rs = stmt.executeQuery();
-	        while (rs.next()) {
-	            Map<String, Object> row = new HashMap<>();
-	            row.put("nombre", rs.getString("nombre"));
-	            row.put("total_facturado", rs.getDouble("total_facturado"));
-	            resultados.add(row);
-	        }
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	    }
-
-	    return resultados;
-	}
-
-
-
-
 	
 	public static List<Map<String, Object>> productosPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	    List<Map<String, Object>> resultados = new ArrayList<>();

@@ -126,12 +126,9 @@
                </font>
             </Button>
             <TextArea fx:id="observaciones" layoutX="41.0" layoutY="448.0" prefHeight="132.0" prefWidth="760.0" />
-            <TableView fx:id="tableViewServicios" layoutX="42.0" layoutY="72.0" prefHeight="312.0" prefWidth="1286.0">
+            <TableView fx:id="tableViewFechas" layoutX="42.0" layoutY="72.0" prefHeight="312.0" prefWidth="379.0">
 			    <columns>
-			        <TableColumn fx:id="columnFecha" prefWidth="302.39997482299805" text="FECHA" />
-			        <TableColumn fx:id="columnProductos" minWidth="0.0" prefWidth="327.2000427246094" text="PRODUCTOS" />
-			        <TableColumn fx:id="columnServicios" minWidth="0.0" prefWidth="399.0" text="SERVICIOS" />
-			        <TableColumn fx:id="columnPrecio" prefWidth="254.0" text="PRECIO" />
+			        <TableColumn fx:id="columnFecha" prefWidth="378.0" text="FECHAS DE VENTAS DE PRODUCTOS Y SERVICIOS REALIZADOS" />
 			    </columns>
 			</TableView>
             <Text fx:id="nombreCliente" layoutX="535.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="298.1367492675781">
@@ -144,12 +141,66 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <TextField fx:id="barraBusqueda" layoutX="1057.0" layoutY="20.0" prefHeight="36.0" prefWidth="263.0" promptText="Buscar..." style="-fx-background-color: #D9D9D9;" />
-            <ImageView fitHeight="23.0" fitWidth="26.0" layoutX="1291.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/lupa.png" />
-               </image>
-            </ImageView>
+            <Text layoutX="461.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos totales vendidos:" textAlignment="CENTER" wrappingWidth="313.1367492675781">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="461.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios totales vendidos:" wrappingWidth="313.1367492675781">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="894.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Producto mas vendido:" wrappingWidth="264.1367492675781">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text layoutX="896.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicio mas vendido:" wrappingWidth="264.1367492675781">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <TextField fx:id="productosTotalesVendidos" layoutX="789.0" layoutY="129.0" prefHeight="25.0" prefWidth="77.0" />
+            <TextField fx:id="serviciosTotalesVendidos" layoutX="774.0" layoutY="209.0" prefHeight="25.0" prefWidth="77.0" />
+            <TextField fx:id="productoMasVendido" layoutX="1171.0" layoutY="129.0" prefHeight="25.0" prefWidth="142.0" />
+            <TextField fx:id="servicioMasVendido" layoutX="1158.0" layoutY="209.0" prefHeight="25.0" prefWidth="151.0" />
+            <AnchorPane fx:id="popupDetalles" layoutX="398.0" layoutY="20.0" prefHeight="545.0" prefWidth="617.0" style="-fx-background-color: D9CCC7; -fx-border-color: black; -fx-border-radius: 10px; -fx-border-width: 2px; -fx-background-radius: 10px;" visible="false">
+               <children>
+                  <TableView fx:id="tableServicios" layoutX="34.0" layoutY="68.0" prefHeight="136.0" prefWidth="561.0">
+                    <columns>
+                      <TableColumn fx:id="columnServicios" prefWidth="564.0" text="Servicios realizados" />
+                    </columns>
+                  </TableView>
+                  <TableView fx:id="tableProductos" layoutX="36.0" layoutY="218.0" prefHeight="134.0" prefWidth="560.0">
+                     <columns>
+                        <TableColumn fx:id="columnProductos" prefWidth="440.0" text="Productos vendidos" />
+                        <TableColumn fx:id="columnUnidades" prefWidth="119.0" text="Unidades" />
+                     </columns>
+                  </TableView>
+                  <Text layoutX="167.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Detalles de la sesion" textAlignment="CENTER" underline="true" wrappingWidth="298.1367492675781">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="104.0" layoutY="393.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Comentario:" textAlignment="CENTER" wrappingWidth="298.1367492675781">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <TextArea fx:id="comentario" layoutX="38.0" layoutY="408.0" prefHeight="103.0" prefWidth="413.0" />
+                  <Button fx:id="btnGuardarComentarioSesion" layoutX="468.0" layoutY="425.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="131.0" style="-fx-background-color: black;" text="Guardar comentario" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fx:id="cerrarPopup" fitHeight="30.0" fitWidth="43.0" layoutX="565.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@../images/cerrarPagina.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
 
             </AnchorPane>
         </VBox>
