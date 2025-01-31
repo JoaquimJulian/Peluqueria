@@ -53,8 +53,14 @@ public class estadisticasGeneralesController {
     @FXML
     private Button btnDatosGenerales;
     @FXML
-	private Label facturacionTotalLabel; // Etiqueta en la interfaz para mostrar la facturación total
-
+	private Label facturacionTotalLabel; 
+    @FXML
+	private Label facturacionEfectivoLabel;
+    @FXML
+	private Label facturacionTarjetaLabel;
+    @FXML
+	private Label facturacionBizumLabel;
+    
 	
     private Main mainApp; // Referencia a Main
     
@@ -99,6 +105,9 @@ public class estadisticasGeneralesController {
             btnDatosGenerales.setOnAction(event -> {
                 mostrarDatosGenerales();
                 mostrarFacturacionTotal();
+                mostrarFacturacionEfectivo();
+                mostrarFacturacionTarjeta();
+                mostrarFacturacionBizum();
             });
 
 
@@ -129,11 +138,17 @@ public class estadisticasGeneralesController {
     	comboTrabajadores.setItems(nombresTrabajadores);
     	
     	aplicarFiltro();
+    	mostrarFacturacionEfectivo();
+        mostrarFacturacionTarjeta();
+        mostrarFacturacionBizum();
 
         // Configurar el evento del botón "Filtrar"
         btnFiltrar.setOnAction(event -> { 
-        aplicarFiltro();  
-        mostrarFacturacionTotal();
+	        aplicarFiltro();  
+	        mostrarFacturacionTotal();
+	        mostrarFacturacionEfectivo();
+	        mostrarFacturacionTarjeta();
+	        mostrarFacturacionBizum();
         });
     }
 
@@ -150,13 +165,7 @@ public class estadisticasGeneralesController {
                 alert.setHeaderText(null);
                 alert.setContentText("La fecha de inicio no puede ser posterior a la fecha de fin.");
                 alert.showAndWait();
-            } else if (comboTrabajadores.getValue() == null) {
-            	Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Campo vacio");
-                alert.setHeaderText(null);
-                alert.setContentText("Selecciona un trabajador para filtrar");
-                alert.showAndWait();
-            }
+            } 
 
             // Llenar gráficos con datos generales (todos los usuarios)
             llenarGraficoFacturacionTrabajador(null, inicio, fin);
@@ -169,11 +178,6 @@ public class estadisticasGeneralesController {
             e.printStackTrace();
         }
     }
-
-
-
-
-
 
     private void aplicarFiltro() {
         try {
@@ -208,11 +212,6 @@ public class estadisticasGeneralesController {
         }
     }
 
-
-
-
-
-
     private String obtenerColorTrabajador(String nombre) {
         // Asignar un color único si el trabajador no tiene uno asignado
         if (!coloresTrabajadores.containsKey(nombre)) {
@@ -224,8 +223,7 @@ public class estadisticasGeneralesController {
     
    
 
-	 // Método para llenar el gráfico de facturación con números
-	 public void llenarGraficoFacturacionTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) throws SQLException {
+    public void llenarGraficoFacturacionTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) throws SQLException {
 	     graficoFacturacionTrabajador.getData().clear();
 	
 	     List<Map<String, Object>> facturacionPorTrabajador = Facturacion.sumaTotalFacturacion(inicio, fin, idTrabajador);
@@ -257,8 +255,7 @@ public class estadisticasGeneralesController {
 	     graficoFacturacionTrabajador.getData().add(serie);
 	 }
 	
-	 // Método para llenar el gráfico de servicios con números
-	 public void llenarGraficoServiciosTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
+	public void llenarGraficoServiciosTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	     graficoServiciosTrabajador.getData().clear();
 	
 	     List<Map<String, Object>> serviciosTrabajador = Facturacion.serviciosPorTrabajador(idTrabajador, inicio, fin);
@@ -289,8 +286,7 @@ public class estadisticasGeneralesController {
 	     graficoServiciosTrabajador.getData().add(serie);
 	 }
 	
-	 // Método para llenar el gráfico de productos con números
-	 public void llenarGraficoProductosTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
+	public void llenarGraficoProductosTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	     graficoProductosTrabajador.getData().clear();
 	
 	     List<Map<String, Object>> productosTrabajador = Facturacion.productosPorTrabajador(idTrabajador, inicio, fin);
@@ -321,10 +317,7 @@ public class estadisticasGeneralesController {
 	     graficoProductosTrabajador.getData().add(serie);
 	 }
 
-	
-
-	// Método para calcular y mostrar la facturación total
-	 private void mostrarFacturacionTotal() {
+	private void mostrarFacturacionTotal() {
 	     try {
 	         java.sql.Date inicio = java.sql.Date.valueOf(fechaInicio.getValue());
 	         java.sql.Date fin = java.sql.Date.valueOf(fechaFin.getValue());
@@ -354,11 +347,88 @@ public class estadisticasGeneralesController {
 	     }
 	 }
 
+	
+	private void mostrarFacturacionEfectivo() {
+	    try {
+	        java.sql.Date inicio = java.sql.Date.valueOf(fechaInicio.getValue());
+	        java.sql.Date fin = java.sql.Date.valueOf(fechaFin.getValue());
+
+	        // Verifica si se seleccionó un trabajador
+	        String peluqueroSeleccionado = (String) comboTrabajadores.getValue();
+	        Integer idPeluquero = null;
+
+	        if (peluqueroSeleccionado != null) {
+	            String idPeluqueroString = peluqueroSeleccionado.split(" ")[0];
+	            idPeluquero = Integer.parseInt(idPeluqueroString);
+	        }
+
+	        // Obtén la facturación total desde la base de datos
+	        double facturacionTotal = Facturacion.facturacionEfectivo(idPeluquero, inicio, fin);
 
 
+	        // Actualiza la etiqueta en la interfaz
+	        facturacionEfectivoLabel.setText(String.format("Facturación Efectivo: %.2f €", facturacionTotal));
 
-	 
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        facturacionEfectivoLabel.setText("Error al calcular la facturación en efectivo.");
+	    }
+	}
+	
+	private void mostrarFacturacionTarjeta() {
+	    try {
+	        java.sql.Date inicio = java.sql.Date.valueOf(fechaInicio.getValue());
+	        java.sql.Date fin = java.sql.Date.valueOf(fechaFin.getValue());
 
+	        // Verifica si se seleccionó un trabajador
+	        String peluqueroSeleccionado = (String) comboTrabajadores.getValue();
+	        Integer idPeluquero = null;
+
+	        if (peluqueroSeleccionado != null) {
+	            String idPeluqueroString = peluqueroSeleccionado.split(" ")[0];
+	            idPeluquero = Integer.parseInt(idPeluqueroString);
+	        }
+
+	        // Obtén la facturación total desde la base de datos
+	        double facturacionTotal = Facturacion.facturacionTarjeta(idPeluquero, inicio, fin);
+
+
+	        // Actualiza la etiqueta en la interfaz
+	        facturacionTarjetaLabel.setText(String.format("Facturación Tarjeta: %.2f €", facturacionTotal));
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        facturacionTarjetaLabel.setText("Error al calcular la facturación con tarjeta.");
+	    }
+	}
+
+	private void mostrarFacturacionBizum() {
+	    try {
+	        java.sql.Date inicio = java.sql.Date.valueOf(fechaInicio.getValue());
+	        java.sql.Date fin = java.sql.Date.valueOf(fechaFin.getValue());
+
+	        // Verifica si se seleccionó un trabajador
+	        String peluqueroSeleccionado = (String) comboTrabajadores.getValue();
+	        Integer idPeluquero = null;
+
+	        if (peluqueroSeleccionado != null) {
+	            String idPeluqueroString = peluqueroSeleccionado.split(" ")[0];
+	            idPeluquero = Integer.parseInt(idPeluqueroString);
+	        }
+
+	        // Obtén la facturación total desde la base de datos
+	        double facturacionTotal = Facturacion.facturacionBizum(idPeluquero, inicio, fin);
+
+
+	        // Actualiza la etiqueta en la interfaz
+	        facturacionBizumLabel.setText(String.format("Facturación Bizum: %.2f €", facturacionTotal));
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        facturacionBizumLabel.setText("Error al calcular la facturación con bizum.");
+	    }
+	}
+	
 }
 
 

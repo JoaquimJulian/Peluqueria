@@ -781,10 +781,6 @@ public class Facturacion {
 	    return resultados;
 	}
 
-
-
-
-
 	
 	public static List<Map<String, Object>> serviciosPorTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
 	    List<Map<String, Object>> resultados = new ArrayList<>();
@@ -837,8 +833,131 @@ public class Facturacion {
 	}
 
 
+	public static double facturacionEfectivo(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
+	    double totalEfectivo = 0.0; // Valor por defecto si no se encuentran resultados
+	    String sql = "SELECT SUM(efectivo) AS total_efectivo FROM facturacion";
+	    
+	    if (idTrabajador != null) {
+	        sql += " WHERE id_trabajador = ?";
+	    }
+	    
+	    if (inicio != null && fin != null && idTrabajador != null) {
+	        sql += " AND fecha BETWEEN ? AND ?";
+	    } else if (inicio != null && fin != null && idTrabajador == null) {
+	        sql += " WHERE fecha BETWEEN ? AND ?";
+	    }
 
+	    try (Connection conn = databaseConection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
+	        int paramIndex = 1;
+
+	        // Asigna el parámetro idTrabajador si no es nulo
+	        if (idTrabajador != null) {
+	            stmt.setInt(paramIndex++, idTrabajador);
+	        }
+
+	        // Asigna las fechas si están definidas
+	        if (inicio != null && fin != null) {
+	            stmt.setDate(paramIndex++, inicio);
+	            stmt.setDate(paramIndex++, fin);
+	        }
+
+	        // Ejecuta la consulta
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            totalEfectivo = rs.getDouble("total_efectivo");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return totalEfectivo;
+	}
+	
+	public static double facturacionTarjeta(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
+	    double totalTarjeta = 0.0; // Valor por defecto si no se encuentran resultados
+	    String sql = "SELECT SUM(tarjeta) AS total_tarjeta FROM facturacion";
+	    
+	    if (idTrabajador != null) {
+	        sql += " WHERE id_trabajador = ?";
+	    }
+	    
+	    if (inicio != null && fin != null && idTrabajador != null) {
+	        sql += " AND fecha BETWEEN ? AND ?";
+	    } else if (inicio != null && fin != null && idTrabajador == null) {
+	        sql += " WHERE fecha BETWEEN ? AND ?";
+	    }
+
+	    try (Connection conn = databaseConection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        int paramIndex = 1;
+
+	        // Asigna el parámetro idTrabajador si no es nulo
+	        if (idTrabajador != null) {
+	            stmt.setInt(paramIndex++, idTrabajador);
+	        }
+
+	        // Asigna las fechas si están definidas
+	        if (inicio != null && fin != null) {
+	            stmt.setDate(paramIndex++, inicio);
+	            stmt.setDate(paramIndex++, fin);
+	        }
+
+	        // Ejecuta la consulta
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            totalTarjeta = rs.getDouble("total_tarjeta");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return totalTarjeta;
+	}
+
+	public static double facturacionBizum(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) {
+	    double totalBizum = 0.0; // Valor por defecto si no se encuentran resultados
+	    String sql = "SELECT SUM(bizum) AS total_bizum FROM facturacion";
+	    
+	    if (idTrabajador != null) {
+	        sql += " WHERE id_trabajador = ?";
+	    }
+	    
+	    if (inicio != null && fin != null && idTrabajador != null) {
+	        sql += " AND fecha BETWEEN ? AND ?";
+	    } else if (inicio != null && fin != null && idTrabajador == null) {
+	        sql += " WHERE fecha BETWEEN ? AND ?";
+	    }
+
+	    try (Connection conn = databaseConection.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        int paramIndex = 1;
+
+	        // Asigna el parámetro idTrabajador si no es nulo
+	        if (idTrabajador != null) {
+	            stmt.setInt(paramIndex++, idTrabajador);
+	        }
+
+	        // Asigna las fechas si están definidas
+	        if (inicio != null && fin != null) {
+	            stmt.setDate(paramIndex++, inicio);
+	            stmt.setDate(paramIndex++, fin);
+	        }
+
+	        // Ejecuta la consulta
+	        ResultSet rs = stmt.executeQuery();
+	        if (rs.next()) {
+	            totalBizum = rs.getDouble("total_bizum");
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    
+	    return totalBizum;
+	}
 
 	
 }

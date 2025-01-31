@@ -272,7 +272,7 @@ public class fichaClienteController {
 			}
         });
     }
-
+ 
     public void guardarObservacionFacturacion(String observacion, Date fecha, int id_cliente) throws SQLException {
     	if(Facturacion.guardarObservaciones(observacion, fecha, id_cliente)) {
     		Alert alerta = new Alert(AlertType.INFORMATION);

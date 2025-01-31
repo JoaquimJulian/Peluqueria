@@ -23,12 +23,12 @@
                   <Font name="System Bold" size="36.0" />
                </font>
             </Text>
-            <Text layoutX="189.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Facturacion por  trabajador:" textAlignment="CENTER">
+            <Text layoutX="189.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Facturacion por  trabajador:" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
-            <BarChart fx:id="graficoFacturacionTrabajador" layoutX="35.0" layoutY="176.0" legendVisible="false" prefHeight="563.0" prefWidth="618.0" style="-fx-border-color: black;" stylesheets="@../resource/MyStyle.css">
+            <BarChart fx:id="graficoFacturacionTrabajador" layoutX="35.0" layoutY="200.0" legendVisible="false" prefHeight="563.0" prefWidth="618.0" style="-fx-border-color: black;" stylesheets="@../resource/MyStyle.css">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
@@ -36,7 +36,7 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <BarChart fx:id="graficoProductosTrabajador" layoutX="696.0" layoutY="176.0" legendVisible="false" prefHeight="245.0" prefWidth="618.0" style="-fx-border-color: black;" stylesheets="@../resource/MyStyle.css">
+            <BarChart fx:id="graficoProductosTrabajador" layoutX="696.0" layoutY="200.0" legendVisible="false" prefHeight="245.0" prefWidth="618.0" style="-fx-border-color: black;" stylesheets="@../resource/MyStyle.css">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>
@@ -44,12 +44,12 @@
                   <NumberAxis side="LEFT" tickUnit="1.0" />
                </yAxis>
             </BarChart>
-            <Text layoutX="817.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos vendidos por trabajador:" textAlignment="CENTER">
+            <Text layoutX="817.0" layoutY="167.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Productos vendidos por trabajador:" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
-            <BarChart fx:id="graficoServiciosTrabajador" layoutX="697.0" layoutY="497.0" legendVisible="false" prefHeight="245.0" prefWidth="618.0" style="-fx-border-color: black;" stylesheets="@../resource/MyStyle.css">
+            <BarChart fx:id="graficoServiciosTrabajador" layoutX="697.0" layoutY="521.0" legendVisible="false" prefHeight="245.0" prefWidth="618.0" style="-fx-border-color: black;" stylesheets="@../resource/MyStyle.css">
                <xAxis>
                   <CategoryAxis side="BOTTOM" />
                </xAxis>
@@ -57,7 +57,7 @@
                   <NumberAxis side="LEFT" />
                </yAxis>
             </BarChart>
-            <Text layoutX="820.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios vendidos por trabajador:" textAlignment="CENTER">
+            <Text layoutX="820.0" layoutY="488.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servicios vendidos por trabajador:" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -84,6 +84,9 @@
             </Text>
             
             <Label fx:id="facturacionTotalLabel" layoutX="267.0" layoutY="81.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Facturación Total: 0.00 €" />
+            <Label fx:id="facturacionEfectivoLabel" layoutX="375.0" layoutY="115.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Facturación Efectivo: 0.00 €" />
+            <Label fx:id="facturacionTarjetaLabel" layoutX="606.0" layoutY="115.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Facturación Tarjeta: 0.00 €" />
+            <Label fx:id="facturacionBizumLabel" layoutX="826.0" layoutY="115.0" style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Facturación Bizum: 0.00 €" />
             
          </children>
     </AnchorPane>

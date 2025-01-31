@@ -1,10 +1,13 @@
 package application.controllers;
 
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
+
+import java.util.function.UnaryOperator;
 
 import application.Main;
 import application.models.Cliente;
@@ -74,6 +77,8 @@ public class editarClientesController {
 				ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 			}
 			
+			controlFormatoTelefono();
+			
 			editarCliente.setOnAction(event ->  {
 				editarCliente();
 			 	mainApp.mostrarVista("clientes.fxml");
@@ -109,5 +114,21 @@ public class editarClientesController {
 			
 			
 	        Cliente.editarCliente(cliente.getId(), nombre, apellidos, telefono, email, lpdd);
+	    }
+	    
+	    private void controlFormatoTelefono() {
+	    	int maxLength = 9;
+        	UnaryOperator<TextFormatter.Change> filter = change -> {
+                String newText = change.getControlNewText();
+                
+                // Verifica si el texto es numérico y no excede la longitud máxima
+                if (newText.matches("\\d*") && newText.length() <= maxLength) {
+                    return change; // Aceptar el cambio
+                }
+                return null; // Rechazar el cambio
+            };
+
+            TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+            telefonoCliente.setTextFormatter(textFormatter);
 	    }
 }

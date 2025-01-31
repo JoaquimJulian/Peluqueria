@@ -1,6 +1,9 @@
 package application.controllers;
 
 import javafx.scene.control.TextField;
+
+import java.util.function.UnaryOperator;
+
 import application.Main;
 import application.models.Cliente;
 import application.models.Trabajador;
@@ -70,7 +73,9 @@ public class crearClientesController {
 			}else {
 				ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 			}
-    		
+        	
+        	controlFormatoTelefono();
+        	
     	   	crearCliente.setOnMouseClicked(event -> {
 		       	crearCliente();
 		       	mainApp.mostrarVista("clientes.fxml");
@@ -95,6 +100,22 @@ public class crearClientesController {
 	            alert.setContentText("Rellene todos los campos, por favor"); 
 	            alert.showAndWait(); 
 	    	}
+	    }
+	    
+	    private void controlFormatoTelefono() {
+	    	int maxLength = 9;
+        	UnaryOperator<TextFormatter.Change> filter = change -> {
+                String newText = change.getControlNewText();
+                
+                // Verifica si el texto es numérico y no excede la longitud máxima
+                if (newText.matches("\\d*") && newText.length() <= maxLength) {
+                    return change; // Aceptar el cambio
+                }
+                return null; // Rechazar el cambio
+            };
+
+            TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+            telefonoCliente.setTextFormatter(textFormatter);
 	    }
 	    
 	    

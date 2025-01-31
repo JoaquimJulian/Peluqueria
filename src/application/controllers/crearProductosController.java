@@ -10,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.util.function.UnaryOperator;
 
 public class crearProductosController {
 
@@ -65,7 +67,10 @@ public class crearProductosController {
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 		
-
+    	controlFormatoPrecio();
+    	controlFormatoStock();
+    	controlFormatoCodigo();
+    	
 	   	crearProducto.setOnMouseClicked(event -> {
 	       	try {
 				crearProducto();
@@ -120,5 +125,50 @@ public class crearProductosController {
         
       
     }
+    
+    private void controlFormatoPrecio() {
+        UnaryOperator<TextFormatter.Change> filtro = change -> {
+            String newText = change.getControlNewText();
 
+            // Permite solo números y un único punto decimal
+            if (newText.matches("\\d*\\.?\\d*")) {
+                return change; // Aceptar el cambio
+            }
+            return null; // Rechazar el cambio
+        };
+
+        // Crear una nueva instancia de TextFormatter para cada TextField
+        precio_venta.setTextFormatter(new TextFormatter<>(filtro));
+        precio_costo.setTextFormatter(new TextFormatter<>(filtro));
+    }
+
+    private void controlFormatoStock() {
+        UnaryOperator<TextFormatter.Change> filtroStock = change -> {
+            String newText = change.getControlNewText();
+            
+            // Verifica si el texto es numérico (solo dígitos)
+            if (newText.matches("\\d*")) {
+                return change; // Aceptar el cambio
+            }
+            return null; // Rechazar el cambio
+        };
+
+        // Crear una nueva instancia de TextFormatter para stockProducto
+        stockProducto.setTextFormatter(new TextFormatter<>(filtroStock));
+    }
+    
+    private void controlFormatoCodigo() {
+    	UnaryOperator<TextFormatter.Change> filtroCodigo = change -> {
+            String newText = change.getControlNewText();
+            
+            // Verifica si el texto es numérico (solo dígitos)
+            if (newText.matches("\\d*")) {
+                return change; // Aceptar el cambio
+            }
+            return null; // Rechazar el cambio
+        };
+
+        // Crear una nueva instancia de TextFormatter para stockProducto
+        codigo_barras.setTextFormatter(new TextFormatter<>(filtroCodigo));
+    }
 }
