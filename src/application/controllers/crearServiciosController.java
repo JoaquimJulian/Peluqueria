@@ -56,22 +56,32 @@ public class crearServiciosController {
 	    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
 	    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 
-    	   	crearServicio.setOnMouseClicked(event -> {
-    	   		try {
-	    		    // Intentamos convertir el texto a double
-	    		    Double precio = Double.parseDouble(precioServicio.getText());
-	    		    crearServicio();
-			       	mainApp.mostrarVista("servicios.fxml");
-	    		} catch (NumberFormatException e) {
-	    			Alert alert = new Alert(Alert.AlertType.WARNING);
-	                alert.setTitle("Error al crear el servicio");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Formato del campo 'precio' incorrecto");
-	                alert.showAndWait();
-	                precioServicio.setText(null);
-	    		}
-		       	
-		    });
+	    	crearServicio.setOnMouseClicked(event -> {
+	    	    // Verificar si el campo nombreServicio está vacío
+	    	    if (nombreServicio.getText().trim().isEmpty()) {
+	    	        Alert alert = new Alert(Alert.AlertType.WARNING);
+	    	        alert.setTitle("Campo requerido");
+	    	        alert.setHeaderText(null);
+	    	        alert.setContentText("El nombre del servicio es obligatorio");
+	    	        alert.showAndWait();
+	    	        return; // Detener ejecución si el campo está vacío
+	    	    }
+	    	    
+	    	    try {
+	    	        // Intentamos convertir el texto a double
+	    	        Double precio = Double.parseDouble(precioServicio.getText());
+	    	        crearServicio();
+	    	        mainApp.mostrarVista("servicios.fxml");
+	    	    } catch (NumberFormatException e) {
+	    	        Alert alert = new Alert(Alert.AlertType.WARNING);
+	    	        alert.setTitle("Error al crear el servicio");
+	    	        alert.setHeaderText(null);
+	    	        alert.setContentText("Formato del campo 'precio' incorrecto");
+	    	        alert.showAndWait();
+	    	        precioServicio.setText(null);
+	    	    }
+	    	});
+
     	   	
 	        
     	   	// Valores posibles por defecto de los combobox

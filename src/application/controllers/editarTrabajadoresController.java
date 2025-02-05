@@ -10,6 +10,7 @@ import application.models.Trabajador;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.PasswordField;
 
 public class editarTrabajadoresController {
 
@@ -39,7 +40,7 @@ public class editarTrabajadoresController {
     @FXML
     private TextField email;
     @FXML
-    private TextField contrasena;
+    private PasswordField contrasena;
     @FXML
     private CheckBox admin;
     @FXML

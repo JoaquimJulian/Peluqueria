@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.PasswordField?>
 
 <BorderPane fx:id="panelPrincipal" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.editarTrabajadoresController">
          <top>
@@ -166,11 +167,11 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="contrasena" layoutX="400.0" layoutY="37.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
+                  <PasswordField fx:id="contrasena" layoutX="400.0" layoutY="37.0" prefHeight="31.0" prefWidth="319.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;">
                      <cursor>
                         <Cursor fx:constant="TEXT" />
                      </cursor>
-                  </TextField>
+                  </PasswordField>
                   <Text layoutX="401.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin:">
                      <font>
                         <Font name="System Bold" size="18.0" />
