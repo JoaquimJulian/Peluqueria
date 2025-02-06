@@ -108,7 +108,7 @@ public class Producto {
 
     
     public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras, int aviso_stock) {
-		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock, codigo_barras, alerta_bajo_stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock, codigo_barras, aviso_stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
 		try (Connection connection = databaseConection.getConnection();
 	             PreparedStatement stmt = connection.prepareStatement(sql)) {
