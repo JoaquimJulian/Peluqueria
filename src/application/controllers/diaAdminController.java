@@ -51,6 +51,8 @@ public class diaAdminController {
 		@FXML
 	    private ImageView ficha;
 		@FXML
+	    private ImageView basura;
+		@FXML
 		private Text nombreSesion;
 
 	    @FXML
@@ -85,7 +87,8 @@ public class diaAdminController {
     	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
-		ficha.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
 		
     	if (!trabajadorLogueado.isEsAdministrador()) {
     		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());

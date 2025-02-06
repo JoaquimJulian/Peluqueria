@@ -58,6 +58,8 @@ public class restarstock {
     @FXML
     private ImageView ficha;
     @FXML
+    private ImageView basura;
+    @FXML
 	private Text nombreSesion;
 
     @FXML
@@ -99,6 +101,7 @@ public class restarstock {
         	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+        	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	
         	
@@ -122,7 +125,12 @@ public class restarstock {
                 if (producto != null) {
                     int cantidadRestar = cantidadProducto.getValue();
                     if (cantidadRestar > 0) {
-                        restarStock(producto, cantidadRestar);
+                        try {
+							restarStock(producto, cantidadRestar);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
                     } else {
                         mostrarAlerta("Cantidad inválida", "La cantidad debe ser mayor que 0.");
                     }
@@ -169,20 +177,37 @@ public class restarstock {
     // LOGICA STOCK
     
  // Método para restar el stock
-    public void restarStock(Producto producto, int cantidadRestar) {
-        int nuevoStock = producto.getCantidad_en_stock() - cantidadRestar;
-        if (nuevoStock >= 0) {
-            if (Facturacion.restarStock(producto.getId(), nuevoStock)) {
-                producto.setCantidad_en_stock(nuevoStock);
-                mostrarAlerta("Stock actualizado", "El stock ha sido actualizado correctamente.");
-                mainApp.mostrarVista("productos.fxml");
-            } else {
-                mostrarAlerta("Error", "No se pudo actualizar el stock en la base de datos.");
-            }
+    public void restarStock(Producto producto, int cantidadRestar) throws SQLException {
+        int stock = producto.getCantidad_en_stock() - 1;
+        
+        // Restar el stock en la base de datos
+        if (Facturacion.restarStock(producto.getId(), stock)) {
+            producto.setCantidad_en_stock(stock);
+        }
+
+        // Verificar si el stock ha bajado del nivel de aviso
+        boolean stockBajo = Producto.verificarAvisoStock(producto.getId(), producto.getCantidad_en_stock());
+        System.out.println("Producto: " + producto.getNombre() + " - Stock bajo: " + stockBajo); // Depurar el valor de stockBajo
+
+        if (stockBajo) {
+            // Si el stock está por debajo del nivel de aviso, mostrar la alerta
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("AVISO DE STOCK");
+            alert.setHeaderText(null);
+            alert.setContentText("El stock de " + producto.getNombre() + " ha bajado de su nivel mínimo que es: " + producto.getAviso_stock() + "\nStock actual: " + producto.getCantidad_en_stock());
+            alert.showAndWait();
+            mainApp.mostrarVista("productos.fxml"); 
         } else {
-            mostrarAlerta("Stock insuficiente", "No hay suficiente stock para restar esa cantidad.");
+            // Si el stock pasa por encima del nivel de aviso, mostrar alerta de stock recuperado
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("STOCK RECUPERADO");
+            alert.setHeaderText(null);
+            alert.setContentText("El stock de " + producto.getNombre() + " ha superado el nivel de aviso. Stock actual: " + producto.getCantidad_en_stock());
+            alert.showAndWait();
+            mainApp.mostrarVista("productos.fxml"); 
         }
     }
+
 
     // Método para mostrar alertas
     private void mostrarAlerta(String titulo, String mensaje) {
@@ -198,3 +223,7 @@ public class restarstock {
 
 
    
+
+
+
+  

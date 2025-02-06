@@ -408,8 +408,6 @@ public class Producto {
 
 	    if (rs.next()) {
 	        int avisoStock = rs.getInt("aviso_stock"); // Nivel de aviso de stock
-	        System.out.println("Producto ID: " + productoId + " - Stock: " + cantidadEnStock + " - Aviso Stock: " + avisoStock); // Verificación en consola
-	        System.out.println("¿Stock bajo? " + (cantidadEnStock < avisoStock)); // Imprimir resultado de la comparación
 	        return cantidadEnStock < avisoStock; // Verifica si el stock es menor al nivel de aviso
 	    }
 	    return false; // Si no encuentra el producto
