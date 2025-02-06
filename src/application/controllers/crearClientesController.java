@@ -30,6 +30,8 @@ public class crearClientesController {
 	@FXML
 	private ImageView cerrar;
 	@FXML
+	private ImageView basura;
+	@FXML
 	private ImageView ficha;
 	@FXML
 	private Text nombreSesion;
@@ -66,6 +68,8 @@ public class crearClientesController {
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+        	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+
         	if (!trabajadorLogueado.isEsAdministrador()) {
 				Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
 				ajustes.setImage(imagenCliente);

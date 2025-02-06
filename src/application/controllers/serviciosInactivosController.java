@@ -31,6 +31,8 @@ public class serviciosInactivosController {
 	@FXML
 	private ImageView usuarios;
 	@FXML
+	private ImageView basura;
+	@FXML
 	private ImageView cerrar;
 	@FXML
 	private Text nombreSesion;
@@ -80,7 +82,7 @@ public class serviciosInactivosController {
 		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
-    	
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
     	activos.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
     	
     	btnActivar.setOnMouseClicked(event -> {

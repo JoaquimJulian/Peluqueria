@@ -30,6 +30,8 @@ public class editarProductosController {
     @FXML
     private ImageView usuarios;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView cerrar;
     @FXML
     private ImageView ficha;
@@ -67,6 +69,7 @@ public class editarProductosController {
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
 
     	controlFormatoPrecio();
     	controlFormatoStock();

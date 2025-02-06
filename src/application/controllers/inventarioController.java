@@ -40,6 +40,8 @@ public class inventarioController {
     @FXML
     private ImageView logIn;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView salir;
     @FXML
     private ImageView ficha;
@@ -81,7 +83,7 @@ public class inventarioController {
     	trabajadores.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
     	servicios.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
     	clientes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
-    	
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
     	
     }
     

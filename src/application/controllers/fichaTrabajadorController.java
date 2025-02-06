@@ -28,6 +28,8 @@ public class fichaTrabajadorController {
     @FXML
     private ImageView usuarios;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView cerrar;
     @FXML
 	private Text nombreSesion;
@@ -69,6 +71,7 @@ public class fichaTrabajadorController {
         calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+        basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
         if (!trabajadorLogueado.isEsAdministrador()) {
     		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
     		ajustes.setImage(imagenCliente);

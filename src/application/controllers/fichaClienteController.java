@@ -58,6 +58,8 @@ public class fichaClienteController {
     @FXML
     private ImageView usuarios;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView salir;
     @FXML
     private ImageView ficha;
@@ -145,6 +147,7 @@ public class fichaClienteController {
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
         	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+        	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
         	
         	
             // Configurar las columnas

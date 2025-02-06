@@ -33,6 +33,8 @@ public class editarClientesController {
 		@FXML
 		private ImageView cerrar;
 		@FXML
+		private ImageView basura;
+		@FXML
 		private ImageView ficha;
 		@FXML
 		private Text nombreSesion;
@@ -69,6 +71,8 @@ public class editarClientesController {
 			usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
 			calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 			salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+	    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+
 			if (!trabajadorLogueado.isEsAdministrador()) {
 				Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
 				ajustes.setImage(imagenCliente);

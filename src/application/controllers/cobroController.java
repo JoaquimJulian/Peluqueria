@@ -56,6 +56,8 @@ public class cobroController {
     @FXML
     private ImageView salir;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView ficha;
     @FXML
 	private Text nombreSesion;
@@ -208,6 +210,7 @@ public class cobroController {
         	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
         	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
         	salir.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+        	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
         	
         	
         	// LOGICA SERVICIOS

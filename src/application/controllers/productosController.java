@@ -44,6 +44,8 @@ public class productosController {
 	@FXML
 	private ImageView cerrar;
 	@FXML
+	private ImageView basura;
+	@FXML
 	private Text nombreSesion;
 	@FXML
     private ImageView ficha;
@@ -102,6 +104,7 @@ public class productosController {
 		calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 		usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
 
 		
 		btnCrear.setOnMouseClicked(event -> mainApp.mostrarVista("crearProductos.fxml"));

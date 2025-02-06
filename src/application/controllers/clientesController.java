@@ -37,6 +37,8 @@ public class clientesController {
 	@FXML
 	private ImageView cerrar;
 	@FXML
+	private ImageView basura;
+	@FXML
     private ImageView ficha;
 	
 	// CONTROLES GENERICOS PARA CRUD
@@ -88,6 +90,8 @@ public class clientesController {
 	    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
 	    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
 	    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+	    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+
 	    	if (!trabajadorLogueado.isEsAdministrador()) {
 	    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
 	    		ajustes.setImage(imagenCliente);

@@ -35,6 +35,8 @@ public class productosInactivosController {
 		@FXML
 		private ImageView cerrar;
 		@FXML
+		private ImageView basura;
+		@FXML
 		private Text nombreSesion;
 		@FXML
 	    private ImageView ficha;
@@ -87,7 +89,8 @@ public class productosInactivosController {
 			calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 	    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
 	    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
-			
+	    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+
 			btnActivar.setDisable(true);
 			tablaProductos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> { //listener que detecta cuando se hace click en una fila de la tabla para asi activar el boton de editar
 		        btnActivar.setDisable(false);

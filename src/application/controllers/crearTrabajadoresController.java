@@ -27,6 +27,8 @@ public class crearTrabajadoresController {
     @FXML
     private ImageView cerrar;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView ficha;
 
     // CAMPOS DE TRABAJADOR
@@ -61,6 +63,7 @@ public class crearTrabajadoresController {
         cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
         salir.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
         ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+        basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
 
         if (salir != null) {
             salir.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));

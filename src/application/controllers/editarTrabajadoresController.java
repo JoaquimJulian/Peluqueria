@@ -28,6 +28,8 @@ public class editarTrabajadoresController {
     @FXML
     private ImageView cerrar;
     @FXML
+    private ImageView basura;
+    @FXML
     private ImageView ficha;
 
     // CAMPOS DE EDICIÓN DE TRABAJADOR
@@ -65,7 +67,7 @@ public class editarTrabajadoresController {
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("trabajadores.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-   
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
 
         guardarCambios.setOnAction(event -> {
             editarTrabajador();

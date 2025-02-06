@@ -21,6 +21,8 @@ public class crearServiciosController {
 	@FXML
 	private ImageView usuarios;
 	@FXML
+	private ImageView basura;
+	@FXML
 	private ImageView cerrar;
 	@FXML
     private ImageView ficha;
@@ -55,6 +57,8 @@ public class crearServiciosController {
 	    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 	    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("servicios.fxml"));
 	    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+	    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+
 
 	    	crearServicio.setOnMouseClicked(event -> {
 	    	    // Verificar si el campo nombreServicio está vacío

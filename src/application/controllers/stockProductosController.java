@@ -75,10 +75,6 @@ public class stockProductosController {
 	private Spinner<Integer> cantidadProducto;
 
 	
-
-
-	
-	
     private Producto producto;
 	
 
@@ -94,14 +90,27 @@ public class stockProductosController {
     @FXML
     public void initialize() throws SQLException {
     	if (mainApp != null) {
-
+    		Trabajador trabajadorLogueado = Trabajador.getTrabajadorLogueado();
+        	nombreSesion.setText(trabajadorLogueado.getNombre());
+    		
         	// BOTONES HEADER
-        	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-        	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
-        	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
-        	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
-        	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
-        	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+    		cerrar.setOnMouseClicked(event -> { Platform.exit(); });
+	    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
+	    	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
+	    	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+	    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+	    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+	    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+
+	    	if (!trabajadorLogueado.isEsAdministrador()) {
+	    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
+	    		ajustes.setImage(imagenCliente);
+	    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+	    	}else {
+	    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+	    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+	    	}
+        	
         	
         	controlFormatoCodigo();
         	

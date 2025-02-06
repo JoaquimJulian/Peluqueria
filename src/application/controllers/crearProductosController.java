@@ -28,6 +28,8 @@ public class crearProductosController {
     private ImageView cobrar;
     @FXML
     private ImageView usuarios;
+    @FXML
+    private ImageView basura;
 	@FXML
 	private ImageView cerrar;
 	@FXML
@@ -68,6 +70,8 @@ public class crearProductosController {
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
     	salir.setOnMouseClicked(event -> mainApp.mostrarVista("productos.fxml"));
     	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
+    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+
 		
     	controlFormatoPrecio();
     	controlFormatoStock();
