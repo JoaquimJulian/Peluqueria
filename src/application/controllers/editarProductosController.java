@@ -45,6 +45,8 @@ public class editarProductosController {
     @FXML
     private TextField cantidad_en_stock;
     @FXML
+    private TextField aviso_stock;
+    @FXML
     private TextField codigo_barras;
     @FXML
     private Button editarproducto;
@@ -69,6 +71,7 @@ public class editarProductosController {
     	controlFormatoPrecio();
     	controlFormatoStock();
     	controlFormatoCodigo();
+    	controlFormatoStock2();
     	
         editarproducto.setOnAction(event -> {
             editarProducto();
@@ -88,6 +91,7 @@ public class editarProductosController {
         PrecioCosto.setText(String.valueOf(producto.getPrecioCosto())); // Cambiado a setText()
         cantidad_en_stock.setText(String.valueOf(producto.getCantidad_en_stock())); // Cargar la cantidad en stock
         codigo_barras.setText(String.valueOf(producto.getCodigo_barras()));
+        aviso_stock.setText(String.valueOf(producto.getAviso_stock()));
     }
     
     public void editarProducto() {
@@ -102,12 +106,13 @@ public class editarProductosController {
         
         String descripcion = descripcionProducto.getText();
         int cantidad = Integer.parseInt(cantidad_en_stock.getText()); // Convertir a int
+        int aviso = Integer.parseInt(aviso_stock.getText()); // Convertir a int
         String codigoBarrasTexto = codigo_barras.getText();
         codigoBarrasTexto = codigoBarrasTexto.replaceAll("^\\^", "");
         Long codigoBarras = Long.parseLong(codigoBarrasTexto);
 
         // Llamar al método de edición en el modelo
-        Producto.editarproducto(producto.getId(), nombre, descripcion, precioVenta, precioCosto, cantidad, codigoBarras);
+        Producto.editarproducto(producto.getId(), nombre, descripcion, precioVenta, precioCosto, cantidad, codigoBarras, aviso);
     }
     
     private void controlFormatoPrecio() {
@@ -139,6 +144,21 @@ public class editarProductosController {
 
         // Crear una nueva instancia de TextFormatter para stockProducto
         cantidad_en_stock.setTextFormatter(new TextFormatter<>(filtroStock));
+    }
+    
+    private void controlFormatoStock2() {
+        UnaryOperator<TextFormatter.Change> filtroStock = change -> {
+            String newText = change.getControlNewText();
+            
+            // Verifica si el texto es numérico (solo dígitos)
+            if (newText.matches("\\d*")) {
+                return change; // Aceptar el cambio
+            }
+            return null; // Rechazar el cambio
+        };
+
+        // Crear una nueva instancia de TextFormatter para stockProducto
+        aviso_stock.setTextFormatter(new TextFormatter<>(filtroStock));
     }
     
     private void controlFormatoCodigo() {

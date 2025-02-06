@@ -16,16 +16,18 @@ public class Producto {
     private double precioVenta;
     private double precioCosto;
     private int cantidad_en_stock;
+    private int aviso_stock;
     private String codigo_barras;
     private boolean activo;
 
-    public Producto(int id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, String codigo_barras, boolean activo) {
+    public Producto(int id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, int aviso_stock, String codigo_barras, boolean activo) {
     	this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioVenta = precioVenta;
         this.precioCosto = precioCosto;
         this.cantidad_en_stock = cantidad_en_stock;
+        this.aviso_stock = aviso_stock;
         this.codigo_barras = codigo_barras;
         this.activo = activo;
     }
@@ -80,6 +82,14 @@ public class Producto {
         this.cantidad_en_stock = cantidad_en_stock;
     }
     
+    public int getAviso_stock() {
+        return aviso_stock;
+    }
+
+    public void setAviso_stock(int aviso_stock) {
+        this.aviso_stock = aviso_stock;
+    }
+    
     public String getCodigo_barras() {
         return codigo_barras;
     }
@@ -97,8 +107,8 @@ public class Producto {
     }
 
     
-    public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras) {
-		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock, codigo_barras) VALUES (?, ?, ?, ?, ?, ?)";
+    public static void crearproducto(String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras, int aviso_stock) {
+		String sql = "INSERT INTO productos (nombre_producto, descripcion, precio_venta, precio_costo, cantidad_en_stock, codigo_barras, alerta_bajo_stock) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
 		try (Connection connection = databaseConection.getConnection();
 	             PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -110,6 +120,7 @@ public class Producto {
 	            stmt.setDouble(4, precioCosto);
 	            stmt.setInt(5, cantidad_en_stock);
 	            stmt.setLong(6, codigo_barras);
+	            stmt.setLong(7, aviso_stock);
 
 	            // Ejecutamos la inserción
 	            stmt.executeUpdate();
@@ -120,8 +131,8 @@ public class Producto {
 	        }
 	}
 	
-	public static void editarproducto(Integer id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras) {
-		String sql = "UPDATE productos SET nombre_producto = ?, descripcion = ?, precio_venta  = ?, precio_costo = ?, cantidad_en_stock = ?, codigo_barras = ? WHERE id_producto = ?";
+	public static void editarproducto(Integer id, String nombre, String descripcion, double precioVenta, double precioCosto, int cantidad_en_stock, Long codigo_barras, int aviso_stock) {
+		String sql = "UPDATE productos SET nombre_producto = ?, descripcion = ?, precio_venta  = ?, precio_costo = ?, cantidad_en_stock = ?, codigo_barras = ?, aviso_stock = ? WHERE id_producto = ?";
 		
 		try (Connection connection = databaseConection.getConnection();
 				PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -132,7 +143,8 @@ public class Producto {
 	            stmt.setDouble(4, precioCosto);
 	            stmt.setInt(5, cantidad_en_stock);
 				stmt.setLong(6, codigo_barras);
-				stmt.setInt(7, id);
+				stmt.setLong(7, aviso_stock);
+				stmt.setInt(8, id);
 				
 				stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -204,6 +216,7 @@ public class Producto {
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
                      rs.getInt("cantidad_en_stock"),
+                     rs.getInt("aviso_stock"),
                      rs.getString("codigo_barras"),
                      rs.getBoolean("activo")
                  ));
@@ -234,6 +247,7 @@ public class Producto {
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
                      rs.getInt("cantidad_en_stock"),
+                     rs.getInt("aviso_stock"),
                      rs.getString("codigo_barras"),
                      rs.getBoolean("activo")
                  ));
@@ -264,6 +278,7 @@ public class Producto {
                      rs.getDouble("precio_venta"),
                      rs.getDouble("precio_costo"), 
                      rs.getInt("cantidad_en_stock"),
+                     rs.getInt("aviso_stock"),
                      rs.getString("codigo_barras"),
                      rs.getBoolean("activo")
                  ));
@@ -321,6 +336,7 @@ public class Producto {
 	                rs.getDouble("precio_venta"),
 	                rs.getDouble("precio_costo"),
 	                rs.getInt("cantidad_en_stock"),
+                    rs.getInt("aviso_stock"),
 	                rs.getString("codigo_barras"),
 	                rs.getBoolean("activo")
 	            );
@@ -356,7 +372,28 @@ public class Producto {
 
 	    return codigos;
 	}
-
+	
+	
+	public boolean restarStock(String codigoBarras, int cantidad) throws SQLException {
+		Connection connection = databaseConection.getConnection();
+		String query = "UPDATE productos SET cantidad_en_stock = cantidad_en_stock - ? WHERE codigo_barras = ? AND cantidad_en_stock >= ?";
+        PreparedStatement stmt = connection.prepareStatement(query);
+        
+        try (
+        		ResultSet rs = stmt.executeQuery(query);
+        	
+        	PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, cantidad);
+            statement.setString(2, codigoBarras);
+            statement.setInt(3, cantidad);
+            int filasActualizadas = statement.executeUpdate();
+            return filasActualizadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+	
 
 	
 	

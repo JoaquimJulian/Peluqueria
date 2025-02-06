@@ -28,6 +28,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -81,10 +82,11 @@ public class diaAdminController {
     	nombreSesion.setText(trabajadorLogueado.getNombre());
 
     	cerrar.setOnMouseClicked(event -> { Platform.exit(); });
-    	ficha.setOnMouseClicked(event -> mainApp.mostrarVista("fichaTrabajador.fxml"));
     	usuarios.setOnMouseClicked(event -> mainApp.mostrarVista("LogIn.fxml"));
     	cobrar.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
     	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
+		ficha.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
+		
     	if (!trabajadorLogueado.isEsAdministrador()) {
     		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
     		ajustes.setImage(imagenCliente);

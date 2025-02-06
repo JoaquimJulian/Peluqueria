@@ -72,7 +72,9 @@ public class productosController {
     @FXML
     private TableColumn<Producto, Double> columnaCoste; 
     @FXML
-    private TableColumn<Producto, Integer> columnacantidad_en_stock;
+    private TableColumn<Producto, Integer> columnacantidad_en_stock; 
+    @FXML
+    private TableColumn<Producto, Integer> columnaaviso_stock;
     @FXML
     private TableColumn<Producto, Integer> columnacodigo_barras;
     @FXML
@@ -132,6 +134,7 @@ public class productosController {
         columnaPrecioVenta.setCellValueFactory(new PropertyValueFactory<>("precioVenta"));
         columnaCoste.setCellValueFactory(new PropertyValueFactory<>("precioCosto"));
         columnacantidad_en_stock.setCellValueFactory(new PropertyValueFactory<>("cantidad_en_stock"));
+        columnaaviso_stock.setCellValueFactory(new PropertyValueFactory<>("aviso_stock"));
         columnacodigo_barras.setCellValueFactory(new PropertyValueFactory<>("codigo_barras"));
 
      // Cargar los datos

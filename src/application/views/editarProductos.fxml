@@ -113,7 +113,7 @@
                         <Font name="System Bold" size="36.0" />
                     </font>
                 </Text>
-                <AnchorPane layoutX="510.0" layoutY="96.0" prefHeight="395.0" prefWidth="396.0" style="-fx-background-color: D9CCC7; -fx-background-radius: 10;">
+                <AnchorPane layoutX="510.0" layoutY="96.0" prefHeight="509.0" prefWidth="396.0" style="-fx-background-color: D9CCC7; -fx-background-radius: 10;">
                     <children>
                         <Text layoutX="32.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre:">
                      <font>
@@ -140,21 +140,27 @@
                         <Font name="System Bold" size="18.0" />
                      </font></Text>
                         <TextField fx:id="cantidad_en_stock" layoutX="105.0" layoutY="249.0" prefHeight="31.0" prefWidth="81.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
-                        <Text layoutX="33.0" layoutY="323.0" text="Codigo de barras:">
+                        <TextField fx:id="codigo_barras" layoutX="33.0" layoutY="379.0" prefHeight="31.0" prefWidth="318.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                        <Text layoutX="32.0" layoutY="359.0" text="Codigo de barras:">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Text>
-                        <TextField fx:id="codigo_barras" layoutX="33.0" layoutY="332.0" prefHeight="31.0" prefWidth="318.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                  <Text layoutX="32.0" layoutY="309.0" text="Aviso de Bajo Stock:">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="aviso_stock" layoutX="217.0" layoutY="286.0" prefHeight="31.0" prefWidth="81.0" style="-fx-border-color: black; -fx-background-color: D9D9D9;" />
+                      <Button fx:id="editarproducto" layoutX="98.0" layoutY="426.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="176.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Editar Producto" textFill="WHITE">
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                      </Button>
                     </children>
                 </AnchorPane>
-                <Button fx:id="editarproducto" layoutX="614.0" layoutY="509.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="176.0" style="-fx-background-color: #3E403D; -fx-background-radius: 10;" text="Editar Producto" textFill="WHITE">
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-                </Button>
             </children>
         </AnchorPane>
     </center>

@@ -38,11 +38,13 @@ public class crearProductosController {
     @FXML
     private TextField descripcionProducto;
     @FXML
-    private TextField precio_venta ;
+    private TextField precio_venta;
     @FXML
     private TextField precio_costo;
     @FXML
     private TextField stockProducto;
+    @FXML
+    private TextField aviso_stock;
     @FXML
     private TextField codigo_barras;
     @FXML
@@ -70,6 +72,7 @@ public class crearProductosController {
     	controlFormatoPrecio();
     	controlFormatoStock();
     	controlFormatoCodigo();
+    	controlFormatoStock2();
     	
 	   	crearProducto.setOnMouseClicked(event -> {
 	       	try {
@@ -89,6 +92,7 @@ public class crearProductosController {
         double precio_ventaValue = Double.parseDouble(precio_venta.getText());
         double precioCostoValue = Double.parseDouble(precio_costo.getText());
         int stock = Integer.parseInt(stockProducto.getText());
+        int avisostock = Integer.parseInt(aviso_stock.getText());
         String codigoBarrasTexto = codigo_barras.getText();
         codigoBarrasTexto = codigoBarrasTexto.replaceAll("^\\^", "");
         Long codigoBarras = Long.parseLong(codigoBarrasTexto);
@@ -102,13 +106,14 @@ public class crearProductosController {
         }
         
         if (!existeCodigo) {
-            Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock, codigoBarras);
+            Producto.crearproducto(nombre, descripcion, precio_ventaValue, precioCostoValue, stock, codigoBarras, avisostock);
             mainApp.mostrarVista("productos.fxml");
             nombreProducto.clear();
             descripcionProducto.clear();
             precio_venta .clear();
             precio_costo.clear();
             stockProducto.clear();
+            aviso_stock.clear();
         } else {
         	Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error al crear el producto");
@@ -121,6 +126,7 @@ public class crearProductosController {
             precio_venta .clear();
             precio_costo.clear();
             stockProducto.clear();
+            aviso_stock.clear();
         }
         
       
@@ -155,6 +161,21 @@ public class crearProductosController {
 
         // Crear una nueva instancia de TextFormatter para stockProducto
         stockProducto.setTextFormatter(new TextFormatter<>(filtroStock));
+    }
+    
+    private void controlFormatoStock2() {
+        UnaryOperator<TextFormatter.Change> filtroStock = change -> {
+            String newText = change.getControlNewText();
+            
+            // Verifica si el texto es numérico (solo dígitos)
+            if (newText.matches("\\d*")) {
+                return change; // Aceptar el cambio
+            }
+            return null; // Rechazar el cambio
+        };
+
+        // Crear una nueva instancia de TextFormatter para stockProducto
+        aviso_stock.setTextFormatter(new TextFormatter<>(filtroStock));
     }
     
     private void controlFormatoCodigo() {
