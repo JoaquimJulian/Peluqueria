@@ -509,6 +509,7 @@ public class cobroController {
                 alert.showAndWait();
                 return; // Detener el proceso y no continuar con el cobro
             }
+            
 
             // Continuar con el flujo de inserción (si la suma es correcta)
             Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
@@ -559,6 +560,24 @@ public class cobroController {
                     hora,
                     observacion
                 );
+                // Restar el stock del producto
+                restarStock(producto);
+            }
+
+            // Verificar el stock solo después de procesar todos los productos
+            for (Producto producto : productosAnadidos) {
+                boolean stockBajo = Producto.verificarAvisoStock(producto.getId(), producto.getCantidad_en_stock());
+                System.out.println("Producto: " + producto.getNombre() + " - Stock bajo: " + stockBajo); // Depurar el valor de stockBajo
+
+                if (stockBajo) {
+                    // Si el stock está por debajo del nivel de aviso, mostrar la alerta
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("AVISO DE STOCK");
+                    alert.setHeaderText(null);
+                    alert.setContentText("El stock de " + producto.getNombre() + " ha bajado de su nivel mínimo que es: " + producto.getAviso_stock() + " \n Stock actual: " + producto.getCantidad_en_stock());
+                    alert.showAndWait();
+                    break; // Salir del bucle después de mostrar la alerta
+                }
             }
 
      
@@ -583,7 +602,7 @@ public class cobroController {
     
     // LOGICA STOCK
     
-    public void restarStock(Producto producto) {
+    public void restarStock(Producto producto) throws SQLException {
 		int stock = producto.getCantidad_en_stock() - 1;
 		if (Facturacion.restarStock(producto.getId(),stock)) {
 			producto.setCantidad_en_stock(stock);

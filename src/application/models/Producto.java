@@ -394,6 +394,30 @@ public class Producto {
         return false;
     }
 	
+	
+
+	
+
+	    // Método para verificar si el stock está por debajo del nivel de aviso
+	public static boolean verificarAvisoStock(int productoId, int cantidadEnStock) throws SQLException {
+	    // Conectar a la base de datos
+	    Connection conn = databaseConection.getConnection();
+	    PreparedStatement stmt = conn.prepareStatement("SELECT aviso_stock FROM productos WHERE id_producto = ?");
+	    stmt.setInt(1, productoId);
+	    ResultSet rs = stmt.executeQuery();
+
+	    if (rs.next()) {
+	        int avisoStock = rs.getInt("aviso_stock"); // Nivel de aviso de stock
+	        System.out.println("Producto ID: " + productoId + " - Stock: " + cantidadEnStock + " - Aviso Stock: " + avisoStock); // Verificación en consola
+	        System.out.println("¿Stock bajo? " + (cantidadEnStock < avisoStock)); // Imprimir resultado de la comparación
+	        return cantidadEnStock < avisoStock; // Verifica si el stock es menor al nivel de aviso
+	    }
+	    return false; // Si no encuentra el producto
+	}
+
+
+
+	
 
 	
 	
