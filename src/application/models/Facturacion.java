@@ -958,6 +958,298 @@ public class Facturacion {
 	    
 	    return totalBizum;
 	}
+	
+	public static List<Map<String, Object>> facturacionEfectivoPrueba(java.sql.Date inicio, java.sql.Date fin, Integer idTrabajador) throws SQLException {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    Map<String, Double> sumasPorTrabajador = new HashMap<>();
+
+	    // Consulta para sumar los monto_total de los registros no repetidos dentro del rango de fechas y por trabajador
+	    String sqlNoRepetidos = "SELECT t.nombre, SUM(f.efectivo) AS total_no_repetidos "
+	                            + "FROM facturacion f "
+	                            + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                            + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlNoRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlNoRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlNoRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                     + "HAVING COUNT(*) = 1"; // Solo registros no repetidos
+
+	    // Consulta para sumar los monto_total de los registros repetidos dentro del rango de fechas y por trabajador
+	    String sqlRepetidos = "SELECT t.nombre, SUM(f.efectivo) / COUNT(*) AS total_repetidos "
+	                          + "FROM facturacion f "
+	                          + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                          + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                   + "HAVING COUNT(*) > 1"; // Solo registros repetidos
+
+	    try (Connection conn = databaseConection.getConnection()) {
+	        // Procesar los registros no repetidos
+	        try (PreparedStatement stmtNoRepetidos = conn.prepareStatement(sqlNoRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtNoRepetidos.setDate(paramIndex++, inicio);
+	                stmtNoRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtNoRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsNoRepetidos = stmtNoRepetidos.executeQuery();
+	            while (rsNoRepetidos.next()) {
+	                String nombre = rsNoRepetidos.getString("nombre");
+	                double totalNoRepetidos = rsNoRepetidos.getDouble("total_no_repetidos");
+	                
+	                
+
+	                // Acumular la suma total_no_repetidos
+	                sumasPorTrabajador.merge(nombre, totalNoRepetidos, Double::sum);
+	            }
+	        }
+
+	        // Procesar los registros repetidos
+	        try (PreparedStatement stmtRepetidos = conn.prepareStatement(sqlRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtRepetidos.setDate(paramIndex++, inicio);
+	                stmtRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsRepetidos = stmtRepetidos.executeQuery();
+	            while (rsRepetidos.next()) {
+	                String nombre = rsRepetidos.getString("nombre");
+	                double totalRepetidos = rsRepetidos.getDouble("total_repetidos");
+
+	                // Acumular la suma total_repetidos
+	                sumasPorTrabajador.merge(nombre, totalRepetidos, Double::sum);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // Crear la lista de resultados con las sumas totales por trabajador
+	    for (Map.Entry<String, Double> entry : sumasPorTrabajador.entrySet()) {
+	        Map<String, Object> row = new HashMap<>();
+	        row.put("nombre", entry.getKey());
+	        row.put("facturacion_total", entry.getValue()); // Esta es la suma total
+	        resultados.add(row);
+	    }
+
+	    return resultados;
+	}
+	
+	public static List<Map<String, Object>> facturacionTarjetaPrueba(java.sql.Date inicio, java.sql.Date fin, Integer idTrabajador) throws SQLException {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    Map<String, Double> sumasPorTrabajador = new HashMap<>();
+
+	    // Consulta para sumar los monto_total de los registros no repetidos dentro del rango de fechas y por trabajador
+	    String sqlNoRepetidos = "SELECT t.nombre, SUM(f.tarjeta) AS total_no_repetidos "
+	                            + "FROM facturacion f "
+	                            + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                            + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlNoRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlNoRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlNoRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                     + "HAVING COUNT(*) = 1"; // Solo registros no repetidos
+
+	    // Consulta para sumar los monto_total de los registros repetidos dentro del rango de fechas y por trabajador
+	    String sqlRepetidos = "SELECT t.nombre, SUM(f.tarjeta) / COUNT(*) AS total_repetidos "
+	                          + "FROM facturacion f "
+	                          + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                          + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                   + "HAVING COUNT(*) > 1"; // Solo registros repetidos
+
+	    try (Connection conn = databaseConection.getConnection()) {
+	        // Procesar los registros no repetidos
+	        try (PreparedStatement stmtNoRepetidos = conn.prepareStatement(sqlNoRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtNoRepetidos.setDate(paramIndex++, inicio);
+	                stmtNoRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtNoRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsNoRepetidos = stmtNoRepetidos.executeQuery();
+	            while (rsNoRepetidos.next()) {
+	                String nombre = rsNoRepetidos.getString("nombre");
+	                double totalNoRepetidos = rsNoRepetidos.getDouble("total_no_repetidos");
+	                
+	                
+
+	                // Acumular la suma total_no_repetidos
+	                sumasPorTrabajador.merge(nombre, totalNoRepetidos, Double::sum);
+	            }
+	        }
+
+	        // Procesar los registros repetidos
+	        try (PreparedStatement stmtRepetidos = conn.prepareStatement(sqlRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtRepetidos.setDate(paramIndex++, inicio);
+	                stmtRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsRepetidos = stmtRepetidos.executeQuery();
+	            while (rsRepetidos.next()) {
+	                String nombre = rsRepetidos.getString("nombre");
+	                double totalRepetidos = rsRepetidos.getDouble("total_repetidos");
+
+	                // Acumular la suma total_repetidos
+	                sumasPorTrabajador.merge(nombre, totalRepetidos, Double::sum);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // Crear la lista de resultados con las sumas totales por trabajador
+	    for (Map.Entry<String, Double> entry : sumasPorTrabajador.entrySet()) {
+	        Map<String, Object> row = new HashMap<>();
+	        row.put("nombre", entry.getKey());
+	        row.put("facturacion_total", entry.getValue()); // Esta es la suma total
+	        resultados.add(row);
+	    }
+
+	    return resultados;
+	}
+	
+	public static List<Map<String, Object>> facturacionBizumPrueba(java.sql.Date inicio, java.sql.Date fin, Integer idTrabajador) throws SQLException {
+	    List<Map<String, Object>> resultados = new ArrayList<>();
+	    Map<String, Double> sumasPorTrabajador = new HashMap<>();
+
+	    // Consulta para sumar los monto_total de los registros no repetidos dentro del rango de fechas y por trabajador
+	    String sqlNoRepetidos = "SELECT t.nombre, SUM(f.bizum) AS total_no_repetidos "
+	                            + "FROM facturacion f "
+	                            + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                            + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlNoRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlNoRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlNoRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                     + "HAVING COUNT(*) = 1"; // Solo registros no repetidos
+
+	    // Consulta para sumar los monto_total de los registros repetidos dentro del rango de fechas y por trabajador
+	    String sqlRepetidos = "SELECT t.nombre, SUM(f.bizum) / COUNT(*) AS total_repetidos "
+	                          + "FROM facturacion f "
+	                          + "JOIN trabajadores t ON f.id_trabajador = t.id_trabajador "
+	                          + "WHERE 1=1 ";
+
+	    if (inicio != null && fin != null) {
+	        sqlRepetidos += "AND f.fecha BETWEEN ? AND ? ";
+	    }
+
+	    if (idTrabajador != null) {
+	        sqlRepetidos += "AND f.id_trabajador = ? ";
+	    }
+
+	    sqlRepetidos += "GROUP BY f.id_cliente, f.monto_total, f.bizum, f.tarjeta, f.efectivo, f.fecha, f.horaCobro "
+	                   + "HAVING COUNT(*) > 1"; // Solo registros repetidos
+
+	    try (Connection conn = databaseConection.getConnection()) {
+	        // Procesar los registros no repetidos
+	        try (PreparedStatement stmtNoRepetidos = conn.prepareStatement(sqlNoRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtNoRepetidos.setDate(paramIndex++, inicio);
+	                stmtNoRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtNoRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsNoRepetidos = stmtNoRepetidos.executeQuery();
+	            while (rsNoRepetidos.next()) {
+	                String nombre = rsNoRepetidos.getString("nombre");
+	                double totalNoRepetidos = rsNoRepetidos.getDouble("total_no_repetidos");
+	                
+	                
+
+	                // Acumular la suma total_no_repetidos
+	                sumasPorTrabajador.merge(nombre, totalNoRepetidos, Double::sum);
+	            }
+	        }
+
+	        // Procesar los registros repetidos
+	        try (PreparedStatement stmtRepetidos = conn.prepareStatement(sqlRepetidos)) {
+	            int paramIndex = 1;
+	            if (inicio != null && fin != null) {
+	                stmtRepetidos.setDate(paramIndex++, inicio);
+	                stmtRepetidos.setDate(paramIndex++, fin);
+	            }
+	            if (idTrabajador != null) {
+	                stmtRepetidos.setInt(paramIndex++, idTrabajador);
+	            }
+
+	            ResultSet rsRepetidos = stmtRepetidos.executeQuery();
+	            while (rsRepetidos.next()) {
+	                String nombre = rsRepetidos.getString("nombre");
+	                double totalRepetidos = rsRepetidos.getDouble("total_repetidos");
+
+	                // Acumular la suma total_repetidos
+	                sumasPorTrabajador.merge(nombre, totalRepetidos, Double::sum);
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    // Crear la lista de resultados con las sumas totales por trabajador
+	    for (Map.Entry<String, Double> entry : sumasPorTrabajador.entrySet()) {
+	        Map<String, Object> row = new HashMap<>();
+	        row.put("nombre", entry.getKey());
+	        row.put("facturacion_total", entry.getValue()); // Esta es la suma total
+	        resultados.add(row);
+	    }
+
+	    return resultados;
+	}
+
 
 	
 }

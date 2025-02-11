@@ -138,6 +138,7 @@ public class estadisticasGeneralesController {
     	comboTrabajadores.setItems(nombresTrabajadores);
     	
     	aplicarFiltro();
+    	mostrarFacturacionTotal();
     	mostrarFacturacionEfectivo();
         mostrarFacturacionTarjeta();
         mostrarFacturacionBizum();
@@ -363,11 +364,15 @@ public class estadisticasGeneralesController {
 	        }
 
 	        // Obtén la facturación total desde la base de datos
-	        double facturacionTotal = Facturacion.facturacionEfectivo(idPeluquero, inicio, fin);
+	        List<Map<String, Object>>facturacionTotal = Facturacion.facturacionEfectivoPrueba(inicio, fin, idPeluquero);
+	        double facturacionTotalEfectivo = 0.0;
 
+	        for (Map<String, Object> fila : facturacionTotal) {
+	             facturacionTotalEfectivo += (Double) fila.get("facturacion_total");
+	        }
 
 	        // Actualiza la etiqueta en la interfaz
-	        facturacionEfectivoLabel.setText(String.format("Facturación Efectivo: %.2f €", facturacionTotal));
+	        facturacionEfectivoLabel.setText(String.format("Facturación Efectivo: %.2f €", facturacionTotalEfectivo));
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -389,12 +394,15 @@ public class estadisticasGeneralesController {
 	            idPeluquero = Integer.parseInt(idPeluqueroString);
 	        }
 
-	        // Obtén la facturación total desde la base de datos
-	        double facturacionTotal = Facturacion.facturacionTarjeta(idPeluquero, inicio, fin);
+	        List<Map<String, Object>>facturacionTotal = Facturacion.facturacionTarjetaPrueba(inicio, fin, idPeluquero);
+	        double facturacionTotalTarjeta = 0.0;
 
-
+	        for (Map<String, Object> fila : facturacionTotal) {
+	             facturacionTotalTarjeta += (Double) fila.get("facturacion_total");
+	        }
+ 
 	        // Actualiza la etiqueta en la interfaz
-	        facturacionTarjetaLabel.setText(String.format("Facturación Tarjeta: %.2f €", facturacionTotal));
+	        facturacionTarjetaLabel.setText(String.format("Facturación Efectivo: %.2f €", facturacionTotalTarjeta));
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -416,12 +424,15 @@ public class estadisticasGeneralesController {
 	            idPeluquero = Integer.parseInt(idPeluqueroString);
 	        }
 
-	        // Obtén la facturación total desde la base de datos
-	        double facturacionTotal = Facturacion.facturacionBizum(idPeluquero, inicio, fin);
+	        List<Map<String, Object>>facturacionTotal = Facturacion.facturacionBizumPrueba(inicio, fin, idPeluquero);
+	        double facturacionTotalBizum = 0.0;
 
+	        for (Map<String, Object> fila : facturacionTotal) {
+	             facturacionTotalBizum += (Double) fila.get("facturacion_total");
+	        }
 
 	        // Actualiza la etiqueta en la interfaz
-	        facturacionBizumLabel.setText(String.format("Facturación Bizum: %.2f €", facturacionTotal));
+	        facturacionBizumLabel.setText(String.format("Facturación Efectivo: %.2f €", facturacionTotalBizum));
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
