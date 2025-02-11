@@ -69,13 +69,13 @@ public class estadisticasGeneralesController {
 
     // Paleta de colores
     private final String[] colores = {
-    	 
-    		 "#FFD580", // Melocotón
-    		 "#E63946", // Rojo intenso
+    		
     		 "#F4A261", // Naranja vibrante
     		 "#2A9D8F", // Verde azulado oscuro
-    		 "#264653", // Azul petróleo
+    		 "#E63946", // Rojo intenso
     		 "#A8DADC", // Verde menta brillante
+    		 "#FFD580", // Melocotón
+    		 "#264653", // Azul petróleo
     	};
 
 
@@ -225,8 +225,10 @@ public class estadisticasGeneralesController {
    
 
     public void llenarGraficoFacturacionTrabajador(Integer idTrabajador, java.sql.Date inicio, java.sql.Date fin) throws SQLException {
+    
 	     graficoFacturacionTrabajador.getData().clear();
 	
+	     
 	     List<Map<String, Object>> facturacionPorTrabajador = Facturacion.sumaTotalFacturacion(inicio, fin, idTrabajador);
 	
 	     XYChart.Series<String, Number> serie = new XYChart.Series<>();
@@ -235,6 +237,18 @@ public class estadisticasGeneralesController {
 	         Double totalFacturado = (Double) fila.get("facturacion_total");
 	
 	         XYChart.Data<String, Number> data = new XYChart.Data<>(nombre, totalFacturado);
+	         
+	      // Obtener color del trabajador
+	         String color = obtenerColorTrabajador(nombre);
+
+	         // Aplicar color a la barra del gráfico
+	         data.nodeProperty().addListener((obs, oldNode, newNode) -> {
+	             if (newNode != null) {
+	                 newNode.setStyle("-fx-bar-fill: " + color + ";");
+	             }
+	         });
+
+	         
 	         // Agregar el número encima de la barra
 	         Label label = new Label(String.valueOf(totalFacturado));
 	         label.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
@@ -267,6 +281,17 @@ public class estadisticasGeneralesController {
 	         Integer serviciosVendidos = (Integer) fila.get("numero_servicios");
 	
 	         XYChart.Data<String, Number> data = new XYChart.Data<>(nombre, serviciosVendidos);
+	         
+	      // Obtener color del trabajador
+	         String color = obtenerColorTrabajador(nombre);
+
+	         // Aplicar color a la barra del gráfico
+	         data.nodeProperty().addListener((obs, oldNode, newNode) -> {
+	             if (newNode != null) {
+	                 newNode.setStyle("-fx-bar-fill: " + color + ";");
+	             }
+	         });
+
 	         // Agregar el número encima de la barra
 	         Label label = new Label(String.valueOf(serviciosVendidos));
 	         label.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
@@ -298,6 +323,16 @@ public class estadisticasGeneralesController {
 	         Integer productosVendidos = (Integer) fila.get("numero_productos");
 	
 	         XYChart.Data<String, Number> data = new XYChart.Data<>(nombre, productosVendidos);
+	      // Obtener color del trabajador
+	         String color = obtenerColorTrabajador(nombre);
+
+	         // Aplicar color a la barra del gráfico
+	         data.nodeProperty().addListener((obs, oldNode, newNode) -> {
+	             if (newNode != null) {
+	                 newNode.setStyle("-fx-bar-fill: " + color + ";");
+	             }
+	         });
+
 	         // Agregar el número encima de la barra
 	         Label label = new Label(String.valueOf(productosVendidos));
 	         label.setStyle("-fx-font-size: 12px; -fx-text-fill: black;");
