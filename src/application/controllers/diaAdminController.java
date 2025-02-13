@@ -24,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -67,6 +68,8 @@ public class diaAdminController {
 	    private Button vaciarReserva;
 	    @FXML
 	    private Button verEstadisticas;
+	    @FXML
+	    private Button facturacionDiaria;
 	    @FXML
 	    private Label nombreFecha;
 
@@ -163,6 +166,7 @@ public class diaAdminController {
         }
         
         verEstadisticas.setOnMouseClicked(event -> mainApp.mostrarVista("estadisticasGenerales.fxml"));
+        facturacionDiaria.setOnMouseClicked(event -> mainApp.mostrarVista("facturacionDiaria.fxml"));
 
     }
     

@@ -101,14 +101,14 @@ public class stockProductosController {
 	    	calendario.setOnMouseClicked(event -> mainApp.mostrarVista("Agenda.fxml"));
 	    	basura.setOnMouseClicked(event -> mainApp.mostrarVista("stockProductos.fxml"));
 	    	ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("clientes.fxml"));
+	    	salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
 
 	    	if (!trabajadorLogueado.isEsAdministrador()) {
 	    		Image imagenCliente = new Image(getClass().getResource("/application/images/clientes.png").toExternalForm());
 	    		ajustes.setImage(imagenCliente);
-	    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("diaAdmin.fxml"));
+	    
 	    	}else {
 	    		ajustes.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
-	    		salir.setOnMouseClicked(event -> mainApp.mostrarVista("inventario.fxml"));
 	    	}
         	
         	
@@ -131,6 +131,7 @@ public class stockProductosController {
                     if (cantidadRestar > 0) {
                         try {
 							restarStock(producto, cantidadRestar);
+							mainApp.mostrarVista("diaAdmin.fxml");
 						} catch (SQLException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -217,7 +218,6 @@ public class stockProductosController {
 
         // Verificar si el stock ha bajado del nivel de aviso
         boolean stockBajo = Producto.verificarAvisoStock(producto.getId(), producto.getCantidad_en_stock());
-        System.out.println("Producto: " + producto.getNombre() + " - Stock bajo: " + stockBajo); // Depurar el valor de stockBajo
 
         if (stockBajo) {
             // Si el stock está por debajo del nivel de aviso, mostrar la alerta

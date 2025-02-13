@@ -516,11 +516,11 @@ public class cobroController {
 
             // Continuar con el flujo de inserción (si la suma es correcta)
             Cliente cliente = (Cliente) mainApp.getDatosCompartidos();
-            System.out.println(nombrePeluquero.getValue());
+           
             String peluqueroSeleccionado = (String) nombrePeluquero.getValue(); // Esto devuelve "1 Carmen"
             String idPeluqueroString = peluqueroSeleccionado.split(" ")[0]; 
             int idPeluquero = Integer.parseInt(idPeluqueroString);
-            System.out.println(idPeluquero);
+           
             java.sql.Date fecha = new java.sql.Date(System.currentTimeMillis());
             Time hora = new Time(System.currentTimeMillis());
             String observacion = observaciones.getText();
@@ -570,7 +570,6 @@ public class cobroController {
             // Verificar el stock solo después de procesar todos los productos
             for (Producto producto : productosAnadidos) {
                 boolean stockBajo = Producto.verificarAvisoStock(producto.getId(), producto.getCantidad_en_stock());
-                System.out.println("Producto: " + producto.getNombre() + " - Stock bajo: " + stockBajo); // Depurar el valor de stockBajo
 
                 if (stockBajo) {
                     // Si el stock está por debajo del nivel de aviso, mostrar la alerta
